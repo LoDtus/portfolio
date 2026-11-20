@@ -1,0 +1,73 @@
+import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import MarkdownView from "@/features/portfolio/components/markdown-view";
+import SiteFooter from "@/features/portfolio/components/site-footer";
+import SiteHeader from "@/features/portfolio/components/site-header";
+import { MAIN_CONTENT_ID } from "@/features/portfolio/constants/sections.constants";
+import {
+    getPortfolioContent,
+    requireLocale,
+} from "@/features/portfolio/services/content.service";
+import { buildProjectMetadata } from "@/features/portfolio/services/metadata.service";
+import {
+    findProjectBySlug,
+    getProjectMarkdown,
+    getProjectsWithDetail,
+} from "@/features/portfolio/services/project-markdown.service";
+import { locales } from "@/shared/constants/i18n.constants";
+
+type PageProps = { params: Promise<{ locale: string; slug: string }> };
+
+export const dynamicParams = false;
+
+// Chỉ sinh trang chi tiết cho project thật sự có tài liệu markdown.
+export async function generateStaticParams() {
+    const projects = await getProjectsWithDetail();
+    return locales.flatMap((locale) =>
+        projects.map((project) => ({ locale, slug: project.slug })),
+    );
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { locale, slug } = await params;
+    const project = findProjectBySlug(slug);
+    if (!project) notFound();
+    return buildProjectMetadata(requireLocale(locale), project.slug);
+}
+
+export default async function ProjectDetailPage({ params }: PageProps) {
+    const { locale, slug } = await params;
+    const validLocale = requireLocale(locale);
+    const project = findProjectBySlug(slug);
+    if (!project || project.markdownFile === null) notFound();
+
+    const markdown = await getProjectMarkdown(project.markdownFile);
+    if (markdown === null) notFound();
+
+    const content = getPortfolioContent(validLocale);
+
+    return (
+        <>
+            <SiteHeader locale={validLocale} content={content} />
+            <main
+                id={MAIN_CONTENT_ID}
+                tabIndex={-1}
+                className="site-container py-16 outline-none lg:py-24"
+            >
+                <Link
+                    href={`/${validLocale}#projects`}
+                    className="link-draw mb-10 inline-flex items-center gap-2 font-semibold text-heading"
+                >
+                    <ArrowLeft size={18} aria-hidden="true" />
+                    {content.ui.backToProjects}
+                </Link>
+                <article className="max-w-3xl">
+                    <MarkdownView source={markdown} />
+                </article>
+            </main>
+            <SiteFooter locale={validLocale} content={content} />
+        </>
+    );
+}

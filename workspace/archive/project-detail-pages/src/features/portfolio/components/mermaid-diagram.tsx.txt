@@ -1,0 +1,51 @@
+"use client";
+
+import { useEffect, useId, useState } from "react";
+
+// Render sơ đồ mermaid ở client (tải lười để không nặng bundle). Trước khi render xong hoặc khi lỗi,
+// hiển thị chính mã sơ đồ dạng văn bản, nên nội dung vẫn có trong HTML cho người đọc và AI.
+export default function MermaidDiagram({ chart }: { chart: string }) {
+    const diagramId = `mermaid-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
+    const [svg, setSvg] = useState<string | null>(null);
+
+    useEffect(() => {
+        let isCancelled = false;
+
+        const renderDiagram = async () => {
+            try {
+                const { default: mermaid } = await import("mermaid");
+                mermaid.initialize({
+                    startOnLoad: false,
+                    securityLevel: "strict",
+                    theme: "neutral",
+                });
+                const result = await mermaid.render(diagramId, chart);
+                if (!isCancelled) setSvg(result.svg);
+            } catch (error) {
+                console.error("Cannot render mermaid diagram:", error);
+            }
+        };
+
+        void renderDiagram();
+        return () => {
+            isCancelled = true;
+        };
+    }, [chart, diagramId]);
+
+    if (svg === null) {
+        return (
+            <pre>
+                <code>{chart}</code>
+            </pre>
+        );
+    }
+
+    return (
+        <div
+            role="img"
+            aria-label="Diagram"
+            className="overflow-x-auto bg-white p-4"
+            dangerouslySetInnerHTML={{ __html: svg }}
+        />
+    );
+}

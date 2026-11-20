@@ -1,0 +1,59 @@
+import { Children, isValidElement, type ReactNode } from "react";
+import ReactMarkdown, { type Components } from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
+import MermaidDiagram from "@/features/portfolio/components/mermaid-diagram";
+
+const EXTERNAL_URL = /^https?:\/\//i;
+
+interface CodeElementProps {
+    className?: string;
+    children?: ReactNode;
+}
+
+// Tài liệu project viết cho GitHub: liên kết/ảnh tương đối (LICENSE, docs/*.png) không tồn tại trên site này,
+// nên chỉ giữ liên kết/ảnh tuyệt đối để không sinh liên kết gãy hay khung ảnh trống.
+const MARKDOWN_COMPONENTS: Components = {
+    a({ href, children }) {
+        if (!href) return <>{children}</>;
+        if (href.startsWith("#")) return <a href={href}>{children}</a>;
+        if (EXTERNAL_URL.test(href)) {
+            return (
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                    {children}
+                </a>
+            );
+        }
+        return <>{children}</>;
+    },
+    img({ src, alt }) {
+        if (typeof src !== "string" || !EXTERNAL_URL.test(src)) return null;
+        // eslint-disable-next-line @next/next/no-img-element -- ảnh ngoài, kích thước không biết trước
+        return <img src={src} alt={alt ?? ""} loading="lazy" className="h-auto max-w-full" />;
+    },
+    pre({ children }) {
+        const child = Children.toArray(children)[0];
+        if (isValidElement<CodeElementProps>(child)) {
+            const { className, children: codeChildren } = child.props;
+            if (className?.includes("language-mermaid")) {
+                const chart = Children.toArray(codeChildren).join("").trim();
+                return <MermaidDiagram chart={chart} />;
+            }
+        }
+        return <pre>{children}</pre>;
+    },
+};
+
+export default function MarkdownView({ source }: { source: string }) {
+    return (
+        <div className="doc">
+            <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={MARKDOWN_COMPONENTS}
+            >
+                {source}
+            </ReactMarkdown>
+        </div>
+    );
+}
