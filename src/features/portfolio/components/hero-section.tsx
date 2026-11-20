@@ -21,7 +21,7 @@ export default function HeroSection({
             className="bg-bg-main"
         >
             <div className="site-container grid min-h-[calc(100dvh-6.75rem)] items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-                <div className="hero-exit">
+                <div>
                     <p
                         data-enter
                         style={{ "--enter-index": 0 } as CSSProperties}
@@ -85,7 +85,7 @@ export default function HeroSection({
                     </div>
                 </div>
 
-                <div className="hero-drift mx-auto w-full max-w-md lg:max-w-lg">
+                <div className="mx-auto w-full max-w-md lg:max-w-lg">
                     <Image
                         src={PROFILE.portrait.src}
                         alt={hero.photoAlt}

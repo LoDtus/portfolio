@@ -357,60 +357,14 @@
     }
 }
 
-/* 6b. Hiệu ứng xuất hiện / biến mất khi cuộn: CSS scroll-driven animations (Baseline: Chrome/Edge 115, Safari 26, Firefox 159).
-   Chạy trên compositor, không cần JS và không chặn cuộn; trình duyệt cũ hoặc bật "giảm chuyển động" thì hiện nội dung bình thường.
-   Ưu tiên hiệu ứng VÀO (người xem thấy rõ), hạn chế hiệu ứng RA:
-   - Vào: tính theo vị trí ĐỈNH phần tử trên màn hình (range `cover`, không phụ thuộc chiều cao phần tử). Bắt đầu khi đỉnh còn
-     cách mép dưới --reveal-start, chạy trong --reveal-span, nên luôn xong khi đỉnh phần tử còn ở khoảng 60% chiều cao màn hình
-     trở xuống: phần giữa và trên của màn hình luôn hiện đủ, cả khi cuộn lên (chiều ngược lại của hiệu ứng vào cũng nằm gọn ở nửa dưới).
-   - Ra: chỉ bắt đầu khi phần tử đã trượt qua 80% (inset 4.5rem = chiều cao nav sticky), tức gần như đã khuất sau nav.
-   - Chỉ animate opacity/transform; backwards/forwards để trạng thái ẩn không "dính" lại giữa hai đầu. */
+/* 6b. Hiệu ứng xuất hiện khi cuộn, điều khiển theo TRẠNG THÁI bởi RevealObserver (IntersectionObserver):
+   - Phần tử chỉ bị ẩn đi (đặt lại) khi đã KHUẤT HẲN khỏi màn hình (phía trên nav hoặc phía dưới), nên người xem không bao giờ thấy hiệu ứng "ra".
+   - Mỗi lần phần tử quay lại màn hình (cuộn xuống hay cuộn ngược lên) thì hiệu ứng "vào" chạy lại.
+   - Lớp .reveal-js chỉ được thêm khi RevealObserver chạy (có JS, không bật "giảm chuyển động"): không JS, bot tìm kiếm hay in thì nội dung hiện bình thường.
+   - Hiện khi phần tử vào vùng nhìn thấy; chỉ ẩn lại khi đã cách màn hình hơn 100px (hai observer, xem RevealObserver); chỉ animate opacity/transform. */
 :root {
-    --reveal-start: 8vh; /* vào: bắt đầu khi đỉnh phần tử đã vượt mép dưới màn hình bấy nhiêu */
-    --reveal-span: 26vh; /* vào: quãng cuộn để hoàn tất hiệu ứng */
-    --reveal-out-start: 80%; /* ra: chỉ bắt đầu khi đã trượt qua bấy nhiêu % */
-}
-
-@keyframes reveal-in {
-    from {
-        opacity: 0;
-        transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 64px), 0)
-            rotate(var(--reveal-rotate, 0deg)) scale(var(--reveal-scale, 0.96));
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-@keyframes reveal-out {
-    to {
-        opacity: 0;
-        transform: translate3d(0, -28px, 0) scale(0.985);
-    }
-}
-
-@keyframes bar-grow {
-    from {
-        transform: scaleY(0);
-    }
-    to {
-        transform: none;
-    }
-}
-
-@keyframes hero-exit {
-    to {
-        opacity: 0;
-        transform: translate3d(0, -56px, 0);
-    }
-}
-
-@keyframes hero-drift {
-    to {
-        opacity: 0;
-        transform: translate3d(0, -90px, 0) scale(0.94);
-    }
+    --reveal-duration: 700ms;
+    --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Kiểu chuyển động của hiệu ứng vào */
@@ -432,18 +386,18 @@
     --reveal-rotate: -10deg;
 }
 
-/* So le giữa các phần tử cùng hàng: lùi điểm bắt đầu thêm một quãng cuộn nhỏ (theo chiều cao màn hình, để màn hình thấp không bị dồn) */
+/* So le giữa các phần tử cùng hàng: trễ thêm một chút (ms) trước khi bắt đầu */
 .reveal-d0 {
-    --reveal-delay: 0vh;
+    --reveal-delay: 0ms;
 }
 .reveal-d1 {
-    --reveal-delay: 1.5vh;
+    --reveal-delay: 70ms;
 }
 .reveal-d2 {
-    --reveal-delay: 3vh;
+    --reveal-delay: 140ms;
 }
 .reveal-d3 {
-    --reveal-delay: 4.5vh;
+    --reveal-delay: 210ms;
 }
 
 @media (max-width: 639px) {
@@ -458,51 +412,54 @@
     }
 }
 
-@supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-        .reveal {
-            animation:
-                reveal-in cubic-bezier(0.22, 1, 0.36, 1) backwards,
-                reveal-out linear forwards;
-            animation-timeline: view(block 4.5rem 0px), view(block 4.5rem 0px);
-            animation-range:
-                cover calc(var(--reveal-start) + var(--reveal-delay, 0vh))
-                    cover calc(var(--reveal-start) + var(--reveal-span) + var(--reveal-delay, 0vh)),
-                exit var(--reveal-out-start) exit 100%;
-        }
+@keyframes reveal-in {
+    from {
+        opacity: 0;
+        transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 64px), 0)
+            rotate(var(--reveal-rotate, 0deg)) scale(var(--reveal-scale, 0.96));
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
 
-        /* Vạch đứng bên cạnh tiêu đề "mọc" từ trên xuống, chậm hơn tiêu đề một nhịp */
-        .reveal-bar {
-            transform-origin: top;
-            animation: bar-grow cubic-bezier(0.22, 1, 0.36, 1) backwards;
-            animation-timeline: view(block 4.5rem 0px);
-            animation-range:
-                cover calc(var(--reveal-start) + 2vh)
-                cover calc(var(--reveal-start) + var(--reveal-span) + 2vh);
-        }
+@keyframes bar-grow {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: none;
+    }
+}
 
-        /* Hero đã hiện sẵn khi tải: chỉ có hiệu ứng ra, và chỉ khi đã cuộn qua 80% */
-        .hero-exit {
-            animation: hero-exit linear forwards;
-            animation-timeline: view(block 4.5rem 0px);
-            animation-range: exit var(--reveal-out-start) exit 100%;
-        }
-        .hero-drift {
-            animation: hero-drift linear forwards;
-            animation-timeline: view(block 4.5rem 0px);
-            animation-range: exit var(--reveal-out-start) exit 100%;
-        }
+/* Trạng thái ẩn CHỈ dùng opacity (không transform) để vị trí của phần tử không đổi giữa hai trạng thái;
+   nếu ẩn bằng transform thì IntersectionObserver (tính cả transform) sẽ làm phần tử bật tắt liên tục ở mép màn hình.
+   Hiệu ứng vào là animation chạy mỗi khi lớp .is-revealed được thêm lại. */
+@media (prefers-reduced-motion: no-preference) {
+    .reveal-js .reveal,
+    .reveal-js .reveal-bar {
+        opacity: 0;
+    }
+    .reveal-js .reveal.is-revealed {
+        opacity: 1;
+        animation: reveal-in var(--reveal-duration) var(--reveal-ease) var(--reveal-delay, 0ms) backwards;
+    }
+
+    /* Vạch đứng bên cạnh tiêu đề "mọc" từ trên xuống, chậm hơn tiêu đề một nhịp */
+    .reveal-js .reveal-bar.is-revealed {
+        opacity: 1;
+        transform-origin: top;
+        animation: bar-grow var(--reveal-duration) var(--reveal-ease) 120ms backwards;
     }
 }
 
 @media print {
     .reveal,
-    .reveal-bar,
-    .hero-exit,
-    .hero-drift {
-        animation: none !important;
+    .reveal-bar {
         opacity: 1 !important;
         transform: none !important;
+        transition: none !important;
     }
 }
 

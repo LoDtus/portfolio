@@ -5,6 +5,7 @@ import ExperienceSection from "@/features/portfolio/components/experience-sectio
 import HeroSection from "@/features/portfolio/components/hero-section";
 import InitialSectionScroller from "@/features/portfolio/components/initial-section-scroller";
 import ProjectsSection from "@/features/portfolio/components/projects-section";
+import RevealObserver from "@/features/portfolio/components/reveal-observer";
 import SiteFooter from "@/features/portfolio/components/site-footer";
 import SiteHeader from "@/features/portfolio/components/site-header";
 import SkillsSection from "@/features/portfolio/components/skills-section";
@@ -47,6 +48,8 @@ export default async function PortfolioPage({
             </main>
 
             <SiteFooter locale={locale} content={content} />
+
+            <RevealObserver key={locale} />
 
             <script
                 type="application/ld+json"

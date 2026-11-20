@@ -159,3 +159,13 @@ Giá trị `overflow` của `<body>` bị chuyển lên viewport nên không c�
 - Nguyên nhân: hiệu ứng vào tính theo `entry 50%` cộng 280px, nên với thẻ cao (Kinh nghiệm, ~890px) chỉ xong khi đỉnh thẻ lên tới ~26% màn hình; chip nhỏ cộng thêm trễ so le 70–210px.
 - Sửa: dùng range `cover` theo vị trí đỉnh phần tử, đơn vị `vh`: `--reveal-start: 8vh`, `--reveal-span: 26vh`, trễ so le 0 / 1.5 / 3 / 4.5vh. Hiệu ứng vào luôn xong khi đỉnh phần tử còn ở khoảng 62% chiều cao màn hình trở xuống. Hiệu ứng ra giữ nguyên (`exit 80%`).
 - Đã đo ở 1917x870, 1280x720, 390x844: 387 phần tử có đỉnh trong dải 30–58% màn hình đều đặc hoàn toàn; ở đáy trang không còn phần tử nào mờ.
+
+## Đổi: hiệu ứng xuất hiện theo trạng thái (không còn thấy hiệu ứng "ra")
+- Yêu cầu: nội dung chỉ biến mất sau khi đã scroll quá vị trí của nó (người dùng không còn thấy hiệu ứng "ra"); scroll quay lại thì hiệu ứng "vào" chạy lại.
+- Thay CSS scroll-driven animations (mục 6b `globals.css`) bằng `RevealObserver` (`reveal-observer.tsx`, gắn trong `portfolio-page.tsx`): hai `IntersectionObserver` lệch nhau.
+  - Observer "hiện": thêm `is-revealed` khi phần tử vào vùng nhìn thấy (dưới nav 64px, đỉnh phần tử lên cách mép dưới 8%) và hiệu ứng vào (`reveal-in`, `bar-grow`) chạy lại mỗi lần thêm lớp, cả khi quay lại từ phía trên.
+  - Observer "ẩn": gỡ `is-revealed` chỉ khi phần tử đã cách màn hình hơn 100px (kiểm tra lại vị trí thật trước khi ẩn vì hai observer gọi lại bất đồng bộ).
+- Trạng thái ẩn chỉ dùng `opacity` (không `transform`): `IntersectionObserver` tính cả transform nên ẩn bằng transform làm phần tử bật tắt ở mép màn hình.
+- Không JS, bot, in hoặc bật "giảm chuyển động": lớp `reveal-js` không được thêm nên nội dung hiện bình thường. Hero không còn hiệu ứng ra (cuộn qua bình thường).
+- Đã đo (desktop 1917x870, mobile 390x844, dev và build production): mọi lần ẩn đều cách màn hình tối thiểu 100px (0 lần ẩn khi đang hiện); không có phần tử nào trong vùng nhìn thấy mà bị ẩn (0/117 vị trí, cả xuống và lên); quay lại thì hiệu ứng vào chạy lại (opacity 0 đến 1).
+- Độ trễ chấp nhận được: cuộn rất nhanh khi cuộn ngược lên, phần tử có thể chậm 1–2 khung hình mới bắt đầu hiện (opacity 0 trong lúc đó, không nháy).
