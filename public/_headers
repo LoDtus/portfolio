@@ -1,0 +1,30 @@
+# Cloudflare Pages / Workers static assets: https://developers.cloudflare.com/pages/configuration/headers/
+# File này được Next.js chép nguyên vào out/ khi build.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cross-Origin-Opener-Policy: same-origin
+
+# Tệp có hash trong tên (JS, CSS, font): cache vĩnh viễn
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Logo, ảnh, tài liệu markdown: tên tệp không có hash nên chỉ cache 7 ngày
+/logo/*
+  Cache-Control: public, max-age=604800
+/images/*
+  Cache-Control: public, max-age=604800
+/markdown/*
+  Cache-Control: public, max-age=604800
+
+# Tệp mô tả cho công cụ tìm kiếm và AI: cho phép cache ngắn để cập nhật nhanh
+/llms.txt
+  Cache-Control: public, max-age=3600
+/robots.txt
+  Cache-Control: public, max-age=3600
+/sitemap.xml
+  Cache-Control: public, max-age=3600
