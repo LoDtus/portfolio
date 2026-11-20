@@ -1,0 +1,637 @@
+@import "tailwindcss";
+
+/* 1. Khai báo Custom Variant Dark Mode cho Tailwind v4 với next-themes */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 2. Design Tokens vào Tailwind v4 Engine (inline: biến được resolve tại chỗ dùng, nên theo được .dark) */
+@theme inline {
+    --color-bg-main: var(--bg-main);
+    --color-surface: var(--surface);
+    --color-muted: var(--surface-muted);
+    --color-text-main: var(--text-main);
+    --color-text-sub: var(--text-sub);
+    --color-heading: var(--heading);
+    --color-primary: var(--primary);
+    --color-border-main: var(--border-main);
+    --color-band: var(--band);
+    --color-band-deep: var(--band-deep);
+    --color-accent: var(--accent);
+    --color-accent-ink: var(--accent-ink);
+    --color-accent-strong: var(--accent-strong);
+
+    /* Bảng màu: xanh lá (rừng đậm, thông, lá, ô liu + sage vintage, mint nhạt) + terracotta làm màu nhấn */
+    --color-brand-forest: #14412b;
+    --color-brand-pine: #2f6b3f;
+    --color-brand-leaf: #4c9a5f;
+    --color-brand-olive: #8e9b4a;
+    --color-brand-sage: #a3b18a;
+    --color-brand-mint: #cfe3c8;
+    /* Màu nhấn thứ hai: terracotta (đất nung) và bản peach nhạt dùng trên nền xanh đậm */
+    --color-brand-terracotta: #b5472a;
+    --color-brand-peach: #f2a488;
+
+    --color-brand-success: #10b981;
+    --color-brand-warning: #f59e0b;
+    --color-brand-danger: #ef4444;
+
+    /* Manrope: nội dung (font phụ trợ chính thức của trường). Lexend: tiêu đề, thay cho Thang Long Sans (font riêng, không công khai). */
+    --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: var(--font-lexend), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* 3. Theme Variable Mapping & Color Scheme */
+:root {
+    color-scheme: light;
+    --bg-main: #ffffff;
+    --surface: #ffffff;
+    --surface-muted: #f4f7f3; /* nền thẻ trên nền trắng, xám-xanh rất nhạt */
+    --text-main: #1c211c; /* chữ đen (nội dung) */
+    --text-sub: #565b50;
+    --heading: #111611; /* chữ đen (tiêu đề, nav) */
+    --primary: #1f6b45; /* liên kết trong tài liệu: xanh lá */
+    --border-main: #dde4da;
+    --band: #14412b; /* nền xanh rừng đậm */
+    --band-deep: #0c2a1b;
+    --accent: #b5472a; /* terracotta: vạch, mốc timeline, hình khối */
+    --accent-ink: #b5472a; /* chữ nhấn trên nền sáng, đạt AA (4.8:1 trên nền trắng) */
+    --accent-strong: #b5472a; /* nền nút có chữ trắng, đạt AA (5.4:1) */
+    --notify-progress-fixed-color: red !important;
+}
+
+.dark {
+    color-scheme: dark;
+    --bg-main: #0e1a13;
+    --surface: #15261b;
+    --surface-muted: #1a2f22;
+    --text-main: #edf1e4;
+    --text-sub: #b3c2b4;
+    --heading: #f4f4ee;
+    --primary: #8fd3a0;
+    --border-main: #27402f;
+    --band: #14412b;
+    --band-deep: #08110c;
+    --accent: #d9684a; /* terracotta sáng hơn để nhìn rõ trên nền tối */
+    --accent-ink: #f2a488; /* chữ nhấn trên nền tối (7.9:1) */
+    --accent-strong: #b5472a;
+}
+
+/* 4. Base Styles & Overrides */
+@layer base {
+    html {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        scroll-behavior: smooth;
+        /* chừa chỗ cho thanh nav sticky khi cuộn tới #section */
+        scroll-padding-top: 5rem;
+        /* Giữ chỗ cho thanh cuộn: khi drawer mobile khóa cuộn (overflow: hidden) trang không bị giật ngang. */
+        scrollbar-gutter: stable;
+    }
+
+    /* Khi Lenis chạy, để Lenis quyết định độ mượt (tránh cuộn mượt hai lần) */
+    html.lenis {
+        scroll-behavior: auto;
+    }
+
+    /* Phần tử trượt ngang lúc xuất hiện có thể vượt mép màn hình: cắt tại <main> bằng clip (không phải hidden)
+       để không sinh thanh cuộn ngang, không tạo scroll container (timeline view() vẫn chạy) và không ảnh hưởng position: sticky.
+       Không đặt trên <body>: giá trị đó bị chuyển lên viewport nên không cắt được. */
+    main {
+        overflow-x: clip;
+    }
+
+    body {
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        word-spacing: 0.06em; /* Manrope có khoảng trắng hẹp ở cỡ chữ nhỏ */
+        /* 💡 Đã bỏ transition ở body để triệt tiêu lỗi nháy/chậm màu khi F5 trang */
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    :focus-visible {
+        outline: 3px solid var(--accent-ink);
+        outline-offset: 3px;
+    }
+
+    /* Hiệu ứng click/hover mượt mà cho Button */
+    button,
+    [type="button"],
+    [type="submit"] {
+        cursor: pointer;
+        transition:
+            background-color 150ms ease,
+            color 150ms ease,
+            border-color 150ms ease,
+            transform 150ms ease;
+    }
+
+    button:active,
+    [type="button"]:active,
+    [type="submit"]:active {
+        transform: scale(0.98);
+    }
+}
+
+/* 5. Layout, nút, hiệu ứng (ngôn ngữ thị giác của thanglong.edu.vn) */
+@utility site-container {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+
+    @media (min-width: 40rem) {
+        padding-inline: 1.5rem;
+    }
+    @media (min-width: 64rem) {
+        padding-inline: 2rem;
+    }
+}
+
+@layer components {
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 2rem; /* 12px 32px như nút của trường */
+        font-weight: 700;
+        line-height: 1.25;
+        border: 2px solid transparent;
+        border-radius: 0; /* nút vuông, không bo */
+        transition:
+            background-color 200ms ease,
+            color 200ms ease,
+            border-color 200ms ease,
+            transform 200ms ease;
+    }
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+    .btn:active {
+        transform: scale(0.98);
+    }
+    .btn-primary {
+        background-color: var(--accent-strong);
+        color: #ffffff;
+    }
+    .btn-primary:hover {
+        background-color: #983a20;
+    }
+    .btn-outline {
+        border-color: var(--heading);
+        color: var(--heading);
+    }
+    .btn-outline:hover {
+        background-color: var(--heading);
+        color: var(--bg-main);
+    }
+    /* Nút đặc trên nền xanh đậm (band) */
+    .btn-light {
+        background-color: #ddebd0;
+        color: #14412b;
+    }
+    .btn-light:hover {
+        background-color: #ffffff;
+    }
+    .btn-on-dark {
+        border-color: rgb(255 255 255 / 0.7);
+        color: #ffffff;
+    }
+    .btn-on-dark:hover {
+        background-color: #ffffff;
+        color: #14412b;
+    }
+
+    /* gạch chân vẽ dần khi hover/focus */
+    .link-draw {
+        background-image: linear-gradient(currentColor, currentColor);
+        background-repeat: no-repeat;
+        background-position: 0 100%;
+        background-size: 0 2px;
+        padding-bottom: 2px;
+        transition: background-size 250ms ease;
+    }
+    .link-draw:hover,
+    .link-draw:focus-visible,
+    .link-draw[aria-current="location"] {
+        background-size: 100% 2px;
+    }
+
+    .card-lift {
+        transition:
+            transform 200ms ease,
+            box-shadow 200ms ease;
+    }
+    .card-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px -12px rgb(20 65 43 / 0.3);
+    }
+
+    .skip-link {
+        position: absolute;
+        left: 1rem;
+        top: 0;
+        z-index: 100;
+        transform: translateY(-120%);
+        background-color: var(--accent-strong);
+        color: #ffffff;
+        padding: 0.75rem 1.25rem;
+        font-weight: 700;
+    }
+    .skip-link:focus {
+        transform: translateY(0.5rem);
+    }
+
+    /* Nội dung markdown của trang chi tiết project */
+    .doc {
+        color: var(--text-main);
+        line-height: 1.75;
+    }
+    .doc > * + * {
+        margin-top: 1.25rem;
+    }
+    .doc h1,
+    .doc h2,
+    .doc h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        color: var(--heading);
+        line-height: 1.2;
+    }
+    .doc h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+    }
+    .doc h2 {
+        font-size: 1.75rem;
+        margin-top: 2.5rem;
+        padding-left: 0.875rem;
+        border-left: 4px solid var(--accent);
+    }
+    .doc h3 {
+        font-size: 1.25rem;
+        margin-top: 2rem;
+    }
+    .doc a {
+        color: var(--primary);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+    .doc ul > li {
+        list-style: disc;
+        margin-left: 1.25rem;
+    }
+    .doc ol > li {
+        list-style: decimal;
+        margin-left: 1.25rem;
+    }
+    .doc code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.9em;
+        background-color: var(--surface);
+        border: 1px solid var(--border-main);
+        padding: 0.1em 0.35em;
+    }
+    .doc pre {
+        overflow-x: auto;
+        background-color: var(--surface);
+        border: 1px solid var(--border-main);
+        padding: 1rem;
+    }
+    .doc pre code {
+        background: none;
+        border: 0;
+        padding: 0;
+    }
+    .doc hr {
+        border: 0;
+        border-top: 1px solid var(--border-main);
+        margin-block: 2rem;
+    }
+    .doc table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .doc th,
+    .doc td {
+        border: 1px solid var(--border-main);
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+    }
+}
+
+/* Hiệu ứng vào trang: hero vào một lần khi tải; tile hình học lần lượt hiện ra */
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes tile-in {
+    from {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+[data-enter] {
+    animation: rise-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--enter-index, 0) * 90ms);
+}
+
+.mosaic-tile {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: tile-in 600ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--tile-index, 0) * 45ms + 150ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    [data-enter],
+    .mosaic-tile {
+        animation: none;
+    }
+    .btn,
+    .card-lift,
+    .link-draw {
+        transition: none;
+    }
+    .btn:hover,
+    .card-lift:hover {
+        transform: none;
+    }
+}
+
+/* 6b. Hiệu ứng xuất hiện / biến mất khi cuộn: CSS scroll-driven animations (Baseline: Chrome/Edge 115, Safari 26, Firefox 159).
+   Chạy trên compositor, không cần JS và không chặn cuộn; trình duyệt cũ hoặc bật "giảm chuyển động" thì hiện nội dung bình thường.
+   Ưu tiên hiệu ứng VÀO (người xem thấy rõ), hạn chế hiệu ứng RA:
+   - Vào: ẩn cho tới khi phần tử đã vào được 50% chiều cao của nó, rồi chạy trong --reveal-span (px cuộn) nên diễn ra
+     ở giữa màn hình thay vì sát mép dưới.
+   - Ra: chỉ bắt đầu khi phần tử đã trượt qua 80% (inset 4.5rem = chiều cao nav sticky), tức gần như đã khuất sau nav.
+   - Chỉ animate opacity/transform; backwards/forwards để trạng thái ẩn không "dính" lại giữa hai đầu. */
+:root {
+    --reveal-start: 50%; /* vào: bắt đầu khi phần tử đã vào được bấy nhiêu % */
+    --reveal-span: 280px; /* vào: quãng cuộn để hoàn tất hiệu ứng */
+    --reveal-out-start: 80%; /* ra: chỉ bắt đầu khi đã trượt qua bấy nhiêu % */
+}
+
+@keyframes reveal-in {
+    from {
+        opacity: 0;
+        transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 64px), 0)
+            rotate(var(--reveal-rotate, 0deg)) scale(var(--reveal-scale, 0.96));
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes reveal-out {
+    to {
+        opacity: 0;
+        transform: translate3d(0, -28px, 0) scale(0.985);
+    }
+}
+
+@keyframes bar-grow {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes hero-exit {
+    to {
+        opacity: 0;
+        transform: translate3d(0, -56px, 0);
+    }
+}
+
+@keyframes hero-drift {
+    to {
+        opacity: 0;
+        transform: translate3d(0, -90px, 0) scale(0.94);
+    }
+}
+
+/* Kiểu chuyển động của hiệu ứng vào */
+.reveal-left {
+    --reveal-x: -80px;
+    --reveal-y: 0px;
+}
+.reveal-right {
+    --reveal-x: 80px;
+    --reveal-y: 0px;
+}
+.reveal-zoom {
+    --reveal-y: 48px;
+    --reveal-scale: 0.88;
+}
+.reveal-pop {
+    --reveal-y: 40px;
+    --reveal-scale: 0.78;
+    --reveal-rotate: -10deg;
+}
+
+/* So le giữa các phần tử cùng hàng: lùi điểm bắt đầu thêm một quãng cuộn cố định (px) */
+.reveal-d0 {
+    --reveal-delay: 0px;
+}
+.reveal-d1 {
+    --reveal-delay: 70px;
+}
+.reveal-d2 {
+    --reveal-delay: 140px;
+}
+.reveal-d3 {
+    --reveal-delay: 210px;
+}
+
+@media (max-width: 639px) {
+    .reveal-left {
+        --reveal-x: -32px;
+    }
+    .reveal-right {
+        --reveal-x: 32px;
+    }
+    .reveal {
+        --reveal-y: 44px;
+    }
+}
+
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .reveal {
+            animation:
+                reveal-in cubic-bezier(0.22, 1, 0.36, 1) backwards,
+                reveal-out linear forwards;
+            animation-timeline: view(block 4.5rem 0px), view(block 4.5rem 0px);
+            animation-range:
+                entry calc(var(--reveal-start) + var(--reveal-delay, 0px))
+                    entry calc(var(--reveal-start) + var(--reveal-span) + var(--reveal-delay, 0px)),
+                exit var(--reveal-out-start) exit 100%;
+        }
+
+        /* Vạch đứng bên cạnh tiêu đề "mọc" từ trên xuống, chậm hơn tiêu đề một nhịp */
+        .reveal-bar {
+            transform-origin: top;
+            animation: bar-grow cubic-bezier(0.22, 1, 0.36, 1) backwards;
+            animation-timeline: view(block 4.5rem 0px);
+            animation-range:
+                entry calc(var(--reveal-start) + 60px)
+                entry calc(var(--reveal-start) + var(--reveal-span) + 60px);
+        }
+
+        /* Hero đã hiện sẵn khi tải: chỉ có hiệu ứng ra, và chỉ khi đã cuộn qua 80% */
+        .hero-exit {
+            animation: hero-exit linear forwards;
+            animation-timeline: view(block 4.5rem 0px);
+            animation-range: exit var(--reveal-out-start) exit 100%;
+        }
+        .hero-drift {
+            animation: hero-drift linear forwards;
+            animation-timeline: view(block 4.5rem 0px);
+            animation-range: exit var(--reveal-out-start) exit 100%;
+        }
+    }
+}
+
+@media print {
+    .reveal,
+    .reveal-bar,
+    .hero-exit,
+    .hero-drift {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* In CV: chỉ in nội dung, bỏ điều hướng */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* 6. Custom Utilities (Scrollbar) */
+@layer utilities {
+    .app-scrollbar::-webkit-scrollbar {
+        width: 8px;
+    }
+    .app-scrollbar::-webkit-scrollbar-track {
+        background: var(--bg-main);
+        margin-block: 2px;
+    }
+    .app-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--border-main);
+        border-radius: 9999px;
+        border: 2px solid var(--bg-main);
+        min-height: 80px;
+    }
+    .app-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: color-mix(in srgb, var(--text-main) 40%, transparent);
+    }
+
+    .border-debug {
+        border: 3px solid red;
+    }
+
+    .react-player video,
+    .react-player iframe {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+/* Mobile navigation drawer (see mobile-drawer.tsx). Transform is removed once the animation ends so that
+   `position: fixed` descendants (the theme-toggle circle) are positioned against the viewport again. */
+@keyframes drawer-slide-in {
+    from {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+@keyframes drawer-fade-in {
+    from {
+        opacity: 0;
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .drawer[open] .drawer-panel {
+        animation: drawer-slide-in 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .drawer[open]::backdrop {
+        animation: drawer-fade-in 280ms ease-out;
+    }
+}
+
+/* Slide ảnh trong mục Kinh nghiệm (Swiper): nút vuông, chấm hình thoi như mốc timeline. */
+.photo-swiper {
+    --swiper-theme-color: var(--accent-strong);
+    --swiper-navigation-size: 16px;
+    --swiper-navigation-color: var(--heading);
+    --swiper-navigation-sides-offset: 8px;
+    --swiper-pagination-bullet-width: 9px;
+    --swiper-pagination-bullet-height: 9px;
+    --swiper-pagination-bullet-border-radius: 0;
+    --swiper-pagination-bullet-inactive-color: #ffffff;
+    --swiper-pagination-bullet-inactive-opacity: 0.75;
+    --swiper-pagination-bullet-horizontal-gap: 5px;
+    --swiper-pagination-bottom: 10px;
+}
+/* Trước khi Swiper khởi tạo (HTML tĩnh), mỗi slide rộng đúng bằng lúc đã khởi tạo, để chiều cao trang không đổi
+   khi JS chạy (tránh dịch bố cục / CLS). Khoảng cách 12px và breakpoint 768px phải khớp SLIDE_GAP_PX, WIDE_BREAKPOINT_PX
+   trong experience-gallery.tsx; --photos-per-view do component đặt. */
+.photo-swiper:not(.swiper-initialized) .swiper-slide {
+    margin-right: 12px;
+}
+
+@media (min-width: 768px) {
+    .photo-swiper:not(.swiper-initialized) .swiper-slide {
+        width: calc((100% - (var(--photos-per-view, 1) - 1) * 12px) / var(--photos-per-view, 1));
+    }
+}
+
+.photo-swiper .swiper-button-prev,
+.photo-swiper .swiper-button-next {
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    background-color: var(--surface);
+    border: 1px solid var(--border-main);
+    box-shadow: 0 4px 12px -4px rgb(0 0 0 / 0.35);
+}
+/* Mũi tên: Swiper cho svg phủ kín nút, thu lại để nút vuông trông gọn. */
+.photo-swiper .swiper-button-prev svg,
+.photo-swiper .swiper-button-next svg {
+    width: 16px;
+    height: 16px;
+}
+/* Ở ảnh đầu / ảnh cuối thì ẩn hẳn nút tương ứng (đặt đủ độ ưu tiên để thắng CSS của Swiper). */
+.photo-swiper .swiper-button-prev.swiper-button-disabled,
+.photo-swiper .swiper-button-next.swiper-button-disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+.photo-swiper .swiper-pagination-bullet {
+    transform: rotate(45deg);
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
+}
