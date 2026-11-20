@@ -63,7 +63,10 @@ const eslintConfig = defineConfig([
         "dist/**",
         "node_modules/**",
         "next-env.d.ts",
-        "public/**"
+        "public/**",
+        // Cấu hình Claude Code và tài liệu thiết kế, không phải mã của ứng dụng
+        ".claude/**",
+        "workspace/**"
     ]),
 ]);
 
