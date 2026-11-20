@@ -47,7 +47,6 @@ const nextConfig: NextConfig = {
             "lucide-react",
             "framer-motion",
         ],
-        viewTransition: true,
     },
     images: {
         // Tối ưu hóa hình ảnh
