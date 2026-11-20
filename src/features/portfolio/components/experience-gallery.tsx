@@ -48,8 +48,17 @@ export default function ExperienceGallery({
         const container = containerRef.current;
         if (swiper === null || container === null) return undefined;
 
+        // Khi Swiper bị gỡ (ví dụ đổi ngôn ngữ làm trang mới thay trang cũ), nó tự destroy() và xóa module `autoplay`;
+        // gọi tiếp `swiper.autoplay.stop()` lúc đó sẽ ném lỗi và làm cả trang báo "This page couldn't load".
+        const stopAutoplay = () => {
+            if (!swiper.destroyed) swiper.autoplay.stop();
+        };
+        const startAutoplay = () => {
+            if (!swiper.destroyed) swiper.autoplay.start();
+        };
+
         // Swiper tự bắt đầu chạy ngay khi khởi tạo; dừng lại để ta quyết định lúc bắt đầu (lệch pha, đang hiện).
-        swiper.autoplay.stop();
+        stopAutoplay();
         if (!isAutoplay) return undefined;
 
         let timerId: number | undefined;
@@ -57,9 +66,9 @@ export default function ExperienceGallery({
             ([entry]) => {
                 window.clearTimeout(timerId);
                 if (entry?.isIntersecting) {
-                    timerId = window.setTimeout(() => swiper.autoplay.start(), offsetMs);
+                    timerId = window.setTimeout(startAutoplay, offsetMs);
                 } else {
-                    swiper.autoplay.stop();
+                    stopAutoplay();
                 }
             },
             { threshold: GALLERY_VISIBLE_THRESHOLD },
@@ -69,7 +78,7 @@ export default function ExperienceGallery({
         return () => {
             observer.disconnect();
             window.clearTimeout(timerId);
-            swiper.autoplay.stop();
+            stopAutoplay();
         };
     }, [swiper, isAutoplay, offsetMs]);
 
