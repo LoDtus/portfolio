@@ -1,0 +1,104 @@
+# CI/CD: kiểm tra (lint, kiểu, build, quét gói) trên mọi push và pull request; chỉ push vào main mới deploy lên Cloudflare
+# (Workers Static Assets, cấu hình trong wrangler.jsonc, tên miền portfolio.longvi.org).
+# Cần hai GitHub secret (Settings > Secrets and variables > Actions): CLOUDFLARE_API_TOKEN (mẫu "Edit Cloudflare Workers")
+# và CLOUDFLARE_ACCOUNT_ID. Chi tiết trong README mục "Triển khai".
+name: ci-cd
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Cùng một nhánh/PR thì hủy lượt cũ khi có lượt mới.
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Biến lúc build: được đóng vào HTML (canonical, sitemap, og:url). Không kèm cổng, không có dấu "/" cuối.
+  NEXT_PUBLIC_APP_URL: https://portfolio.longvi.org
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  verify:
+    name: Lint, type-check, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # next build tạo next-env.d.ts và kiểu của route nên phải chạy trước type-check; nó cũng tự kiểm tra kiểu.
+      - name: Build static site
+        run: npm run build
+
+      - name: Type-check
+        run: npm run type-check
+
+      # Chỉ chặn lỗ hổng mức cao trở lên trong gói chạy thật (không tính gói dev).
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Check build output
+        run: |
+          test -f out/vi.html
+          test -f out/en.html
+          test -f out/sitemap.xml
+          test -f out/robots.txt
+          test -f out/_headers
+
+      - name: Upload static site
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: out
+          retention-days: 7
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy to Cloudflare
+    needs: verify
+    # Chỉ khi push (hoặc chạy tay) trên main; PR không bao giờ deploy.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://portfolio.longvi.org
+    # Mỗi lượt deploy chạy lần lượt, không hủy giữa chừng.
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      # Cần wrangler.jsonc trong repo.
+      - uses: actions/checkout@v4
+
+      # Deploy đúng bản đã build và kiểm tra ở job trên, không build lại.
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: out
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.165.0"
+          command: deploy

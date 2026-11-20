@@ -1,0 +1,19 @@
+// Cloudflare Workers Static Assets: phục vụ thư mục `out/` (bản xuất tĩnh của Next.js) và gắn tên miền portfolio.longvi.org.
+// Không cần cổng: Cloudflare phục vụ qua HTTPS 443. Deploy: `npm run deploy:cloudflare` hoặc GitHub Actions (.github/workflows/ci-cd.yml).
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "portfolio",
+    "compatibility_date": "2026-11-20",
+    "assets": {
+        "directory": "./out",
+        // Dùng out/404.html cho đường dẫn không tồn tại.
+        "not_found_handling": "404-page",
+        // /vi/ chuyển về /vi (khớp trailingSlash: false trong next.config.ts, tránh trùng nội dung).
+        "html_handling": "drop-trailing-slash"
+    },
+    // Tạo bản ghi DNS và chứng chỉ HTTPS cho subdomain (zone longvi.org nằm trong cùng tài khoản).
+    "routes": [{ "pattern": "portfolio.longvi.org", "custom_domain": true }],
+    // Chỉ truy cập qua tên miền chính, không mở thêm địa chỉ *.workers.dev (tránh bản trùng nội dung).
+    "workers_dev": false,
+    "preview_urls": false
+}

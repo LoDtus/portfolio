@@ -35,6 +35,9 @@ next-env.d.ts
 *.pub
 *.key
 
+# Cloudflare Wrangler (cache và trạng thái cục bộ)
+.wrangler/
+
 # ==========================================
 # 4. LOGS & TEMPORARY FILES
 # ==========================================
