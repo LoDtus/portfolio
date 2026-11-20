@@ -1,7 +1,6 @@
 import type {
     ContactChannelFacts,
     ExperienceCompany,
-    MosaicVariant,
     NeutralSkillGroupId,
     ProjectLink,
     ProjectSlug,
@@ -162,7 +161,8 @@ export interface ProjectConfig {
     endedAt: string | null;
     links: readonly ProjectLink[];
     tech: readonly string[];
-    mosaic: MosaicVariant;
+    // Ảnh đại diện của dự án (đặt trong public/images/projects); null nghĩa là chưa có, thẻ dự án bỏ phần ảnh.
+    thumbnail: { src: string; width: number; height: number } | null;
 }
 
 // Thứ tự hiển thị do người dùng chốt (mới nhất trước).
@@ -195,7 +195,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "Docker Compose",
             "Claude Max",
         ],
-        mosaic: "alpha",
+        thumbnail: null,
     },
     {
         slug: "vinfastreev",
@@ -214,7 +214,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "Better Stack",
             "Telegram Bot",
         ],
-        mosaic: "beta",
+        thumbnail: null,
     },
     {
         slug: "affiliate-product-catalog",
@@ -236,7 +236,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "Docker",
             "Cloudflare Tunnel",
         ],
-        mosaic: "gamma",
+        thumbnail: null,
     },
     {
         slug: "city-incidents-management-system",
@@ -259,7 +259,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "WebSocket",
             "JWT",
         ],
-        mosaic: "hero",
+        thumbnail: null,
     },
 ];
 

@@ -9,7 +9,7 @@
 | Khối số liệu: ảnh trái, panel indigo phải, số lớn có đơn vị nhỏ | `education-section` |
 | Thẻ chương trình trên nền indigo, nhãn nhỏ + tiêu đề + "Xem thêm" đỏ | `skills-section` |
 | Nút đỏ vuông (không bo), padding 12×32, chữ đậm | `.btn-primary` |
-| Khối hình học (phần tư đường tròn, tam giác, vuông) indigo/xanh/đỏ | `geometric-mosaic` (hero, project, contact) |
+| ~~Khối hình học~~ đã bỏ (quá giống trang của trường); hero dùng ảnh chân dung, thẻ project chờ ảnh đại diện | `hero-section`, `project-card` |
 | Nền trắng ngà `#F5F5F7`, chữ đen/indigo | token `--bg-main` |
 
 Bản vẽ khối hình học là tự dựng, lấy cảm hứng từ ngôn ngữ hình học của brand, không dùng tài nguyên đồ họa của trường.
@@ -22,7 +22,7 @@ app/
   [locale]/          layout (html lang={locale}), page, education|experience|projects (route cũ), projects/[slug]
   sitemap.ts, robots.ts, llms.txt/route.ts
 features/portfolio/
-  components/        server: *-section, section-heading, geometric-mosaic, ...
+  components/        server: *-section, section-heading, ...
                      client: site-nav, locale-switcher, initial-section-scroller, mermaid-diagram
   constants/         sections, profile (dữ kiện không phụ thuộc ngôn ngữ), content-vi, content-en
   hooks/             use-scroll-spy

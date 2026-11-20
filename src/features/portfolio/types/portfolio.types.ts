@@ -47,9 +47,6 @@ export interface ProjectLink {
     url: string;
 }
 
-// Biến thể bố cục của khối hình học trang trí (không dùng ảnh cá nhân).
-export type MosaicVariant = "hero" | "alpha" | "beta" | "gamma";
-
 export interface Fact {
     value: string;
     label: string;

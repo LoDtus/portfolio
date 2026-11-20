@@ -1,5 +1,4 @@
 import ContactChannelCard from "@/features/portfolio/components/contact-channel-card";
-import GeometricMosaic from "@/features/portfolio/components/geometric-mosaic";
 import { CONTACT_CHANNELS } from "@/features/portfolio/constants/profile.constants";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
@@ -13,8 +12,8 @@ export default function ContactSection({ content }: { content: PortfolioContent 
             aria-labelledby="contact-title"
             className="bg-band py-20 text-white lg:py-28"
         >
-            <div className="site-container grid items-start gap-12 lg:grid-cols-[1.4fr_0.6fr]">
-                <div>
+            <div className="site-container">
+                <div className="max-w-4xl">
                     <div className="reveal reveal-left">
                         <div className="mb-8 flex items-stretch gap-4">
                             <span
@@ -50,12 +49,6 @@ export default function ContactSection({ content }: { content: PortfolioContent 
                         ))}
                     </ul>
                 </div>
-
-                <GeometricMosaic
-                    variant="gamma"
-                    rows={4}
-                    className="reveal reveal-pop reveal-d1 mx-auto hidden aspect-square w-full max-w-xs lg:block"
-                />
             </div>
         </section>
     );

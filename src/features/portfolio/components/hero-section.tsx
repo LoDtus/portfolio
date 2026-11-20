@@ -1,13 +1,11 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import GeometricMosaic from "@/features/portfolio/components/geometric-mosaic";
 import SectionLink from "@/features/portfolio/components/section-link";
 import { PROFILE } from "@/features/portfolio/constants/profile.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
 import type { Locale } from "@/shared/constants/i18n.constants";
 
-// Hero một mình trên màn hình đầu tiên. Bên phải là ảnh chân dung (đã có sẵn vòng tròn nền, đầu nhô ra khỏi vòng)
-// đặt đè lên khối hình học theo brand.
+// Hero một mình trên màn hình đầu tiên. Bên phải là ảnh chân dung (đã có sẵn vòng tròn nền, đầu nhô ra khỏi vòng).
 export default function HeroSection({
     locale,
     content,
@@ -87,20 +85,15 @@ export default function HeroSection({
                     </div>
                 </div>
 
-                <div className="hero-drift relative mx-auto aspect-square w-full max-w-md lg:max-w-none">
-                    <GeometricMosaic
-                        variant="hero"
-                        rows={4}
-                        className="absolute right-0 top-0 aspect-square w-[72%]"
-                    />
+                <div className="hero-drift mx-auto w-full max-w-md lg:max-w-lg">
                     <Image
                         src={PROFILE.portrait.src}
                         alt={hero.photoAlt}
                         width={PROFILE.portrait.width}
                         height={PROFILE.portrait.height}
                         priority
-                        sizes="(min-width: 1024px) 400px, 80vw"
-                        className="absolute bottom-0 left-0 h-auto w-[78%]"
+                        sizes="(min-width: 1024px) 512px, 90vw"
+                        className="h-auto w-full"
                     />
                 </div>
             </div>

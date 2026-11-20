@@ -1,4 +1,4 @@
-import GeometricMosaic from "@/features/portfolio/components/geometric-mosaic";
+import Image from "next/image";
 import ProjectLinks from "@/features/portfolio/components/project-links";
 import type { ProjectConfig } from "@/features/portfolio/constants/profile.constants";
 import type {
@@ -6,7 +6,7 @@ import type {
     ProjectText,
 } from "@/features/portfolio/types/portfolio.types";
 
-// Thẻ project: hình khối riêng (không cần ảnh chụp), tên, thời gian, mô tả, số thành viên và vai trò, công nghệ, liên kết.
+// Thẻ project: ảnh đại diện (nếu có), tên, thời gian, mô tả, số thành viên và vai trò, công nghệ, liên kết.
 // Phần nào chưa có dữ liệu (mô tả, thời gian) thì bỏ qua, không bịa nội dung.
 export default function ProjectCard({
     config,
@@ -19,13 +19,18 @@ export default function ProjectCard({
 }) {
     return (
         <article className="card-lift flex h-full flex-col border border-border-main bg-surface">
-            <div className="relative aspect-[2/1] overflow-hidden bg-bg-main">
-                <GeometricMosaic
-                    variant={config.mosaic}
-                    rows={2}
-                    className="absolute inset-0 h-full w-full"
-                />
-            </div>
+            {config.thumbnail === null ? null : (
+                <div className="relative aspect-[2/1] overflow-hidden bg-muted">
+                    <Image
+                        src={config.thumbnail.src}
+                        alt={text.name}
+                        width={config.thumbnail.width}
+                        height={config.thumbnail.height}
+                        sizes="(min-width: 768px) 560px, 100vw"
+                        className="size-full object-cover"
+                    />
+                </div>
+            )}
 
             <div className="flex flex-1 flex-col gap-5 p-6 lg:p-8">
                 <div className="space-y-3">

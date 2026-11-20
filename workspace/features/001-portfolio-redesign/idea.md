@@ -147,3 +147,9 @@ Giá trị `overflow` của `<body>` bị chuyển lên viewport nên không c�
 ## Cập nhật: ảnh chân dung ở hero
 - Hero dùng `public/images/me/me-001.avif` (800x897, nền trong suốt, có sẵn vòng tròn terracotta, đầu nhô ra khỏi vòng) đặt đè lên khối hình học (`hero-section.tsx`, dữ kiện ở `PROFILE.portrait`). Ảnh dùng `priority` vì là phần tử lớn trên màn hình đầu.
 - `hero.photoAlt` có bản vi/en. JSON-LD `Person.image` trỏ tới ảnh này. Ảnh gốc PNG ở `workspace/assets-source/images/me/` (không đưa lên git).
+
+## Cập nhật: bỏ khối hình học trang trí
+- Đã xóa `geometric-mosaic.tsx`, `mosaic.utils.ts`, kiểu `MosaicVariant`, trường `mosaic` của dự án và CSS `.mosaic-tile`/`tile-in`: họa tiết quá giống trang của Thăng Long.
+- Hero chỉ còn ảnh chân dung; mục Liên hệ bỏ cột họa tiết bên phải; thẻ dự án không còn dải họa tiết phía trên.
+- Thẻ dự án có chỗ cho ảnh đại diện: điền `thumbnail: { src, width, height }` cho dự án trong `PROJECTS` (`profile.constants.ts`, ảnh đặt ở `public/images/projects/`, tỉ lệ 2:1); để `null` thì thẻ không hiện ảnh.
+- Ảnh chia sẻ `public/og/og-image.jpg` vẽ lại với ảnh chân dung thay cho khối hình học.
