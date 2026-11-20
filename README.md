@@ -52,8 +52,11 @@ Dependabot (`.github/dependabot.yml`) mở PR cập nhật gói và action mỗi
    `CLOUDFLARE_API_TOKEN` và `CLOUDFLARE_ACCOUNT_ID`.
 4. **(Khuyến nghị)** Settings → Environments → `production` → bật *Required reviewers* nếu muốn duyệt tay trước khi lên web,
    và Settings → Branches → bảo vệ `main` (yêu cầu job `Lint, type-check, build` xanh trước khi merge).
-5. **Tên miền:** `portfolio.longvi.org` không được có bản ghi DNS khác (ví dụ CNAME trỏ tunnel) trước lần deploy đầu tiên;
-   Cloudflare tự tạo bản ghi và chứng chỉ khi deploy.
+5. **Tên miền:** `wrangler.jsonc` dùng *route trên zone* (`portfolio.longvi.org/*`, zone `longvi.org`): Worker nhận request tại mạng Cloudflare
+   trước máy chủ gốc, nên bản ghi DNS sẵn có của subdomain (đang proxy) được giữ nguyên, không cần sửa. Nếu muốn dọn, xóa bản ghi/tunnel cũ
+   rồi đổi sang `{ "pattern": "portfolio.longvi.org", "custom_domain": true }` (Cloudflare tự tạo bản ghi và chứng chỉ).
+
+Chưa thêm secret thì job deploy chỉ in cảnh báo và bỏ qua (kiểm tra vẫn chạy); lần đầu có thể deploy tay bằng `npm run deploy:cloudflare`.
 
 ### Deploy thủ công từ máy
 
