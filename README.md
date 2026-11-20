@@ -27,62 +27,61 @@ docker exec dev npm install
 
 Container chạy bằng root, nên nếu `npm install` làm đổi `package-lock.json` thì file đó trên máy bạn sẽ thuộc root. Chạy `npm install` trên máy (ngoài Docker) trước để cập nhật lock bằng đúng user của bạn.
 
-## Đưa lên Cloudflare Pages
+## Triển khai lên Cloudflare (CI/CD)
 
-Bản build tĩnh nằm ở `out/`. Có hai cách.
+Trang là bản xuất tĩnh (`output: "export"`), được phục vụ bằng **Cloudflare Workers Static Assets** tại `https://portfolio.longvi.org`.
+Không cần khai báo cổng: Cloudflare phục vụ qua HTTPS 443 (cổng 9200 trong `.env` chỉ dùng khi chạy dev trên máy).
+Cấu hình nằm ở `wrangler.jsonc` (thư mục `out/`, trang 404, tên miền).
 
-### Cách 1: kết nối Git (khuyên dùng, tự build khi push)
+### Quy trình tự động (`.github/workflows/ci-cd.yml`)
 
-1. Đẩy mã lên GitHub/GitLab.
-2. Cloudflare Dashboard → **Workers & Pages** → **Create application** → **Pages** → **Import an existing Git repository**.
-3. Cấu hình build:
+| Sự kiện | Việc chạy |
+|---|---|
+| Pull request vào `main` | `npm ci` → lint → build → type-check → `npm audit` (gói chạy thật, mức high) → kiểm tra đầu ra. Không deploy. |
+| Push vào `main` | Như trên, rồi deploy đúng bản đã build lên Cloudflare (môi trường `production`). |
+| Chạy tay (Actions → ci-cd → Run workflow) | Như push vào `main` nếu chọn nhánh `main`. |
 
-   | Mục | Giá trị |
-   |---|---|
-   | Framework preset | Next.js (Static HTML Export) |
-   | Build command | `npm run build` |
-   | Build output directory | `out` |
+Dependabot (`.github/dependabot.yml`) mở PR cập nhật gói và action mỗi tuần.
 
-4. Thêm biến môi trường (Settings → Variables and Secrets, **Production** và **Preview**). Phiên bản Node lấy từ `.node-version` (22), không cần đặt thêm:
+### Thiết lập một lần
 
-   | Biến | Giá trị | Ghi chú |
-   |---|---|---|
-   | `NEXT_PUBLIC_APP_URL` | `https://ten-mien-cua-ban` | **Bắt buộc**: dùng cho canonical, hreflang, sitemap, robots và JSON-LD. Thiếu thì dùng giá trị mặc định `https://longvi.org`. |
+1. **Tạo API token:** Cloudflare Dashboard → My Profile → API Tokens → Create Token → mẫu **Edit Cloudflare Workers**
+   (chọn đúng tài khoản và zone `longvi.org`). Sao chép token.
+2. **Lấy Account ID:** Workers & Pages → bên phải trang tổng quan.
+3. **Thêm vào GitHub:** repo → Settings → Secrets and variables → Actions → New repository secret:
+   `CLOUDFLARE_API_TOKEN` và `CLOUDFLARE_ACCOUNT_ID`.
+4. **(Khuyến nghị)** Settings → Environments → `production` → bật *Required reviewers* nếu muốn duyệt tay trước khi lên web,
+   và Settings → Branches → bảo vệ `main` (yêu cầu job `Lint, type-check, build` xanh trước khi merge).
+5. **Tên miền:** `portfolio.longvi.org` không được có bản ghi DNS khác (ví dụ CNAME trỏ tunnel) trước lần deploy đầu tiên;
+   Cloudflare tự tạo bản ghi và chứng chỉ khi deploy.
 
-5. **Save and Deploy**. Gắn tên miền riêng ở tab **Custom domains**.
-
-### Cách 2: tải thẳng thư mục out/ lên (không cần Git)
-
-```bash
-npm run build
-npx wrangler login                      # lần đầu
-npx wrangler pages deploy out --project-name portfolio
-# hoặc: npm run deploy:cloudflare
-```
-
-Nhớ đặt `NEXT_PUBLIC_APP_URL` **trước khi build** (build tĩnh nhúng giá trị này vào HTML):
+### Deploy thủ công từ máy
 
 ```bash
-NEXT_PUBLIC_APP_URL=https://ten-mien-cua-ban npm run build
+npx wrangler@4.165.0 login        # lần đầu
+npm run deploy:cloudflare         # build rồi deploy (đặt NEXT_PUBLIC_APP_URL=https://portfolio.longvi.org khi build)
 ```
+
+`NEXT_PUBLIC_APP_URL` được nhúng vào HTML lúc build (canonical, sitemap, og:url): không kèm cổng, không có dấu `/` cuối.
+Workflow đã đặt sẵn giá trị này; đổi tên miền thì sửa ở `.github/workflows/ci-cd.yml` và `wrangler.jsonc`.
 
 ### Những gì Cloudflare dùng sẵn trong repo
 
-- `public/_headers`: cache bất biến cho `/_next/static/*`, cache 7 ngày cho logo/ảnh, và các header bảo mật cơ bản. Được chép vào `out/_headers`.
-- `out/404.html`: Cloudflare Pages tự dùng làm trang 404.
-- URL sạch: `/vi` được phục vụ từ `vi.html`, nên không cần cấu hình thêm (đã đặt `trailingSlash: false`).
+- `public/_headers`: cache bất biến cho `/_next/static/*`, cache cho logo/ảnh, và các header bảo mật cơ bản. Được chép vào `out/_headers`.
+- `out/404.html`: dùng làm trang 404.
+- URL sạch: `/vi` được phục vụ từ `vi.html`; `/vi/` chuyển về `/vi` (`html_handling: drop-trailing-slash`).
 
 ### Lưu ý
 
 - Static export không có server: không dùng được API route, ISR, middleware. Toàn bộ nội dung đã được render sẵn lúc build.
-- Cloudflare hiện hướng dẫn site Next.js cần server sang Workers; với site tĩnh như thế này, Pages vẫn là đường đi được tài liệu chính thức hỗ trợ.
 - Chưa có CSP vì Next.js static export chèn script inline cho hydration; muốn thêm CSP nghiêm ngặt cần băm (hash) các script đó.
+- `Dockerfile` và `nginx.conf` chỉ dùng khi tự host; Cloudflare không dùng tới.
 
 ## Cấu trúc chính
 
 ```
 src/app/(root)/        "/" và /error/*
-src/app/[locale]/      trang theo ngôn ngữ (vi, en) + chi tiết project
+src/app/[locale]/      trang theo ngôn ngữ (vi, en)
 src/features/portfolio/ nội dung, section, dịch vụ SEO
 src/components/shared/ khung html, cuộn mượt, nút đổi giao diện
 public/_headers        header/cache cho Cloudflare
