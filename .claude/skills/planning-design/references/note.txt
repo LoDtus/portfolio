@@ -1,8 +1,0 @@
-#	File	Vai trò	Input bắt buộc	Output
-00	technical-feasibility.md (đổi tên từ project-discovery.md)	Giải quyết các Open Question mang tính kỹ thuật còn treo từ idea.md (chọn công nghệ, đánh giá phương án, spike rủi ro) — chỉ chạy khi cần, không phải feature nào cũng qua bước này	<feature>-idea.md	Cập nhật Assumptions/Open Questions trong idea.md; nếu nghiên cứu nặng, ghi thêm research.md (mới, optional) trong cùng folder feature
-01	system-modeling.md	Chỉ hành vi/luồng xử lý: user flow, activity diagram, sequence diagram	idea.md	diagrams/flow-*.mmd, diagrams/sequence-*.mmd
-02	database-design.md	Thiết kế schema và ERD (ERD sinh trực tiếp từ DBML để không lệch nguồn sự thật)	idea.md, output của bước 01 nếu cần	mongodb.md, postgresql.dbml, diagrams/erd-*.mmd
-03	data-modeling-review.md	Review pass sau khi có schema: chuẩn hoá, index, kiểu dữ liệu, rủi ro N+1 — không tạo file mới, chỉ soát & sửa trực tiếp output bước 02	Output bước 02	Cập nhật mongodb.md/postgresql.dbml
-04	api-design.md	Thiết kế contract — sinh có điều kiện, không bắt buộc đủ cả 3 loại	idea.md, output bước 02	interfaces/rest-api.yml và/hoặc event-api.yml và/hoặc socket-api.yml (tuỳ feature)
-05	threat-modeling.md	Phân tích sâu dựa trên cờ Data Sensitivity trong idea.md	idea.md, output bước 02–04	Ghi vào mục Rủi ro của README (bước 06), hoặc threat-model.md riêng nếu feature nhạy cảm cao
-06	feature-specification.md (file mới)	Tổng hợp cuối — biên soạn README.md: Overview, FR/BR, Actors, User Flow Summary, Technical Context, Dependencies, Acceptance Criteria (nháp), link tới toàn bộ artifact đã tạo	idea.md + toàn bộ output bước 01–05	README.md

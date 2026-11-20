@@ -69,9 +69,8 @@ ehthumbs.db
 # ==========================================
 # 7. CLAUDE CODE, PLAYWRIGHT & GHI CHÚ CÁ NHÂN
 # ==========================================
-# .claude/ và CLAUDE.md được đưa vào repo; chỉ bỏ phần cấu hình riêng của từng máy.
-.claude/settings.local.json
-.claude/worktrees/
+# Không đưa .claude/ (rules, skills, cài đặt Claude Code) vào repo; CLAUDE.md vẫn được commit.
+.claude/
 CLAUDE.local.md
 .playwright-mcp/
 
