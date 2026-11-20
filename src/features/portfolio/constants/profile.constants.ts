@@ -142,7 +142,19 @@ export const SKILL_ITEMS: Record<NeutralSkillGroupId, readonly string[]> = {
         "Cloudflare Workers",
         "Cloudflare Tunnel",
     ],
-    tools: ["Claude Code", "Cursor", "Firebase"],
+    tools: [
+        "Claude Code",
+        "Cursor",
+        "Firebase",
+        "Nas Synology",
+        "Postman",
+        "Figma",
+        "Microsoft Office",
+        "Adobe",
+        "CapCut",
+        "ElevenLabs",
+        "Google Flows",
+    ],
 };
 
 export const SKILL_GROUP_ORDER: readonly SkillGroupId[] = [
