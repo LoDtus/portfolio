@@ -29,6 +29,8 @@ export const PROFILE = {
     },
     // Logo thương hiệu của trang (đã có sẵn trong public/logo).
     logo: "/logo/longvi.svg",
+    // Ảnh chân dung đã tách nền, có sẵn vòng tròn terracotta phía sau (public/images/me).
+    portrait: { src: "/images/me/me-001.avif", width: 800, height: 897 },
 } as const;
 
 // Dữ kiện SEO dùng chung cho metadata, sitemap và dữ liệu có cấu trúc.

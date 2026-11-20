@@ -143,3 +143,7 @@ Giá trị `overflow` của `<body>` bị chuyển lên viewport nên không c�
 - Ảnh: ảnh kinh nghiệm cắt sẵn 16:10, 960px, AVIF (40–67 KB/ảnh); ảnh học vấn 1200px AVIF; logo đổi sang WebP và thu nhỏ; `public` từ ~3,7 MB còn ~0,57 MB. Ảnh gốc ở `workspace/assets-source/` (không deploy). Ảnh chia sẻ mạng xã hội: `public/og/og-image.jpg` (1200x630).
 - SEO: title/description theo ngôn ngữ, canonical + hreflang (gồm x-default), Open Graph + Twitter (kèm ảnh), robots meta (max-image-preview), JSON-LD `@graph` (WebSite, ProfilePage, Person, ItemList dự án), sitemap có hreflang tự tham chiếu + ảnh + `lastmod` theo `SEO.contentUpdatedAt`, robots.txt, manifest, themeColor, `llms.txt` đầy đủ (kỹ năng, kinh nghiệm, dự án, liên hệ), `_headers` (HSTS, cache), trang lỗi `noindex`.
 - Trang chi tiết dự án (`/[locale]/projects/[slug]`) đã cất vào `workspace/archive/project-detail-pages/` vì `output: "export"` không cho route động có `generateStaticParams()` rỗng; README trong đó nói cách khôi phục.
+
+## Cập nhật: ảnh chân dung ở hero
+- Hero dùng `public/images/me/me-001.avif` (800x897, nền trong suốt, có sẵn vòng tròn terracotta, đầu nhô ra khỏi vòng) đặt đè lên khối hình học (`hero-section.tsx`, dữ kiện ở `PROFILE.portrait`). Ảnh dùng `priority` vì là phần tử lớn trên màn hình đầu.
+- `hero.photoAlt` có bản vi/en. JSON-LD `Person.image` trỏ tới ảnh này. Ảnh gốc PNG ở `workspace/assets-source/images/me/` (không đưa lên git).

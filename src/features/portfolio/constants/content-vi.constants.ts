@@ -67,6 +67,7 @@ const CONTENT_VI: PortfolioContent = {
             "Công nghệ thông tin, Đại học Thăng Long (2021 – 2026). Làm việc với Next.js, React, NestJS, FastAPI; đóng gói bằng Docker và chạy trên Cloudflare.",
         primaryCta: "Xem dự án",
         secondaryCta: "Liên hệ",
+        photoAlt: "Chân dung Long Nguyen",
     },
     about: {
         title: "Giới thiệu",

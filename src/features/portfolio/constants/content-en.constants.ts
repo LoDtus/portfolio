@@ -67,6 +67,7 @@ const CONTENT_EN: PortfolioContent = {
             "Information Technology, Thang Long University (2021 – 2026). I work with Next.js, React, NestJS and FastAPI, package with Docker and run on Cloudflare.",
         primaryCta: "View projects",
         secondaryCta: "Contact",
+        photoAlt: "Portrait of Long Nguyen",
     },
     about: {
         title: "About",

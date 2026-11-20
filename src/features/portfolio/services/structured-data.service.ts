@@ -45,7 +45,7 @@ export function buildPersonJsonLd(
         jobTitle: content.meta.jobTitle,
         description: content.meta.description,
         url: pageUrl,
-        image: imageUrl,
+        image: `${siteUrl}${PROFILE.portrait.src}`,
         email: `mailto:${PROFILE.email}`,
         telephone: PROFILE.phoneE164,
         address: {

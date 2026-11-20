@@ -168,6 +168,7 @@ export interface PortfolioContent {
         summary: string;
         primaryCta: string;
         secondaryCta: string;
+        photoAlt: string;
     };
     about: {
         title: string;
