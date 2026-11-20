@@ -1,0 +1,35 @@
+services:
+  dev:
+    container_name: dev
+    profiles: ["dev"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - IS_DOCKER=true
+      - PORT=${PORT}
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run dev:docker
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
+
+  prod:
+    container_name: prod
+    profiles: ["prod"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "${PORT}:80"
+    environment:
+      - IS_DOCKER=true
+      - PORT=${PORT}
+    restart: always

@@ -1,0 +1,71 @@
+# ==========================================
+# 1. DEPENDENCIES & BUILD CACHES (CRITICAL)
+# ==========================================
+node_modules/
+.next/
+out/
+build/
+dist/
+.turbo/
+.cache/
+.eslintcache
+.npm/
+.yarn/
+.pnpm-store/
+
+# ==========================================
+# 2. BIẾN MÔI TRƯỜNG & SECRETS
+# ==========================================
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+
+# Security Keys
+*.pem
+*.pub
+*.key
+
+# ==========================================
+# 3. FILE RÁC HỆ ĐIỀU HÀNH & IDE
+# ==========================================
+.vscode/
+.idea/
+.history/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Ehthumbs.db
+Desktop.ini
+*.bak
+*.orig
+
+# ==========================================
+# 4. LOGS & TESTING
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+coverage/
+test-results/
+.jest/
+
+# ==========================================
+# 5. DOCKER & DEPLOYMENT FILES
+# ==========================================
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+Makefile
+.git/
+.gitignore
