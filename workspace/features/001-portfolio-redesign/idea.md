@@ -153,3 +153,9 @@ Giá trị `overflow` của `<body>` bị chuyển lên viewport nên không c�
 - Hero chỉ còn ảnh chân dung; mục Liên hệ bỏ cột họa tiết bên phải; thẻ dự án không còn dải họa tiết phía trên.
 - Thẻ dự án có chỗ cho ảnh đại diện: điền `thumbnail: { src, width, height }` cho dự án trong `PROJECTS` (`profile.constants.ts`, ảnh đặt ở `public/images/projects/`, tỉ lệ 2:1); để `null` thì thẻ không hiện ảnh.
 - Ảnh chia sẻ `public/og/og-image.jpg` vẽ lại với ảnh chân dung thay cho khối hình học.
+
+## Sửa: hiệu ứng vào kéo dài quá sâu vào giữa màn hình
+- Triệu chứng: cuộn xuống thấy chip/thẻ ở nửa dưới còn mờ và nghiêng; cuộn lên thì phần tử mờ đi ngay khi vừa qua tâm màn hình (trông như hiệu ứng "ra" bắt đầu quá sớm, thực ra là hiệu ứng "vào" chạy ngược).
+- Nguyên nhân: hiệu ứng vào tính theo `entry 50%` cộng 280px, nên với thẻ cao (Kinh nghiệm, ~890px) chỉ xong khi đỉnh thẻ lên tới ~26% màn hình; chip nhỏ cộng thêm trễ so le 70–210px.
+- Sửa: dùng range `cover` theo vị trí đỉnh phần tử, đơn vị `vh`: `--reveal-start: 8vh`, `--reveal-span: 26vh`, trễ so le 0 / 1.5 / 3 / 4.5vh. Hiệu ứng vào luôn xong khi đỉnh phần tử còn ở khoảng 62% chiều cao màn hình trở xuống. Hiệu ứng ra giữ nguyên (`exit 80%`).
+- Đã đo ở 1917x870, 1280x720, 390x844: 387 phần tử có đỉnh trong dải 30–58% màn hình đều đặc hoàn toàn; ở đáy trang không còn phần tử nào mờ.

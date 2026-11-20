@@ -360,13 +360,14 @@
 /* 6b. Hiệu ứng xuất hiện / biến mất khi cuộn: CSS scroll-driven animations (Baseline: Chrome/Edge 115, Safari 26, Firefox 159).
    Chạy trên compositor, không cần JS và không chặn cuộn; trình duyệt cũ hoặc bật "giảm chuyển động" thì hiện nội dung bình thường.
    Ưu tiên hiệu ứng VÀO (người xem thấy rõ), hạn chế hiệu ứng RA:
-   - Vào: ẩn cho tới khi phần tử đã vào được 50% chiều cao của nó, rồi chạy trong --reveal-span (px cuộn) nên diễn ra
-     ở giữa màn hình thay vì sát mép dưới.
+   - Vào: tính theo vị trí ĐỈNH phần tử trên màn hình (range `cover`, không phụ thuộc chiều cao phần tử). Bắt đầu khi đỉnh còn
+     cách mép dưới --reveal-start, chạy trong --reveal-span, nên luôn xong khi đỉnh phần tử còn ở khoảng 60% chiều cao màn hình
+     trở xuống: phần giữa và trên của màn hình luôn hiện đủ, cả khi cuộn lên (chiều ngược lại của hiệu ứng vào cũng nằm gọn ở nửa dưới).
    - Ra: chỉ bắt đầu khi phần tử đã trượt qua 80% (inset 4.5rem = chiều cao nav sticky), tức gần như đã khuất sau nav.
    - Chỉ animate opacity/transform; backwards/forwards để trạng thái ẩn không "dính" lại giữa hai đầu. */
 :root {
-    --reveal-start: 50%; /* vào: bắt đầu khi phần tử đã vào được bấy nhiêu % */
-    --reveal-span: 280px; /* vào: quãng cuộn để hoàn tất hiệu ứng */
+    --reveal-start: 8vh; /* vào: bắt đầu khi đỉnh phần tử đã vượt mép dưới màn hình bấy nhiêu */
+    --reveal-span: 26vh; /* vào: quãng cuộn để hoàn tất hiệu ứng */
     --reveal-out-start: 80%; /* ra: chỉ bắt đầu khi đã trượt qua bấy nhiêu % */
 }
 
@@ -431,18 +432,18 @@
     --reveal-rotate: -10deg;
 }
 
-/* So le giữa các phần tử cùng hàng: lùi điểm bắt đầu thêm một quãng cuộn cố định (px) */
+/* So le giữa các phần tử cùng hàng: lùi điểm bắt đầu thêm một quãng cuộn nhỏ (theo chiều cao màn hình, để màn hình thấp không bị dồn) */
 .reveal-d0 {
-    --reveal-delay: 0px;
+    --reveal-delay: 0vh;
 }
 .reveal-d1 {
-    --reveal-delay: 70px;
+    --reveal-delay: 1.5vh;
 }
 .reveal-d2 {
-    --reveal-delay: 140px;
+    --reveal-delay: 3vh;
 }
 .reveal-d3 {
-    --reveal-delay: 210px;
+    --reveal-delay: 4.5vh;
 }
 
 @media (max-width: 639px) {
@@ -465,8 +466,8 @@
                 reveal-out linear forwards;
             animation-timeline: view(block 4.5rem 0px), view(block 4.5rem 0px);
             animation-range:
-                entry calc(var(--reveal-start) + var(--reveal-delay, 0px))
-                    entry calc(var(--reveal-start) + var(--reveal-span) + var(--reveal-delay, 0px)),
+                cover calc(var(--reveal-start) + var(--reveal-delay, 0vh))
+                    cover calc(var(--reveal-start) + var(--reveal-span) + var(--reveal-delay, 0vh)),
                 exit var(--reveal-out-start) exit 100%;
         }
 
@@ -476,8 +477,8 @@
             animation: bar-grow cubic-bezier(0.22, 1, 0.36, 1) backwards;
             animation-timeline: view(block 4.5rem 0px);
             animation-range:
-                entry calc(var(--reveal-start) + 60px)
-                entry calc(var(--reveal-start) + var(--reveal-span) + 60px);
+                cover calc(var(--reveal-start) + 2vh)
+                cover calc(var(--reveal-start) + var(--reveal-span) + 2vh);
         }
 
         /* Hero đã hiện sẵn khi tải: chỉ có hiệu ứng ra, và chỉ khi đã cuộn qua 80% */
