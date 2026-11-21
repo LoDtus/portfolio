@@ -28,7 +28,7 @@ export default function ThemeToggle() {
     if (!isMounted) {
         return (
             <div
-                className="w-9 h-9 rounded-lg border border-border-main bg-bg-main animate-pulse"
+                className="size-[38px] rounded-lg border border-border-main bg-bg-main animate-pulse"
                 aria-hidden="true"
             />
         );
