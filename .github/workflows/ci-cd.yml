@@ -10,6 +10,10 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  # Build và deploy lại mỗi tháng (ngày 1, 03:00 UTC) dù không có commit: trang tĩnh chứa nội dung tính lúc build
+  # (số năm "hơn/gần N năm" của trường, liên kết ngành học còn hay mất, năm ở chân trang) nên cần làm mới định kỳ.
+  schedule:
+    - cron: "0 3 1 * *"
 
 permissions:
   contents: read

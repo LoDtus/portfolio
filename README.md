@@ -30,7 +30,7 @@ Container chạy bằng root, nên nếu `npm install` làm đổi `package-lock
 ## Triển khai lên Cloudflare (CI/CD)
 
 Trang là bản xuất tĩnh (`output: "export"`), được phục vụ bằng **Cloudflare Workers Static Assets** tại `https://portfolio.longvi.org`.
-Không cần khai báo cổng: Cloudflare phục vụ qua HTTPS 443 (cổng 9200 trong `.env` chỉ dùng khi chạy dev trên máy).
+Không cần khai báo cổng: Cloudflare phục vụ qua HTTPS 443 (cổng 21000 trong `.env` chỉ dùng khi chạy dev trên máy).
 Cấu hình nằm ở `wrangler.jsonc` (thư mục `out/`, trang 404, tên miền).
 
 ### Quy trình tự động (`.github/workflows/ci-cd.yml`)
