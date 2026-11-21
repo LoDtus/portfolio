@@ -3,6 +3,7 @@ import type {
     ExperienceCompany,
     NeutralSkillGroupId,
     ProjectLink,
+    ReferenceFacts,
     ProjectSlug,
     SkillGroupId,
 } from "@/features/portfolio/types/portfolio.types";
@@ -35,10 +36,11 @@ export const PROFILE = {
 // Dữ kiện SEO dùng chung cho metadata, sitemap và dữ liệu có cấu trúc.
 export const SEO = {
     // Ngày cập nhật nội dung gần nhất ("YYYY-MM-DD"); sửa nội dung trang thì nhớ đổi ngày này (dùng cho sitemap và dateModified).
-    contentUpdatedAt: "2026-11-20",
+    contentUpdatedAt: "2026-11-21",
     // Ảnh chia sẻ mạng xã hội 1200x630 (JPEG vì Facebook/Zalo không đọc ổn định AVIF/WebP).
     ogImage: { path: "/og/og-image.jpg", width: 1200, height: 630 },
-    alternateName: "LoDtus",
+    // Tên khác của chủ trang: biệt danh và tên đầy đủ có dấu (để tìm theo tên tiếng Việt).
+    alternateNames: ["LoDtus", "Nguyễn Trung Long"],
     knowsLanguage: ["vi", "en"],
 } as const;
 
@@ -112,15 +114,67 @@ export const SAME_AS_URLS: readonly string[] = [
 export const EDUCATION = {
     schoolName: "Thang Long University",
     schoolUrl: "https://thanglong.edu.vn",
+    // Liên kết ngành học; nếu trang này không còn (404/410) thì nút "Xem ngành học" dùng `schoolUrl` (xem education-link.service.ts).
     majorUrl: "https://thanglong.edu.vn/vi/nganh-hoc/cong-nghe-thong-tin",
+    // Năm thành lập trường, dùng để tính "hơn/gần N năm" theo năm hiện tại.
+    foundedYear: 1988,
     startYear: 2021,
     endYear: 2026,
     gpa: "3.2",
     gpaScale: "4",
     // Logo dùng nguyên bản, không biến dạng, đặt trên nền trắng (brand.thanglong.edu.vn/logo).
     logoColor: "/logo/thang-long-university.webp",
-    photo: "/images/education/thang-long-graduation.avif",
+    // Các ảnh của trường (slide, mỗi lần một ảnh). Ảnh nguồn nằm trong workspace/assets-source/images/education.
+    photos: [
+        { src: "/images/education/thang-long-graduation.avif", width: 1200, height: 848, position: "50% 30%" },
+        { src: "/images/education/thang-long-computer-lab.avif", width: 1200, height: 800 },
+        { src: "/images/education/thang-long-study-group.avif", width: 1200, height: 800 },
+    ],
 } as const;
+
+// Thông tin người tham chiếu. Ảnh, đơn vị công tác và liên hệ sẽ bổ sung sau; trường null thì giao diện bỏ qua.
+export const REFERENCES: readonly ReferenceFacts[] = [
+    {
+        id: "nguyen-huy-toan",
+        name: "Nguyễn Huy Toán",
+        organization: null,
+        photo: null,
+        email: null,
+        phoneE164: null,
+        phoneDisplay: null,
+    },
+    {
+        id: "tran-tien-quan",
+        name: "Trần Tiến Quân",
+        organization: null,
+        photo: null,
+        email: null,
+        phoneE164: null,
+        phoneDisplay: null,
+    },
+];
+
+// Dải thông tin liên hệ nhanh phía trên header, theo thứ tự hiển thị. Số điện thoại viết liền như yêu cầu.
+export const TOP_BAR_ITEMS = [
+    {
+        id: "phone",
+        value: PROFILE.phoneDisplay.replace(/\s/g, ""),
+        href: `tel:${PROFILE.phoneE164}`,
+    },
+    {
+        id: "email",
+        value: PROFILE.email,
+        href: `mailto:${PROFILE.email}`,
+    },
+    {
+        id: "address",
+        value: PROFILE.address.display,
+        href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(PROFILE.address.display)}`,
+    },
+] as const;
+
+// Tên hiển thị của gói dịch vụ Cloudflare đã dùng (gộp Tunnel, Workers, Pages, R2); tech-links.constants.ts dùng lại đúng chuỗi này.
+export const CLOUDFLARE_ECOSYSTEM = "Cloudflare ecosystem (Tunnel, Workers, Pages, R2)";
 
 // Danh sách công nghệ theo nhóm. Kỹ năng mềm có chữ theo ngôn ngữ nên nằm trong `skills.softSkills` của nội dung.
 export const SKILL_ITEMS: Record<NeutralSkillGroupId, readonly string[]> = {
@@ -138,22 +192,20 @@ export const SKILL_ITEMS: Record<NeutralSkillGroupId, readonly string[]> = {
         "Docker",
         "Docker Compose",
         "Nginx",
-        "Cloudflare Pages",
-        "Cloudflare Workers",
-        "Cloudflare Tunnel",
+        CLOUDFLARE_ECOSYSTEM,
     ],
     tools: [
-        "Claude Code",
+        "Claude Code (Max)",
         "Cursor",
         "Firebase",
-        "Nas Synology",
+        "Synology NAS",
         "Postman",
         "Figma",
         "Microsoft Office",
         "Adobe",
         "CapCut",
+        "Google Flow",
         "ElevenLabs",
-        "Google Flows",
     ],
 };
 
@@ -194,7 +246,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "Tailwind CSS",
             "Redux",
             "REST API",
-            "Socket.io",
+            "Socket.IO",
             "Claude API",
             "PostGIS",
             "Vietmap API",
@@ -362,7 +414,7 @@ export const IRDOP: ExperienceCompany = {
                 "Gemini AI",
                 "PostgreSQL",
                 "Docker",
-                "NAS Synology",
+                "Synology NAS",
                 "Cloudflare",
                 "Frigate",
                 "Cursor",

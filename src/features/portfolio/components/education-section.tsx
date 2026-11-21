@@ -1,12 +1,24 @@
 import Image from "next/image";
+import CountUp from "@/features/portfolio/components/count-up";
+import EducationSlider from "@/features/portfolio/components/education-slider";
+import HighlightedText from "@/features/portfolio/components/highlighted-text";
 import SectionHeading from "@/features/portfolio/components/section-heading";
 import { EDUCATION } from "@/features/portfolio/constants/profile.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
+import { attachPhotoAlts } from "@/features/portfolio/utils/experience.utils";
 
 // Khối số liệu theo thanglong.edu.vn ("Những con số ấn tượng"): ảnh bên trái, panel indigo bên phải.
 // Logo dùng nguyên bản (bản màu) trên nền trắng, rộng 140px, có vùng an toàn xung quanh (tối thiểu theo cẩm nang là 60px).
-export default function EducationSection({ content }: { content: PortfolioContent }) {
+// `programUrl` là địa chỉ nút "Xem ngành học" đã kiểm tra lúc build (xem resolveProgramUrl): trang ngành học, hoặc trang chủ của trường nếu trang đó không còn.
+export default function EducationSection({
+    content,
+    programUrl,
+}: {
+    content: PortfolioContent;
+    programUrl: string;
+}) {
     const { education } = content;
+    const photos = attachPhotoAlts(EDUCATION.photos, education.photoAlts);
 
     return (
         <section
@@ -23,15 +35,7 @@ export default function EducationSection({ content }: { content: PortfolioConten
                 />
 
                 <div className="grid border border-border-main lg:grid-cols-2">
-                    <div className="reveal reveal-left relative min-h-72 lg:min-h-[30rem]">
-                        <Image
-                            src={EDUCATION.photo}
-                            alt={education.photoAlt}
-                            fill
-                            sizes="(min-width: 1024px) 50vw, 100vw"
-                            className="object-cover object-[50%_30%]"
-                        />
-                    </div>
+                    <EducationSlider photos={photos} labels={content.experience.gallery} />
 
                     <div className="reveal reveal-right reveal-d1 flex flex-col justify-between gap-10 bg-band p-8 text-white lg:p-12">
                         <div className="space-y-6">
@@ -66,7 +70,9 @@ export default function EducationSection({ content }: { content: PortfolioConten
                                     {education.periodLabel}
                                 </dt>
                                 <dd className="font-display text-2xl font-bold lg:text-3xl">
-                                    {EDUCATION.startYear} – {EDUCATION.endYear}
+                                    <CountUp
+                                        value={`${EDUCATION.startYear} – ${EDUCATION.endYear}`}
+                                    />
                                 </dd>
                             </div>
                             <div className="reveal reveal-zoom reveal-d2 flex flex-col-reverse bg-band py-5 sm:p-5">
@@ -74,7 +80,7 @@ export default function EducationSection({ content }: { content: PortfolioConten
                                     {education.gpaLabel}
                                 </dt>
                                 <dd className="font-display text-2xl font-bold lg:text-3xl">
-                                    {EDUCATION.gpa}
+                                    <CountUp value={EDUCATION.gpa} />
                                     <span className="text-lg text-white/70">
                                         {" "}/ {EDUCATION.gpaScale}
                                     </span>
@@ -83,9 +89,14 @@ export default function EducationSection({ content }: { content: PortfolioConten
                         </dl>
 
                         <div className="space-y-6">
-                            <p className="leading-7 text-white/80">{education.summary}</p>
+                            <p className="leading-7 text-white/80">
+                                <HighlightedText
+                                    text={education.summary}
+                                    phrases={[education.summaryHighlight]}
+                                />
+                            </p>
                             <a
-                                href={EDUCATION.majorUrl}
+                                href={programUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-light"

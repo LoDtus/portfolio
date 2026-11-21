@@ -34,14 +34,17 @@ export function buildPersonJsonLd(
     const pageUrl = `${siteUrl}/${content.locale}`;
     const personId = `${siteUrl}/#person`;
     const websiteId = `${siteUrl}/#website`;
-    const knowsAbout = NEUTRAL_GROUPS.flatMap((group) => SKILL_ITEMS[group]);
+    // Bỏ phần chú thích trong ngoặc ("Claude Code (Max)" -> "Claude Code") để tên gọn như người ta tìm kiếm.
+    const knowsAbout = NEUTRAL_GROUPS.flatMap((group) => SKILL_ITEMS[group]).map(
+        (name) => name.replace(/\s*\(.*\)$/, ""),
+    );
     const imageUrl = `${siteUrl}${SEO.ogImage.path}`;
 
     const person: JsonLdNode = {
         "@type": "Person",
         "@id": personId,
         name: PROFILE.name,
-        alternateName: SEO.alternateName,
+        alternateName: SEO.alternateNames,
         jobTitle: content.meta.jobTitle,
         description: content.meta.description,
         url: pageUrl,

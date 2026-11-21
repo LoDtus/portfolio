@@ -5,12 +5,15 @@ import ExperienceSection from "@/features/portfolio/components/experience-sectio
 import HeroSection from "@/features/portfolio/components/hero-section";
 import InitialSectionScroller from "@/features/portfolio/components/initial-section-scroller";
 import ProjectsSection from "@/features/portfolio/components/projects-section";
+import ReferencesSection from "@/features/portfolio/components/references-section";
 import RevealObserver from "@/features/portfolio/components/reveal-observer";
+import SpotlightEffect from "@/features/portfolio/components/spotlight-effect";
 import SiteFooter from "@/features/portfolio/components/site-footer";
 import SiteHeader from "@/features/portfolio/components/site-header";
 import SkillsSection from "@/features/portfolio/components/skills-section";
 import { MAIN_CONTENT_ID } from "@/features/portfolio/constants/sections.constants";
 import { getPortfolioContent } from "@/features/portfolio/services/content.service";
+import { resolveProgramUrl } from "@/features/portfolio/services/education-link.service";
 import {
     buildPersonJsonLd,
     serializeJsonLd,
@@ -30,6 +33,7 @@ export default async function PortfolioPage({
 }) {
     const content = getPortfolioContent(locale);
     const jsonLd = serializeJsonLd(buildPersonJsonLd(content, getSiteUrl()));
+    const programUrl = await resolveProgramUrl();
 
     return (
         <>
@@ -41,15 +45,18 @@ export default async function PortfolioPage({
                     <AboutSection content={content} />
                 </div>
                 <SkillsSection content={content} />
-                <EducationSection content={content} />
+                <EducationSection content={content} programUrl={programUrl} />
                 <ExperienceSection content={content} />
                 <ProjectsSection content={content} />
+                <ReferencesSection content={content} />
                 <ContactSection content={content} />
             </main>
 
             <SiteFooter locale={locale} content={content} />
 
             <RevealObserver key={locale} />
+            <SpotlightEffect />
+            <div aria-hidden="true" className="scroll-progress no-print" />
 
             <script
                 type="application/ld+json"

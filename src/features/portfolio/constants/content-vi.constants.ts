@@ -12,8 +12,21 @@ import {
     attachProjectTexts,
 } from "@/features/portfolio/utils/experience.utils";
 import { formatMonthRange } from "@/features/portfolio/utils/period.utils";
+import { describeSchoolAge } from "@/features/portfolio/utils/school-age.utils";
 
 const PRESENT = "nay";
+
+// "hơn 40 năm" / "gần 50 năm" / "40 năm", tính theo năm hiện tại lúc build (xem describeSchoolAge).
+function schoolAgePhrase(): string {
+    const { qualifier, years } = describeSchoolAge(
+        EDUCATION.foundedYear,
+        new Date().getFullYear(),
+    );
+    if (qualifier === "over") return `hơn ${years} năm`;
+    if (qualifier === "nearly") return `gần ${years} năm`;
+    return `${years} năm`;
+}
+const SCHOOL_AGE = schoolAgePhrase();
 
 // Thời gian của một dự án cá nhân theo thứ tự khai báo trong PROJECTS.
 function projectPeriod(index: number): string | null {
@@ -31,7 +44,7 @@ const CONTENT_VI: PortfolioContent = {
         jobTitle: "Lập trình viên Fullstack",
     },
     ui: {
-        tagline: "Portfolio",
+        topBarLabel: "Thông tin liên hệ nhanh",
         skipToContent: "Bỏ qua điều hướng, tới nội dung chính",
         navLabel: "Điều hướng chính",
         menuOpen: "Mở menu",
@@ -55,11 +68,13 @@ const CONTENT_VI: PortfolioContent = {
         education: "Học vấn",
         experience: "Kinh nghiệm",
         projects: "Dự án",
+        references: "Tham chiếu",
         contact: "Liên hệ",
     },
     hero: {
         eyebrow: "Portfolio · Lập trình viên Fullstack",
-        name: PROFILE.name,
+        // Tiêu đề hero dùng tên đầy đủ có dấu; thanh điều hướng và chân trang vẫn dùng PROFILE.name.
+        name: "Nguyễn Trung Long",
         role: "Fullstack · Triển khai · Vận hành",
         headline:
             "Tôi xây dựng và triển khai sản phẩm web, từ giao diện đến hạ tầng chạy thật.",
@@ -67,7 +82,8 @@ const CONTENT_VI: PortfolioContent = {
             "Công nghệ thông tin, Đại học Thăng Long (2021 – 2026). Làm việc với Next.js, React, NestJS, FastAPI; đóng gói bằng Docker và chạy trên Cloudflare.",
         primaryCta: "Xem dự án",
         secondaryCta: "Liên hệ",
-        photoAlt: "Chân dung Long Nguyen",
+        photoAlt: "Chân dung Nguyễn Trung Long",
+        headlineHighlight: "từ giao diện đến hạ tầng chạy thật",
     },
     about: {
         title: "Giới thiệu",
@@ -77,6 +93,7 @@ const CONTENT_VI: PortfolioContent = {
             `Tôi học ngành Công nghệ thông tin tại Đại học Thăng Long trong giai đoạn ${EDUCATION.startYear} – ${EDUCATION.endYear} với GPA ${EDUCATION.gpa}/${EDUCATION.gpaScale}.`,
             "Tôi làm việc ở cả hai đầu của một sản phẩm: giao diện (Next.js, React, React Native) và dịch vụ phía sau (NestJS, FastAPI, Spring Boot), cùng cách đóng gói, triển khai, vận hành bằng Docker, Nginx và Cloudflare.",
         ],
+        highlights: ["cả hai đầu của một sản phẩm"],
         facts: [
             {
                 value: `${EDUCATION.startYear} – ${EDUCATION.endYear}`,
@@ -109,7 +126,7 @@ const CONTENT_VI: PortfolioContent = {
             "Chủ động trong công việc",
             "Phối hợp làm việc nhóm",
             "Tự học và tra cứu",
-            "Có kinh nghiệm làm việc với các nghiệp vụ phức tạp của nhà máy, kiểm nghiệm, kiểm định, y tế",
+            "Có kinh nghiệm làm việc với các nghiệp vụ của nhà máy, kiểm nghiệm, kiểm định, y tế",
         ],
     },
     education: {
@@ -121,9 +138,13 @@ const CONTENT_VI: PortfolioContent = {
         majorLabel: "Ngành",
         periodLabel: "Thời gian",
         gpaLabel: "GPA",
-        summary:
-            "Trường đại học ngoài công lập đầu tiên tại Việt Nam, với gần 40 năm tiên phong đào tạo ứng dụng thực tiễn.",
-        photoAlt: "Sinh viên Đại học Thăng Long trong lễ tốt nghiệp",
+        summary: `Trường đại học ngoài công lập đầu tiên tại Việt Nam, với ${SCHOOL_AGE} tiên phong đào tạo ứng dụng thực tiễn.`,
+        summaryHighlight: SCHOOL_AGE,
+        photoAlts: [
+            "Sinh viên Đại học Thăng Long trong lễ tốt nghiệp",
+            "Sinh viên thực hành tại phòng máy tính của thư viện Đại học Thăng Long",
+            "Nhóm sinh viên Đại học Thăng Long thảo luận trong giờ học nhóm",
+        ],
         viewProgram: "Xem ngành học",
     },
     experience: {
@@ -252,8 +273,20 @@ const CONTENT_VI: PortfolioContent = {
             },
         },
     },
+    references: {
+        title: "Người tham chiếu",
+        description:
+            "Những người có thể xác nhận về quá trình làm việc của tôi.",
+        pendingNote: "Thông tin liên hệ của người tham chiếu đang được cập nhật.",
+        emailLabel: "Email",
+        phoneLabel: "Điện thoại",
+        items: {
+            "nguyen-huy-toan": { role: null },
+            "tran-tien-quan": { role: null },
+        },
+    },
     contact: {
-        title: "Cùng làm việc",
+        title: "Thông tin liên hệ",
         description:
             "Bạn đang tuyển dụng hoặc muốn trao đổi về một dự án? Liên hệ với tôi qua bất kỳ kênh nào dưới đây.",
         channelsLabel: "Kênh liên hệ",
@@ -268,7 +301,7 @@ const CONTENT_VI: PortfolioContent = {
         },
     },
     footer: {
-        credit: `Logo và ảnh tốt nghiệp thuộc ${EDUCATION.schoolName} (thanglong.edu.vn). Logo và ảnh của Udata, IRDOP, Lifetex thuộc các đơn vị tương ứng.`,
+        credit: `Logo và hình ảnh của ${EDUCATION.schoolName} thuộc nhà trường (thanglong.edu.vn). Logo và ảnh của Udata, IRDOP, Lifetex thuộc các đơn vị tương ứng.`,
         builtWith: "Xây dựng bằng Next.js và Tailwind CSS.",
     },
 };

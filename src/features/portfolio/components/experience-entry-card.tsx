@@ -25,7 +25,7 @@ export default function ExperienceEntryCard({
     };
 }) {
     return (
-        <article className="card-lift border border-border-main bg-muted p-5 sm:p-6 lg:p-8">
+        <article className="card-lift spotlight border border-border-main bg-muted p-5 sm:p-6 lg:p-8">
             <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
                 {/* Logo đặt thẳng trên nền thẻ. Chỉ giao diện tối mới cần nền trắng, vì logo màu xanh đậm sẽ chìm trên nền tối. */}
                 <span className="inline-flex h-12 items-center dark:bg-white dark:px-3">

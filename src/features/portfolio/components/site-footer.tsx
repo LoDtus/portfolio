@@ -55,7 +55,7 @@ export default function SiteFooter({
                     </ul>
                 </nav>
 
-                <ul className="flex flex-wrap gap-2">
+                <ul className="flex flex-wrap gap-1">
                     {FOOTER_CHANNELS.map((channel) => (
                         <li key={channel.id}>
                             <a
@@ -64,9 +64,9 @@ export default function SiteFooter({
                                     ? { target: "_blank", rel: "me noopener noreferrer" }
                                     : {})}
                                 aria-label={content.contact.channels[channel.id].label}
-                                className="inline-flex size-10 items-center justify-center bg-white text-brand-forest hover:bg-brand-mint"
+                                className="inline-flex size-10 items-center justify-center text-white/85 transition-transform duration-200 hover:-translate-y-0.5 hover:text-white"
                             >
-                                <ContactChannelIcon channel={channel} className="size-5" />
+                                <ContactChannelIcon channel={channel} className="size-7" />
                             </a>
                         </li>
                     ))}

@@ -1,4 +1,5 @@
 import ProjectLinks from "@/features/portfolio/components/project-links";
+import TechBadge from "@/features/portfolio/components/tech-badge";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
 import type {
     ExperienceProject,
@@ -32,7 +33,7 @@ export default function ExperienceProjects({
                         key={project.id}
                         className={`reveal ${REVEAL_DELAY_CLASSES[index % 2]}`}
                     >
-                        <article className="card-lift flex h-full flex-col gap-4 border border-border-main bg-surface p-5">
+                        <article className="card-lift spotlight flex h-full flex-col gap-4 border border-border-main bg-surface p-5">
                             <h5 className="font-display text-lg font-bold text-heading">
                                 {project.name}
                             </h5>
@@ -65,11 +66,8 @@ export default function ExperienceProjects({
                                     className="mt-auto flex flex-wrap gap-1.5"
                                 >
                                     {project.stack.map((item) => (
-                                        <li
-                                            key={item}
-                                            className="border border-border-main bg-muted px-2 py-0.5 text-xs font-semibold text-text-main"
-                                        >
-                                            {item}
+                                        <li key={item}>
+                                            <TechBadge name={item} tone="muted" />
                                         </li>
                                     ))}
                                 </ul>

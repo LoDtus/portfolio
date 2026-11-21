@@ -1,4 +1,5 @@
 import SectionHeading from "@/features/portfolio/components/section-heading";
+import TechBadge from "@/features/portfolio/components/tech-badge";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
 import {
     SKILL_GROUP_ORDER,
@@ -40,7 +41,7 @@ export default function SkillsSection({ content }: { content: PortfolioContent }
                             key={group}
                             className={`reveal min-w-0 ${REVEAL_DELAY_CLASSES[index % 2]}`}
                         >
-                            <article className="card-lift h-full border border-white/20 bg-white/5 p-4 sm:p-6 lg:p-8">
+                            <article className="card-lift spotlight spotlight-on-dark h-full border border-white/20 bg-white/5 p-4 sm:p-6 lg:p-8">
                                 <p className="font-display text-[length:clamp(0.6875rem,3vw,0.875rem)] font-bold tracking-widest text-brand-mint">
                                     {String(index + 1).padStart(2, "0")}
                                 </p>
@@ -51,9 +52,9 @@ export default function SkillsSection({ content }: { content: PortfolioContent }
                                     {getItems(group).map((item, itemIndex) => (
                                         <li
                                             key={item}
-                                            className={`reveal reveal-pop ${REVEAL_DELAY_CLASSES[itemIndex % REVEAL_DELAY_CLASSES.length]} max-w-full break-words border border-white/30 px-2 py-1 text-[length:clamp(0.6875rem,3.1vw,0.875rem)] font-semibold leading-snug sm:px-3 sm:py-1.5`}
+                                            className={`reveal reveal-pop ${REVEAL_DELAY_CLASSES[itemIndex % REVEAL_DELAY_CLASSES.length]} max-w-full`}
                                         >
-                                            {item}
+                                            <TechBadge name={item} tone="onDark" />
                                         </li>
                                     ))}
                                 </ul>

@@ -60,7 +60,7 @@ export default function SiteNav({
                 </BrandLink>
 
                 <nav aria-label={labels.nav} className="hidden lg:block">
-                    <ul className="flex items-center gap-8">
+                    <ul className="flex items-center gap-5 xl:gap-8">
                         {items.map(({ id, label }) => (
                             <li key={id}>
                                 <SectionLink

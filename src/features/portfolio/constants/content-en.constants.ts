@@ -12,8 +12,21 @@ import {
     attachProjectTexts,
 } from "@/features/portfolio/utils/experience.utils";
 import { formatMonthRange } from "@/features/portfolio/utils/period.utils";
+import { describeSchoolAge } from "@/features/portfolio/utils/school-age.utils";
 
 const PRESENT = "present";
+
+// "over 40 years" / "nearly 50 years" / "40 years", computed from the current year at build time (see describeSchoolAge).
+function schoolAgePhrase(): string {
+    const { qualifier, years } = describeSchoolAge(
+        EDUCATION.foundedYear,
+        new Date().getFullYear(),
+    );
+    if (qualifier === "over") return `over ${years} years`;
+    if (qualifier === "nearly") return `nearly ${years} years`;
+    return `${years} years`;
+}
+const SCHOOL_AGE = schoolAgePhrase();
 
 // Period of a personal project, by its position in PROJECTS.
 function projectPeriod(index: number): string | null {
@@ -31,7 +44,7 @@ const CONTENT_EN: PortfolioContent = {
         jobTitle: "Fullstack Developer",
     },
     ui: {
-        tagline: "Portfolio",
+        topBarLabel: "Quick contact details",
         skipToContent: "Skip navigation, go to main content",
         navLabel: "Main navigation",
         menuOpen: "Open menu",
@@ -55,6 +68,7 @@ const CONTENT_EN: PortfolioContent = {
         education: "Education",
         experience: "Experience",
         projects: "Projects",
+        references: "References",
         contact: "Contact",
     },
     hero: {
@@ -68,6 +82,7 @@ const CONTENT_EN: PortfolioContent = {
         primaryCta: "View projects",
         secondaryCta: "Contact",
         photoAlt: "Portrait of Long Nguyen",
+        headlineHighlight: "the infrastructure that runs them",
     },
     about: {
         title: "About",
@@ -76,6 +91,7 @@ const CONTENT_EN: PortfolioContent = {
             `I studied Information Technology at Thang Long University (${EDUCATION.startYear} – ${EDUCATION.endYear}) with a GPA of ${EDUCATION.gpa}/${EDUCATION.gpaScale}.`,
             "I work on both ends of a product: the interface (Next.js, React, React Native) and the services behind it (NestJS, FastAPI, Spring Boot), plus how it is packaged, deployed and operated with Docker, Nginx and Cloudflare.",
         ],
+        highlights: ["both ends of a product"],
         facts: [
             {
                 value: `${EDUCATION.startYear} – ${EDUCATION.endYear}`,
@@ -108,7 +124,7 @@ const CONTENT_EN: PortfolioContent = {
             "Proactive at work",
             "Teamwork and collaboration",
             "Self-learning and research",
-            "Experience with complex workflows in factories, testing, inspection and healthcare",
+            "Experience with workflows in factories, testing, inspection and healthcare",
         ],
     },
     education: {
@@ -120,9 +136,13 @@ const CONTENT_EN: PortfolioContent = {
         majorLabel: "Major",
         periodLabel: "Period",
         gpaLabel: "GPA",
-        summary:
-            "Vietnam's first non-public university, with nearly 40 years of pioneering practice-oriented education.",
-        photoAlt: "Thang Long University students at their graduation ceremony",
+        summary: `Vietnam's first non-public university, with ${SCHOOL_AGE} of pioneering practice-oriented education.`,
+        summaryHighlight: SCHOOL_AGE,
+        photoAlts: [
+            "Thang Long University students at their graduation ceremony",
+            "Students working in the computer lab of the Thang Long University library",
+            "A group of Thang Long University students discussing in a study session",
+        ],
         viewProgram: "View the programme",
     },
     experience: {
@@ -251,8 +271,20 @@ const CONTENT_EN: PortfolioContent = {
             },
         },
     },
+    references: {
+        title: "References",
+        description:
+            "People who can speak to my work and how I work with others.",
+        pendingNote: "The references' contact details are being updated.",
+        emailLabel: "Email",
+        phoneLabel: "Phone",
+        items: {
+            "nguyen-huy-toan": { role: null },
+            "tran-tien-quan": { role: null },
+        },
+    },
     contact: {
-        title: "Let's work together",
+        title: "Contact information",
         description:
             "Hiring, or want to talk about a project? Reach me through any of the channels below.",
         channelsLabel: "Contact channels",
@@ -267,7 +299,7 @@ const CONTENT_EN: PortfolioContent = {
         },
     },
     footer: {
-        credit: `Logo and graduation photo belong to ${EDUCATION.schoolName} (thanglong.edu.vn). Logos and photos of Udata, IRDOP and Lifetex belong to their respective owners.`,
+        credit: `Logo and images of ${EDUCATION.schoolName} belong to the university (thanglong.edu.vn). Logos and photos of Udata, IRDOP and Lifetex belong to their respective owners.`,
         builtWith: "Built with Next.js and Tailwind CSS.",
     },
 };

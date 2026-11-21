@@ -6,6 +6,7 @@ export type SectionId =
     | "education"
     | "experience"
     | "projects"
+    | "references"
     | "contact";
 
 export type SkillGroupId =
@@ -24,6 +25,8 @@ export type ProjectSlug =
     | "vinfastreev"
     | "affiliate-product-catalog"
     | "city-incidents-management-system";
+
+export type ReferenceId = "nguyen-huy-toan" | "tran-tien-quan";
 
 export type ContactChannelId =
     | "zalo"
@@ -120,6 +123,24 @@ export interface ProjectText {
     period: string | null;
 }
 
+// Người tham chiếu: dữ kiện không phụ thuộc ngôn ngữ. Mọi trường null nghĩa là chưa có, giao diện bỏ phần đó thay vì bịa nội dung.
+export interface ReferenceFacts {
+    id: ReferenceId;
+    name: string;
+    organization: string | null;
+    // Ảnh chân dung (đặt trong public/images/references); null thì hiện hình chữ cái đầu của tên.
+    photo: { src: string; width: number; height: number } | null;
+    email: string | null;
+    // Số điện thoại dạng quốc tế (+84...) để dùng cho liên kết tel:; `phoneDisplay` là chữ hiển thị.
+    phoneE164: string | null;
+    phoneDisplay: string | null;
+}
+
+export interface ReferenceText {
+    // Chức danh hoặc mối quan hệ với chủ trang (ví dụ "Quản lý trực tiếp"); null nếu chưa có.
+    role: string | null;
+}
+
 export interface ContactChannelText {
     label: string;
 }
@@ -144,7 +165,7 @@ export interface PortfolioContent {
         jobTitle: string;
     };
     ui: {
-        tagline: string;
+        topBarLabel: string;
         skipToContent: string;
         navLabel: string;
         menuOpen: string;
@@ -166,11 +187,15 @@ export interface PortfolioContent {
         primaryCta: string;
         secondaryCta: string;
         photoAlt: string;
+        // Cụm chữ trong `headline` được tô nhấn (phải xuất hiện nguyên văn trong headline).
+        headlineHighlight: string;
     };
     about: {
         title: string;
         description: string;
         paragraphs: readonly string[];
+        // Các cụm chữ trong `paragraphs` được tô nhấn (phải xuất hiện nguyên văn).
+        highlights: readonly string[];
         facts: readonly Fact[];
     };
     skills: {
@@ -189,7 +214,9 @@ export interface PortfolioContent {
         periodLabel: string;
         gpaLabel: string;
         summary: string;
-        photoAlt: string;
+        // Cụm chữ trong `summary` được tô nhấn (phải xuất hiện nguyên văn).
+        summaryHighlight: string;
+        photoAlts: readonly string[];
         viewProgram: string;
     };
     experience: {
@@ -209,6 +236,14 @@ export interface PortfolioContent {
         title: string;
         description: string;
         items: Record<ProjectSlug, ProjectText>;
+    };
+    references: {
+        title: string;
+        description: string;
+        pendingNote: string;
+        emailLabel: string;
+        phoneLabel: string;
+        items: Record<ReferenceId, ReferenceText>;
     };
     contact: {
         title: string;

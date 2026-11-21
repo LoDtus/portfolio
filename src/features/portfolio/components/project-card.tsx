@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ProjectLinks from "@/features/portfolio/components/project-links";
+import TechBadge from "@/features/portfolio/components/tech-badge";
 import type { ProjectConfig } from "@/features/portfolio/constants/profile.constants";
 import type {
     PortfolioContent,
@@ -18,7 +19,7 @@ export default function ProjectCard({
     ui: PortfolioContent["ui"];
 }) {
     return (
-        <article className="card-lift flex h-full flex-col border border-border-main bg-surface">
+        <article className="card-lift spotlight flex h-full flex-col border border-border-main bg-surface">
             {config.thumbnail === null ? null : (
                 <div className="relative aspect-[2/1] overflow-hidden bg-muted">
                     <Image
@@ -71,11 +72,8 @@ export default function ProjectCard({
                         <dd>
                             <ul className="flex flex-wrap gap-2">
                                 {config.tech.map((item) => (
-                                    <li
-                                        key={item}
-                                        className="border border-border-main px-2.5 py-1 font-semibold text-text-main"
-                                    >
-                                        {item}
+                                    <li key={item}>
+                                        <TechBadge name={item} tone="outline" />
                                     </li>
                                 ))}
                             </ul>
