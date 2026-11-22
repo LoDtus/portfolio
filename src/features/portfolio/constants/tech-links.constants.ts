@@ -78,6 +78,7 @@ export const TECH_LINKS: Readonly<Record<string, string>> = {
     GitHub: "https://github.com/",
     "Claude Code": "https://claude.com/product/claude-code",
     Cursor: "https://cursor.com/",
+    "Visual Studio Code": "https://code.visualstudio.com/",
     Firebase: "https://firebase.google.com/",
     "Synology NAS": "https://www.synology.com/",
     Postman: "https://www.postman.com/",

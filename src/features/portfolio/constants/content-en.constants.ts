@@ -124,8 +124,8 @@ const CONTENT_EN: PortfolioContent = {
         softSkills: [
             "English (TOEIC 565)",
             "Proactive at work",
-            "Teamwork and collaboration",
             "Self-learning and research",
+            "Teamwork and collaboration",
             "Experience handling and working with the operations and processes of factories, production facilities, testing, inspection and healthcare",
         ],
     },

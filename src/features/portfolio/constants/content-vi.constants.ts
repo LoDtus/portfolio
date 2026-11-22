@@ -126,8 +126,8 @@ const CONTENT_VI: PortfolioContent = {
         softSkills: [
             "Tiếng Anh (TOEIC 565)",
             "Chủ động trong công việc",
-            "Phối hợp làm việc nhóm",
             "Tự học và tra cứu",
+            "Phối hợp làm việc nhóm",
             "Có kinh nghiệm xử lý và làm việc với nghiệp vụ, quy trình của nhà máy, cơ sở sản xuất, kiểm nghiệm, kiểm định, y tế",
         ],
     },
