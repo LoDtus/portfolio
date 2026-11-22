@@ -548,3 +548,8 @@ export const EXPERIENCE_COMPANIES: readonly ExperienceCompany[] = [UDATA, IRDOP,
 
 // Tổng số năm kinh nghiệm dạng chữ ("1.5+"), tính lúc build từ EXPERIENCE_COMPANIES và tháng hiện tại (xem formatExperienceYears).
 export const EXPERIENCE_YEARS = formatExperienceYears(countWorkedMonths(EXPERIENCE_COMPANIES));
+
+// Số dự án đã tham gia, hiển thị dạng "10+". Chủ trang tự đếm, gồm cả dự án chưa liệt kê chi tiết trên trang
+// (hiện trang liệt kê PROJECTS và các dự án trong mục Kinh nghiệm); tăng số này khi tham gia thêm dự án.
+const PARTICIPATED_PROJECTS_MIN = 10;
+export const PARTICIPATED_PROJECTS = `${PARTICIPATED_PROJECTS_MIN}+`;

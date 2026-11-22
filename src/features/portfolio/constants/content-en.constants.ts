@@ -3,6 +3,7 @@ import {
     EXPERIENCE_YEARS,
     IRDOP,
     LIFETEX,
+    PARTICIPATED_PROJECTS,
     PROFILE,
     PROJECTS,
     UDATA,
@@ -108,6 +109,10 @@ const CONTENT_EN: PortfolioContent = {
             {
                 value: EXPERIENCE_YEARS,
                 label: "Years of experience",
+            },
+            {
+                value: PARTICIPATED_PROJECTS,
+                label: "Projects worked on",
             },
         ],
     },
