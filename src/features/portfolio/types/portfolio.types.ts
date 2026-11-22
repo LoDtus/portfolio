@@ -16,6 +16,7 @@ export type SkillGroupId =
     | "database"
     | "deploy"
     | "tools"
+    | "design"
     | "soft";
 
 // Nhóm kỹ năng có danh sách không phụ thuộc ngôn ngữ (kỹ năng mềm có chữ theo từng ngôn ngữ nên nằm trong nội dung).

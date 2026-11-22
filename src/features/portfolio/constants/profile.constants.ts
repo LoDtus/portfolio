@@ -203,6 +203,7 @@ export const SKILL_ITEMS: Record<NeutralSkillGroupId, readonly string[]> = {
         "Spring Boot",
         "WebSocket",
         "Apache Kafka",
+        "Firebase",
     ],
     database: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Elasticsearch"],
     deploy: [
@@ -210,16 +211,16 @@ export const SKILL_ITEMS: Record<NeutralSkillGroupId, readonly string[]> = {
         "Docker Compose",
         "Nginx",
         CLOUDFLARE_ECOSYSTEM,
-    ],
-    tools: [
-        "Claude Code",
-        "Cursor",
-        "Firebase",
         "Synology NAS",
-        "Postman",
+        "On-premise server",
+    ],
+    tools: ["Git", "GitHub", "Claude Code", "Cursor", "Postman"],
+    design: [
         "Figma",
         "Microsoft Office",
-        "Adobe",
+        "Adobe Photoshop",
+        "Adobe Premiere Pro",
+        "Adobe Lightroom",
         "CapCut",
         "Google Flow",
         "ElevenLabs",
@@ -233,6 +234,7 @@ export const SKILL_GROUP_ORDER: readonly SkillGroupId[] = [
     "database",
     "deploy",
     "tools",
+    "design",
     "soft",
 ];
 

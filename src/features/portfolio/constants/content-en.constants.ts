@@ -112,20 +112,21 @@ const CONTENT_EN: PortfolioContent = {
         description:
             "Grouped by role in a web product. Only technologies I have used in real projects are listed.",
         groups: {
-            languages: "Languages",
+            languages: "Programming languages",
             frontend: "Frontend",
             backend: "Backend",
             database: "Databases",
-            deploy: "Deployment",
-            tools: "Other tools",
+            deploy: "Deployment & operations",
+            tools: "Development tools",
+            design: "Design & content",
             soft: "Soft skills",
         },
         softSkills: [
-            "TOEIC 565",
+            "English (TOEIC 565)",
             "Proactive at work",
             "Teamwork and collaboration",
             "Self-learning and research",
-            "Experience with workflows in factories, testing, inspection and healthcare",
+            "Experience handling and working with the operations and processes of factories, production facilities, testing, inspection and healthcare",
         ],
     },
     education: {

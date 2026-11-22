@@ -114,20 +114,21 @@ const CONTENT_VI: PortfolioContent = {
         description:
             "Nhóm theo vai trò trong một sản phẩm web. Chỉ liệt kê công nghệ tôi đã dùng trong dự án thật.",
         groups: {
-            languages: "Ngôn ngữ",
+            languages: "Ngôn ngữ lập trình",
             frontend: "Frontend",
             backend: "Backend",
             database: "Cơ sở dữ liệu",
-            deploy: "Triển khai",
-            tools: "Các công cụ khác",
+            deploy: "Triển khai & vận hành",
+            tools: "Công cụ phát triển",
+            design: "Thiết kế & nội dung",
             soft: "Kỹ năng mềm",
         },
         softSkills: [
-            "TOEIC 565",
+            "Tiếng Anh (TOEIC 565)",
             "Chủ động trong công việc",
             "Phối hợp làm việc nhóm",
             "Tự học và tra cứu",
-            "Có kinh nghiệm làm việc với các nghiệp vụ của nhà máy, kiểm nghiệm, kiểm định, y tế",
+            "Có kinh nghiệm xử lý và làm việc với nghiệp vụ, quy trình của nhà máy, cơ sở sản xuất, kiểm nghiệm, kiểm định, y tế",
         ],
     },
     education: {

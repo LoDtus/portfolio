@@ -74,6 +74,8 @@ export const TECH_LINKS: Readonly<Record<string, string>> = {
     "Google Maps API": "https://developers.google.com/maps",
 
     // Công cụ
+    Git: "https://git-scm.com/",
+    GitHub: "https://github.com/",
     "Claude Code": "https://claude.com/product/claude-code",
     Cursor: "https://cursor.com/",
     Firebase: "https://firebase.google.com/",
@@ -81,7 +83,9 @@ export const TECH_LINKS: Readonly<Record<string, string>> = {
     Postman: "https://www.postman.com/",
     Figma: "https://www.figma.com/",
     "Microsoft Office": "https://www.microsoft365.com/",
-    Adobe: "https://www.adobe.com/",
+    "Adobe Photoshop": "https://www.adobe.com/products/photoshop.html",
+    "Adobe Premiere Pro": "https://www.adobe.com/products/premiere.html",
+    "Adobe Lightroom": "https://www.adobe.com/products/photoshop-lightroom.html",
     CapCut: "https://www.capcut.com/",
     "Google Flow": "https://labs.google/flow/about",
     ElevenLabs: "https://elevenlabs.io/",
