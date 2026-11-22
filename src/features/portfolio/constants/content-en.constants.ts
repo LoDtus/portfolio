@@ -275,12 +275,31 @@ const CONTENT_EN: PortfolioContent = {
         title: "References",
         description:
             "People who can speak to my work and how I work with others.",
-        pendingNote: "The references' contact details are being updated.",
         emailLabel: "Email",
         phoneLabel: "Phone",
+        linksLabel: "Links",
         items: {
-            "nguyen-huy-toan": { role: null },
-            "tran-tien-quan": { role: null },
+            "nguyen-huy-toan": {
+                role: "Chief Technology Officer (CTO), Verysell AI & SmartDev",
+                summary:
+                    "PhD in Electronics and Computer Engineering (Chonnam National University, Korea) with years of experience in artificial intelligence, Deep Learning and Computer Vision. Leads the AI Engineering team that takes AI solutions from Proof of Concept to real-world operation for customers in Europe, the Middle East and APAC. Verysell AI and SmartDev are two technology companies of Verysell Group (Switzerland).",
+                highlights: [
+                    "Speaker at the Europe – Vietnam Technovation Forum 2026 (EVTF 2026) on AI in business collaboration and developing the next generation of tech talent.",
+                ],
+                photoAlts: [
+                    "Portrait of Dr. Nguyen Huy Toan",
+                    "Dr. Nguyen Huy Toan speaking on stage at a technology forum",
+                ],
+            },
+            "tran-tien-quan": {
+                role: "AI Engineer & Consultant",
+                summary:
+                    "Provides AI consulting and training for individuals and businesses. Over 6 years building production AI systems at VinBrain, MB Bank and a UK multinational, from healthcare AI to banking automation and enterprise GenAI. MSc in Computer Science, Hanoi University of Science and Technology. Focuses on AI agents, MCP, workflow automation with n8n, and Claude.",
+                highlights: [
+                    "Technical judge at ASCEND Vietnam 2026 (Singapore) and the Swinburne Hackathon.",
+                ],
+                photoAlts: ["Portrait of Tran Tien Quan"],
+            },
         },
     },
     contact: {

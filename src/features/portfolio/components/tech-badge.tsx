@@ -23,14 +23,17 @@ const LINK_MOTION =
     "tech-badge inline-block max-w-full break-words hover:-translate-y-0.5 hover:shadow-[0_6px_14px_-8px_rgb(0_0_0/0.45)]";
 
 // Một thẻ công nghệ. Có địa chỉ trong TECH_LINKS thì là liên kết sang trang chủ (tab mới); không thì chỉ là chữ.
+// `href` ghi đè địa chỉ tra trong TECH_LINKS (dùng cho thẻ liên kết không phải công nghệ, như LinkedIn của người tham chiếu).
 export default function TechBadge({
     name,
     tone,
+    href,
 }: {
     name: string;
     tone: TechBadgeTone;
+    href?: string;
 }) {
-    const url = getTechUrl(name);
+    const url = href ?? getTechUrl(name);
     const classes = TONE_CLASSES[tone];
 
     if (url === null) {

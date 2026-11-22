@@ -1,3 +1,4 @@
+import CopyAsMarkdown from "@/features/portfolio/components/copy-as-markdown";
 import AboutSection from "@/features/portfolio/components/about-section";
 import ContactSection from "@/features/portfolio/components/contact-section";
 import EducationSection from "@/features/portfolio/components/education-section";
@@ -13,6 +14,7 @@ import SiteHeader from "@/features/portfolio/components/site-header";
 import SkillsSection from "@/features/portfolio/components/skills-section";
 import { MAIN_CONTENT_ID } from "@/features/portfolio/constants/sections.constants";
 import { getPortfolioContent } from "@/features/portfolio/services/content.service";
+import { buildPageMarkdown } from "@/features/portfolio/services/page-markdown.service";
 import { resolveProgramUrl } from "@/features/portfolio/services/education-link.service";
 import {
     buildPersonJsonLd,
@@ -56,6 +58,7 @@ export default async function PortfolioPage({
 
             <RevealObserver key={locale} />
             <SpotlightEffect />
+            <CopyAsMarkdown markdown={buildPageMarkdown(content, programUrl)} />
             <div aria-hidden="true" className="scroll-progress no-print" />
 
             <script

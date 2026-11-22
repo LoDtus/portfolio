@@ -277,12 +277,31 @@ const CONTENT_VI: PortfolioContent = {
         title: "Người tham chiếu",
         description:
             "Những người có thể xác nhận về quá trình làm việc của tôi.",
-        pendingNote: "Thông tin liên hệ của người tham chiếu đang được cập nhật.",
         emailLabel: "Email",
         phoneLabel: "Điện thoại",
+        linksLabel: "Liên kết",
         items: {
-            "nguyen-huy-toan": { role: null },
-            "tran-tien-quan": { role: null },
+            "nguyen-huy-toan": {
+                role: "Giám đốc Công nghệ (CTO), Verysell AI & SmartDev",
+                summary:
+                    "Tiến sĩ Điện tử và Kỹ thuật máy tính (Đại học Quốc gia Chonnam, Hàn Quốc), nhiều năm kinh nghiệm về trí tuệ nhân tạo (AI), Deep Learning và Computer Vision. Dẫn dắt đội ngũ AI Engineering triển khai các giải pháp AI từ giai đoạn Proof of Concept đến vận hành thực tế cho khách hàng tại châu Âu, Trung Đông và khu vực APAC. Verysell AI và SmartDev là hai công ty công nghệ thuộc Verysell Group (Thụy Sĩ).",
+                highlights: [
+                    "Diễn giả tại Europe – Vietnam Technovation Forum 2026 (EVTF 2026) với chủ đề AI trong hợp tác kinh doanh và phát triển nhân lực công nghệ thế hệ mới.",
+                ],
+                photoAlts: [
+                    "Chân dung TS. Nguyễn Huy Toán",
+                    "TS. Nguyễn Huy Toán phát biểu trên sân khấu tại một diễn đàn công nghệ",
+                ],
+            },
+            "tran-tien-quan": {
+                role: "AI Engineer & Consultant",
+                summary:
+                    "Tư vấn và đào tạo AI cho cá nhân, doanh nghiệp. Hơn 6 năm xây dựng hệ thống AI chạy thật tại VinBrain, MB Bank và một tập đoàn đa quốc gia của Anh, từ AI y tế đến tự động hóa ngân hàng và GenAI doanh nghiệp. Thạc sĩ Khoa học máy tính, Đại học Bách khoa Hà Nội. Chuyên về AI agent, MCP, tự động hóa quy trình với n8n và Claude.",
+                highlights: [
+                    "Giám khảo kỹ thuật tại ASCEND Vietnam 2026 (Singapore) và Swinburne Hackathon.",
+                ],
+                photoAlts: ["Chân dung Trần Tiến Quân"],
+            },
         },
     },
     contact: {

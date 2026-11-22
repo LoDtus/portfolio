@@ -36,7 +36,7 @@ export const PROFILE = {
 // Dữ kiện SEO dùng chung cho metadata, sitemap và dữ liệu có cấu trúc.
 export const SEO = {
     // Ngày cập nhật nội dung gần nhất ("YYYY-MM-DD"); sửa nội dung trang thì nhớ đổi ngày này (dùng cho sitemap và dateModified).
-    contentUpdatedAt: "2026-11-21",
+    contentUpdatedAt: "2026-11-22",
     // Ảnh chia sẻ mạng xã hội 1200x630 (JPEG vì Facebook/Zalo không đọc ổn định AVIF/WebP).
     ogImage: { path: "/og/og-image.jpg", width: 1200, height: 630 },
     // Tên khác của chủ trang: biệt danh và tên đầy đủ có dấu (để tìm theo tên tiếng Việt).
@@ -132,45 +132,53 @@ export const EDUCATION = {
     ],
 } as const;
 
-// Thông tin người tham chiếu. Ảnh, đơn vị công tác và liên hệ sẽ bổ sung sau; trường null thì giao diện bỏ qua.
+// Thông tin người tham chiếu (chữ giới thiệu theo ngôn ngữ nằm trong content-*.constants.ts).
+// Email và số điện thoại hiện thẳng thành chữ; các trang khác là thẻ liên kết. Trường rỗng/null thì giao diện bỏ qua.
 export const REFERENCES: readonly ReferenceFacts[] = [
     {
         id: "nguyen-huy-toan",
         name: "Nguyễn Huy Toán",
         organization: null,
-        photo: null,
-        email: null,
-        phoneE164: null,
-        phoneDisplay: null,
+        photos: [
+            { src: "/images/reference-nht/nht-001.avif", width: 400, height: 400, position: "50% 25%" },
+            { src: "/images/reference-nht/nht-002.avif", width: 1000, height: 666, position: "46% 50%" },
+        ],
+        email: "toannh@udata.ai",
+        phoneE164: "+84862820165",
+        phoneDisplay: "0862820165",
+        links: [
+            {
+                label: "LinkedIn",
+                url: "https://www.linkedin.com/in/toan-nguyen-huy-ph-d-205035146/",
+            },
+            {
+                label: "Verysell AI",
+                url: "https://verysell.ai/ai-lab-team/dr-toan-nguyen-huy/",
+            },
+        ],
     },
     {
         id: "tran-tien-quan",
         name: "Trần Tiến Quân",
         organization: null,
-        photo: null,
-        email: null,
-        phoneE164: null,
-        phoneDisplay: null,
+        photos: [
+            { src: "/images/reference-ttq/ttq-001.avif", width: 800, height: 1192, position: "50% 15%" },
+        ],
+        email: "quantran98@gmail.com",
+        phoneE164: "+84981044945",
+        phoneDisplay: "0981044945",
+        links: [
+            { label: "quanaibuilder.com", url: "https://quanaibuilder.com/" },
+            { label: "TikTok", url: "https://www.tiktok.com/@quanaibuilder" },
+        ],
     },
 ];
 
-// Dải thông tin liên hệ nhanh phía trên header, theo thứ tự hiển thị. Số điện thoại viết liền như yêu cầu.
+// Dải thông tin liên hệ nhanh phía trên header (chỉ là chữ, không phải liên kết), theo thứ tự hiển thị. Số điện thoại viết liền như yêu cầu.
 export const TOP_BAR_ITEMS = [
-    {
-        id: "phone",
-        value: PROFILE.phoneDisplay.replace(/\s/g, ""),
-        href: `tel:${PROFILE.phoneE164}`,
-    },
-    {
-        id: "email",
-        value: PROFILE.email,
-        href: `mailto:${PROFILE.email}`,
-    },
-    {
-        id: "address",
-        value: PROFILE.address.display,
-        href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(PROFILE.address.display)}`,
-    },
+    { id: "phone", value: PROFILE.phoneDisplay.replace(/\s/g, "") },
+    { id: "email", value: PROFILE.email },
+    { id: "address", value: PROFILE.address.display },
 ] as const;
 
 // Tên hiển thị của gói dịch vụ Cloudflare đã dùng (gộp Tunnel, Workers, Pages, R2); tech-links.constants.ts dùng lại đúng chuỗi này.

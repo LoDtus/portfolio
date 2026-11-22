@@ -1,7 +1,7 @@
 import Image from "next/image";
 import CountUp from "@/features/portfolio/components/count-up";
-import EducationSlider from "@/features/portfolio/components/education-slider";
 import HighlightedText from "@/features/portfolio/components/highlighted-text";
+import PhotoSlider from "@/features/portfolio/components/photo-slider";
 import SectionHeading from "@/features/portfolio/components/section-heading";
 import { EDUCATION } from "@/features/portfolio/constants/profile.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
@@ -35,7 +35,12 @@ export default function EducationSection({
                 />
 
                 <div className="grid border border-border-main lg:grid-cols-2">
-                    <EducationSlider photos={photos} labels={content.experience.gallery} />
+                    <PhotoSlider
+                        photos={photos}
+                        labels={content.experience.gallery}
+                        frameClassName="min-h-72 lg:min-h-[30rem]"
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                    />
 
                     <div className="reveal reveal-right reveal-d1 flex flex-col justify-between gap-10 bg-band p-8 text-white lg:p-12">
                         <div className="space-y-6">

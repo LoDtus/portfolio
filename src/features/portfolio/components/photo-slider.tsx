@@ -19,14 +19,20 @@ import { usePrefersMotion } from "@/shared/hooks/use-prefers-motion";
 
 const SLIDE_GAP_PX = 12;
 
-// Ảnh của trường dạng slide: mỗi lần một ảnh, chấm phân trang bên dưới, lặp vòng và tự chuyển ảnh giống mục Kinh nghiệm.
-// Khung phủ kín cột bên trái (ảnh cắt theo khung bằng object-cover). Ô `.reveal` nằm NGOÀI Swiper vì `.swiper` có overflow hidden.
-export default function EducationSlider({
+// Bộ ảnh dạng slide: mỗi lần một ảnh, chấm phân trang bên dưới, lặp vòng và tự chuyển ảnh giống mục Kinh nghiệm.
+// Khung phủ kín ô chứa nó (ảnh cắt theo khung bằng object-cover); `frameClassName` quyết định kích thước/hình dạng ô đó
+// (ví dụ chiều cao tối thiểu, hoặc aspect-ratio). Ô `.reveal` nằm NGOÀI Swiper vì `.swiper` có overflow hidden.
+export default function PhotoSlider({
     photos,
     labels,
+    frameClassName,
+    sizes,
 }: {
     photos: readonly ExperiencePhoto[];
     labels: { prev: string; next: string; bullet: string };
+    frameClassName: string;
+    // Thuộc tính `sizes` của ảnh (kích thước hiển thị theo viewport).
+    sizes: string;
 }) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
@@ -45,7 +51,7 @@ export default function EducationSlider({
     return (
         <div
             ref={containerRef}
-            className="reveal reveal-left relative min-h-72 lg:min-h-[30rem]"
+            className={`reveal reveal-left relative ${frameClassName}`}
         >
             <Swiper
                 modules={[A11y, Autoplay, Keyboard, Pagination]}
@@ -76,7 +82,7 @@ export default function EducationSlider({
                                 src={photo.src}
                                 alt={photo.alt}
                                 fill
-                                sizes="(min-width: 1024px) 50vw, 100vw"
+                                sizes={sizes}
                                 style={
                                     photo.position === undefined
                                         ? undefined

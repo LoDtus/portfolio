@@ -123,22 +123,34 @@ export interface ProjectText {
     period: string | null;
 }
 
-// Người tham chiếu: dữ kiện không phụ thuộc ngôn ngữ. Mọi trường null nghĩa là chưa có, giao diện bỏ phần đó thay vì bịa nội dung.
+// Liên kết ngoài của người tham chiếu (LinkedIn, trang cá nhân, TikTok...); `label` là chữ trên thẻ liên kết, không phụ thuộc ngôn ngữ.
+export interface ReferenceLink {
+    label: string;
+    url: string;
+}
+
+// Người tham chiếu: dữ kiện không phụ thuộc ngôn ngữ. Trường null/rỗng nghĩa là chưa có, giao diện bỏ phần đó thay vì bịa nội dung.
 export interface ReferenceFacts {
     id: ReferenceId;
     name: string;
     organization: string | null;
-    // Ảnh chân dung (đặt trong public/images/references); null thì hiện hình chữ cái đầu của tên.
-    photo: { src: string; width: number; height: number } | null;
+    // Ảnh (đặt trong public/images/reference-*): một ảnh thì hiện ảnh tĩnh, nhiều ảnh thì thành slide; rỗng thì hiện chữ cái đầu của tên.
+    photos: readonly ExperiencePhotoSource[];
     email: string | null;
     // Số điện thoại dạng quốc tế (+84...) để dùng cho liên kết tel:; `phoneDisplay` là chữ hiển thị.
     phoneE164: string | null;
     phoneDisplay: string | null;
+    links: readonly ReferenceLink[];
 }
 
 export interface ReferenceText {
-    // Chức danh hoặc mối quan hệ với chủ trang (ví dụ "Quản lý trực tiếp"); null nếu chưa có.
+    // Chức danh hiện tại; null nếu chưa có.
     role: string | null;
+    // Giới thiệu ngắn; null nếu chưa có.
+    summary: string | null;
+    highlights: readonly string[];
+    // Chữ mô tả cho từng ảnh trong `photos`, theo đúng thứ tự.
+    photoAlts: readonly string[];
 }
 
 export interface ContactChannelText {
@@ -240,9 +252,9 @@ export interface PortfolioContent {
     references: {
         title: string;
         description: string;
-        pendingNote: string;
         emailLabel: string;
         phoneLabel: string;
+        linksLabel: string;
         items: Record<ReferenceId, ReferenceText>;
     };
     contact: {

@@ -4,9 +4,12 @@ import { useEffect, useRef } from "react";
 import { usePrefersMotion } from "@/shared/hooks/use-prefers-motion";
 
 const NUMBER_PATTERN = /\d+(?:[.,]\d+)?/g;
-const DURATION_MS = 1600;
+const DURATION_MS = 900;
 // Chờ một nhịp để số bắt đầu chạy cùng lúc khung chứa nó hoàn tất hiệu ứng hiện ra.
-const START_DELAY_MS = 250;
+const START_DELAY_MS = 150;
+// Mỗi con số chỉ chạy tối đa ngần này đơn vị trước khi tới giá trị thật (năm 2021 chạy từ 2011, không phải từ 0),
+// để số lớn không đếm lâu; số nhỏ hơn thế (GPA, số dự án) vẫn chạy từ 0.
+const MAX_COUNT_SPAN = 10;
 // Chỉ bắt đầu chạy khi phần lớn con số đã nằm trong màn hình.
 const VISIBLE_THRESHOLD = 0.6;
 
@@ -15,6 +18,7 @@ function easeOutCubic(progress: number): number {
 }
 
 interface NumberToken {
+    start: number;
     target: number;
     decimals: number;
 }
@@ -22,13 +26,15 @@ interface NumberToken {
 function readToken(match: string): NumberToken {
     const normalized = match.replace(",", ".");
     const dot = normalized.indexOf(".");
+    const target = Number(normalized);
     return {
-        target: Number(normalized),
+        start: Math.max(0, target - MAX_COUNT_SPAN),
+        target,
         decimals: dot === -1 ? 0 : normalized.length - dot - 1,
     };
 }
 
-// Chạy mọi con số trong `value` từ 0 tới giá trị thật (ví dụ "2021 – 2026", "3.2", "4"), giữ nguyên các ký tự còn lại.
+// Chạy mọi con số trong `value` tới giá trị thật (ví dụ "2021 – 2026", "3.2", "4"), giữ nguyên các ký tự còn lại; xem MAX_COUNT_SPAN.
 // HTML từ server chứa sẵn giá trị cuối (SEO, không JS, không nhảy bố cục); client đặt về 0 rồi đếm lên khi con số hiện trên màn hình.
 // Cập nhật thẳng vào DOM bằng requestAnimationFrame (không setState mỗi khung hình). Giảm chuyển động thì đứng yên ở giá trị cuối.
 export default function CountUp({ value }: { value: string }) {
@@ -41,8 +47,8 @@ export default function CountUp({ value }: { value: string }) {
 
         const format = (progress: number): string =>
             value.replace(NUMBER_PATTERN, (match) => {
-                const { target, decimals } = readToken(match);
-                const current = (target * progress).toFixed(decimals);
+                const { start, target, decimals } = readToken(match);
+                const current = (start + (target - start) * progress).toFixed(decimals);
                 return match.includes(",") ? current.replace(".", ",") : current;
             });
 

@@ -1,7 +1,6 @@
 import ReferenceCard from "@/features/portfolio/components/reference-card";
 import SectionHeading from "@/features/portfolio/components/section-heading";
 import { REFERENCES } from "@/features/portfolio/constants/profile.constants";
-import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
 
 export default function ReferencesSection({ content }: { content: PortfolioContent }) {
@@ -21,11 +20,11 @@ export default function ReferencesSection({ content }: { content: PortfolioConte
                     tone="light"
                 />
 
-                <ul className="grid gap-6 md:grid-cols-2">
-                    {REFERENCES.map((facts, index) => (
+                <ul className="space-y-6">
+                    {REFERENCES.map((facts) => (
                         <li
                             key={facts.id}
-                            className={`reveal ${REVEAL_DELAY_CLASSES[index % 2]}`}
+                            className="reveal"
                         >
                             <ReferenceCard
                                 facts={facts}
@@ -33,7 +32,8 @@ export default function ReferencesSection({ content }: { content: PortfolioConte
                                 labels={{
                                     email: references.emailLabel,
                                     phone: references.phoneLabel,
-                                    pending: references.pendingNote,
+                                    links: references.linksLabel,
+                                    gallery: content.experience.gallery,
                                 }}
                             />
                         </li>

@@ -18,7 +18,7 @@ const VISIBILITY: Record<TopBarItemId, string> = {
 };
 
 // Dải thông tin liên hệ nhanh bên trái thanh trên cùng: biểu tượng + giá trị, ngăn cách bằng dấu "|".
-// Mỗi mục là liên kết (gọi điện, gửi thư, mở bản đồ); nhãn kênh nằm ở title để người đọc màn hình biết mục đó là gì.
+// Chỉ là chữ thông thường (không phải liên kết); nhãn kênh nằm trong chữ ẩn (sr-only) để người đọc màn hình biết mục đó là gì.
 export default function TopContactBar({
     content,
 }: {
@@ -32,7 +32,6 @@ export default function TopContactBar({
             {TOP_BAR_ITEMS.map((item, index) => {
                 const Icon = ICONS[item.id];
                 const label = content.contact.channels[item.id].label;
-                const isExternal = item.id === "address";
 
                 return (
                     <li
@@ -44,18 +43,11 @@ export default function TopContactBar({
                                 |
                             </span>
                         ) : null}
-                        <a
-                            href={item.href}
-                            title={label}
-                            {...(isExternal
-                                ? { target: "_blank", rel: "noopener noreferrer" }
-                                : {})}
-                            className="inline-flex min-w-0 items-center gap-2 text-white/85 hover:text-white focus-visible:text-white"
-                        >
+                        <span className="inline-flex min-w-0 items-center gap-2 text-white/85">
                             <Icon aria-hidden="true" className="size-4 shrink-0" />
                             <span className="sr-only">{label}: </span>
                             <span className="truncate">{item.value}</span>
-                        </a>
+                        </span>
                     </li>
                 );
             })}
