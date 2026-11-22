@@ -192,7 +192,7 @@ export const REFERENCES: readonly ReferenceFacts[] = [
             ],
             parentOrganization: "Verysell Group",
             alumniOf: "Chonnam National University",
-            mentions: ["Europe – Vietnam Technovation Forum 2026"],
+            mentions: ["FPT Software AI Center", "Samsung Display Vietnam"],
             knowsAbout: ["Artificial Intelligence", "Deep Learning", "Computer Vision"],
         },
         photos: [

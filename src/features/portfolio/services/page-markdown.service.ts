@@ -110,6 +110,9 @@ function formatReferences(content: PortfolioContent): string[] {
             ...(text.summary === null ? [] : ["", text.summary]),
             ...(text.highlights.length === 0 ? [] : ["", ...bullets(text.highlights)]),
             "",
+            ...(facts.email === null && facts.phoneE164 === null && facts.links.length === 0
+                ? []
+                : [`#### ${references.contactLabel}`, ""]),
             ...(facts.email === null
                 ? []
                 : [`- ${references.emailLabel}: ${link(facts.email, `mailto:${facts.email}`)}`]),

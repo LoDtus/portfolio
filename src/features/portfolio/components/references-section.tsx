@@ -30,6 +30,7 @@ export default function ReferencesSection({ content }: { content: PortfolioConte
                                 facts={facts}
                                 text={references.items[facts.id]}
                                 labels={{
+                                    contact: references.contactLabel,
                                     email: references.emailLabel,
                                     phone: references.phoneLabel,
                                     links: references.linksLabel,

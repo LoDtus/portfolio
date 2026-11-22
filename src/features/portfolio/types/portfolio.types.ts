@@ -276,6 +276,8 @@ export interface PortfolioContent {
     references: {
         title: string;
         description: string;
+        // Tiêu đề đứng trước nhóm thông tin liên hệ (email, điện thoại, liên kết) của mỗi người.
+        contactLabel: string;
         emailLabel: string;
         phoneLabel: string;
         linksLabel: string;

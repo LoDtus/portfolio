@@ -55,6 +55,10 @@ function buildReferenceNode(
     const text = content.references.items[facts.id];
     const { seo } = facts;
     const [photo] = facts.photos;
+    // Phần giới thiệu hiển thị trên trang: đoạn văn (nếu có) rồi các ý chính, nối thành một mô tả.
+    const description = [text.summary, ...text.highlights]
+        .filter((part): part is string => part !== null)
+        .join(" ");
     const parent =
         seo.parentOrganization === null
             ? {}
@@ -71,7 +75,7 @@ function buildReferenceNode(
         name: facts.name,
         alternateName: seo.alternateNames,
         ...(text.role === null ? {} : { jobTitle: text.role }),
-        ...(text.summary === null ? {} : { description: text.summary }),
+        ...(description === "" ? {} : { description }),
         ...(photo === undefined ? {} : { image: `${siteUrl}${photo.src}` }),
         sameAs: facts.links.map((link) => link.url),
         ...(seo.worksFor.length === 0

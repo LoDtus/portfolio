@@ -28,11 +28,12 @@ export default function ReferenceCard({
 }: {
     facts: ReferenceFacts;
     text: ReferenceText;
-    labels: { email: string; phone: string; links: string; gallery: { prev: string; next: string; bullet: string } };
+    labels: { contact: string; email: string; phone: string; links: string; gallery: { prev: string; next: string; bullet: string } };
 }) {
     const photos = attachPhotoAlts(facts.photos, text.photoAlts);
     const firstPhoto = photos[0];
     const hasContact = facts.email !== null || facts.phoneE164 !== null;
+    const hasAnyContact = hasContact || facts.links.length > 0;
 
     return (
         <article className="card-lift spotlight grid gap-6 border border-border-main bg-muted p-5 sm:p-6 md:grid-cols-[16rem_1fr]">
@@ -102,47 +103,55 @@ export default function ReferenceCard({
                     </ul>
                 )}
 
-                {hasContact ? (
-                    <ul className="space-y-1.5 font-semibold text-heading">
-                        {facts.email === null ? null : (
-                            <li className="flex items-center gap-2">
-                                <Mail
-                                    aria-hidden="true"
-                                    className="size-4 shrink-0 text-accent-ink"
-                                />
-                                <span className="sr-only">{labels.email}: </span>
-                                <a
-                                    href={`mailto:${facts.email}`}
-                                    className="link-draw break-all"
-                                >
-                                    {facts.email}
-                                </a>
-                            </li>
-                        )}
-                        {facts.phoneE164 === null ? null : (
-                            <li className="flex items-center gap-2">
-                                <Phone
-                                    aria-hidden="true"
-                                    className="size-4 shrink-0 text-accent-ink"
-                                />
-                                <span className="sr-only">{labels.phone}: </span>
-                                <a href={`tel:${facts.phoneE164}`} className="link-draw">
-                                    {facts.phoneDisplay ?? facts.phoneE164}
-                                </a>
-                            </li>
-                        )}
-                    </ul>
-                ) : null}
+                {hasAnyContact ? (
+                    // Nhóm liên hệ có tiêu đề riêng ("Liên hệ") để phân biệt với phần giới thiệu phía trên.
+                    <div className="space-y-3 border-t border-border-main pt-4">
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-accent-ink">
+                            {labels.contact}
+                        </h4>
+                        {hasContact ? (
+                            <ul className="space-y-1.5 font-semibold text-heading">
+                                {facts.email === null ? null : (
+                                    <li className="flex items-center gap-2">
+                                        <Mail
+                                            aria-hidden="true"
+                                            className="size-4 shrink-0 text-accent-ink"
+                                        />
+                                        <span className="sr-only">{labels.email}: </span>
+                                        <a
+                                            href={`mailto:${facts.email}`}
+                                            className="link-draw break-all"
+                                        >
+                                            {facts.email}
+                                        </a>
+                                    </li>
+                                )}
+                                {facts.phoneE164 === null ? null : (
+                                    <li className="flex items-center gap-2">
+                                        <Phone
+                                            aria-hidden="true"
+                                            className="size-4 shrink-0 text-accent-ink"
+                                        />
+                                        <span className="sr-only">{labels.phone}: </span>
+                                        <a href={`tel:${facts.phoneE164}`} className="link-draw">
+                                            {facts.phoneDisplay ?? facts.phoneE164}
+                                        </a>
+                                    </li>
+                                )}
+                            </ul>
+                        ) : null}
 
-                {facts.links.length === 0 ? null : (
-                    <ul aria-label={labels.links} className="flex flex-wrap gap-2">
-                        {facts.links.map((link) => (
-                            <li key={link.url}>
-                                <TechBadge name={link.label} href={link.url} tone="outline" />
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                        {facts.links.length === 0 ? null : (
+                            <ul aria-label={labels.links} className="flex flex-wrap gap-2">
+                                {facts.links.map((link) => (
+                                    <li key={link.url}>
+                                        <TechBadge name={link.label} href={link.url} tone="outline" />
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                ) : null}
             </div>
         </article>
     );
