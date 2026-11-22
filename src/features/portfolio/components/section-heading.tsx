@@ -1,3 +1,5 @@
+import { keepWordsTogether } from "@/features/portfolio/utils/no-break.utils";
+
 // Tiêu đề section theo thanglong.edu.vn: vạch đỏ đứng + tiêu đề đậm, phần mô tả nằm ở cột phải.
 export default function SectionHeading({
     id,
@@ -29,11 +31,11 @@ export default function SectionHeading({
                 </h2>
             </div>
             <p
-                className={`max-w-xl text-lg leading-8 lg:justify-self-end ${
+                className={`max-w-xl text-balance text-lg leading-8 lg:justify-self-end ${
                     isDark ? "text-white/75" : "text-text-sub"
                 }`}
             >
-                {description}
+                {keepWordsTogether(description)}
             </p>
         </div>
     );

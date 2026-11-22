@@ -7,6 +7,7 @@ import {
 } from "@/features/portfolio/constants/profile.constants";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
+import { keepWordsTogether } from "@/features/portfolio/utils/no-break.utils";
 import { locales } from "@/shared/constants/i18n.constants";
 
 export default function ContactSection({ content }: { content: PortfolioContent }) {
@@ -35,8 +36,8 @@ export default function ContactSection({ content }: { content: PortfolioContent 
                                 {contact.title}
                             </h2>
                         </div>
-                        <p className="max-w-2xl text-lg leading-8 text-white/80">
-                            {contact.description}
+                        <p className="max-w-2xl text-balance text-lg leading-8 text-white/80">
+                            {keepWordsTogether(contact.description)}
                         </p>
                     </div>
 
