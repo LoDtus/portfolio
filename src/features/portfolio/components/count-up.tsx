@@ -35,7 +35,8 @@ function readToken(match: string): NumberToken {
 }
 
 // Chạy mọi con số trong `value` tới giá trị thật (ví dụ "2021 – 2026", "3.2", "4"), giữ nguyên các ký tự còn lại; xem MAX_COUNT_SPAN.
-// HTML từ server chứa sẵn giá trị cuối (SEO, không JS, không nhảy bố cục); client đặt về 0 rồi đếm lên khi con số hiện trên màn hình.
+// HTML từ server chứa sẵn giá trị cuối (SEO, không JS, không nhảy bố cục); client đặt về giá trị đầu rồi đếm lên khi con số hiện trên màn hình.
+// Chạy lại mỗi lần cuộn tới: con số ra khỏi màn hình hoàn toàn thì về giá trị đầu, lần hiện sau lại đếm từ đầu (ra một phần thì chưa reset, tránh số nhảy khi còn nhìn thấy).
 // Cập nhật thẳng vào DOM bằng requestAnimationFrame (không setState mỗi khung hình). Giảm chuyển động thì đứng yên ở giá trị cuối.
 export default function CountUp({ value }: { value: string }) {
     const elementRef = useRef<HTMLSpanElement>(null);
@@ -54,7 +55,14 @@ export default function CountUp({ value }: { value: string }) {
 
         let frameId = 0;
         let delayId = 0;
-        element.textContent = format(0);
+        // true từ lúc được lên lịch chạy đến khi con số ra khỏi màn hình hoàn toàn: chặn việc chạy lại khi vẫn đang nhìn thấy.
+        let isActive = false;
+
+        const stop = () => {
+            window.clearTimeout(delayId);
+            cancelAnimationFrame(frameId);
+            isActive = false;
+        };
 
         const run = () => {
             const startedAt = performance.now();
@@ -66,20 +74,29 @@ export default function CountUp({ value }: { value: string }) {
             frameId = requestAnimationFrame(tick);
         };
 
+        element.textContent = format(0);
+
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (!entry?.isIntersecting) return;
-                observer.disconnect();
-                delayId = window.setTimeout(run, START_DELAY_MS);
+            (entries) => {
+                const entry = entries[entries.length - 1];
+                if (entry === undefined) return;
+                if (entry.intersectionRatio >= VISIBLE_THRESHOLD) {
+                    if (isActive) return;
+                    isActive = true;
+                    delayId = window.setTimeout(run, START_DELAY_MS);
+                } else if (!entry.isIntersecting) {
+                    stop();
+                    element.textContent = format(0);
+                }
             },
-            { threshold: VISIBLE_THRESHOLD },
+            // 0: biết khi ra khỏi màn hình hoàn toàn; VISIBLE_THRESHOLD: biết khi đã hiện đủ để bắt đầu chạy.
+            { threshold: [0, VISIBLE_THRESHOLD] },
         );
         observer.observe(element);
 
         return () => {
             observer.disconnect();
-            window.clearTimeout(delayId);
-            cancelAnimationFrame(frameId);
+            stop();
             element.textContent = value;
         };
     }, [value, prefersMotion]);

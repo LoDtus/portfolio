@@ -1,5 +1,6 @@
 import {
     EDUCATION,
+    EXPERIENCE_YEARS,
     IRDOP,
     LIFETEX,
     PROFILE,
@@ -40,10 +41,11 @@ const CONTENT_EN: PortfolioContent = {
     meta: {
         title: `${PROFILE.name} | Fullstack Developer`,
         description:
-            "Long Nguyen, a Fullstack Developer in Hanoi: Next.js, NestJS, FastAPI, Docker. Experience at Udata, IRDOP, Lifetex and the projects shipped so far.",
+            "Long Nguyen (Nguyễn Trung Long), Fullstack Developer in Hanoi, studied Information Technology at Thang Long University. Next.js, NestJS, FastAPI.",
         jobTitle: "Fullstack Developer",
     },
     ui: {
+        switchLanguage: "Switch to Vietnamese",
         topBarLabel: "Quick contact details",
         skipToContent: "Skip navigation, go to main content",
         navLabel: "Main navigation",
@@ -86,12 +88,14 @@ const CONTENT_EN: PortfolioContent = {
     },
     about: {
         title: "About",
-        description: "A quick summary of who I am and what I do.",
+        description:
+            "A few words about me, what I have done and where I want to go next.",
         paragraphs: [
-            `I studied Information Technology at Thang Long University (${EDUCATION.startYear} – ${EDUCATION.endYear}) with a GPA of ${EDUCATION.gpa}/${EDUCATION.gpaScale}.`,
-            "I work on both ends of a product: the interface (Next.js, React, React Native) and the services behind it (NestJS, FastAPI, Spring Boot), plus how it is packaged, deployed and operated with Docker, Nginx and Cloudflare.",
+            "I studied Information Technology and have worked on software projects from the early stages all the way to deployment. I'm good at full-stack development, working with AI tools, connecting different systems, and setting up infrastructure.",
+            "I enjoy learning about different problems, understanding what people and businesses really need, and finding ways to solve them. I like thinking things through, looking at problems from different angles, and finding simple ways to make things work better.",
+            "I'm interested in many different fields, not just technology, but also mechanical engineering, product development, and business. I enjoy trying new things, learning how different fields work, and taking on new challenges. I also want to keep getting better at what I already know while picking up new skills along the way.",
         ],
-        highlights: ["both ends of a product"],
+        highlights: ["full-stack development"],
         facts: [
             {
                 value: `${EDUCATION.startYear} – ${EDUCATION.endYear}`,
@@ -102,15 +106,15 @@ const CONTENT_EN: PortfolioContent = {
                 label: "GPA",
             },
             {
-                value: String(PROJECTS.length),
-                label: "Projects built",
+                value: EXPERIENCE_YEARS,
+                label: "Years of experience",
             },
         ],
     },
     skills: {
         title: "Skills",
         description:
-            "Grouped by role in a web product. Only technologies I have used in real projects are listed.",
+            "The skills, technologies and knowledge I have built up through study, work and real product development.",
         groups: {
             languages: "Programming languages",
             frontend: "Frontend",
@@ -132,14 +136,13 @@ const CONTENT_EN: PortfolioContent = {
     education: {
         title: "Education",
         description:
-            "A practice-oriented programme at Vietnam's first non-public university.",
+            "My academic foundation, major and the knowledge I gained during my university studies.",
         school: "Thang Long University",
         major: "Information Technology",
         majorLabel: "Major",
         periodLabel: "Period",
         gpaLabel: "GPA",
         summary: `Vietnam's first non-public university, with ${SCHOOL_AGE} of pioneering practice-oriented education.`,
-        summaryHighlight: SCHOOL_AGE,
         photoAlts: [
             "Thang Long University students at their graduation ceremony",
             "Students working in the computer lab of the Thang Long University library",
@@ -149,7 +152,8 @@ const CONTENT_EN: PortfolioContent = {
     },
     experience: {
         title: "Experience",
-        description: "Where I have worked and what I contributed.",
+        description:
+            "The most notable places I have worked, the roles I held and what I contributed.",
         entries: [
             {
                 ...UDATA,
@@ -236,7 +240,8 @@ const CONTENT_EN: PortfolioContent = {
     projects: {
         title: "Projects",
         description:
-            "Products I built and deployed, listed from the most recent to the oldest.",
+            "The most notable products and solutions I have built, developed or deployed myself.",
+        moreLabel: "See more projects on GitHub",
         items: {
             "location-insight": {
                 name: "Location Insight",
@@ -276,7 +281,7 @@ const CONTENT_EN: PortfolioContent = {
     references: {
         title: "References",
         description:
-            "People who can speak to my work and how I work with others.",
+            "People I have worked with who can speak about my abilities and how I work.",
         emailLabel: "Email",
         phoneLabel: "Phone",
         linksLabel: "Links",
@@ -307,7 +312,7 @@ const CONTENT_EN: PortfolioContent = {
     contact: {
         title: "Contact information",
         description:
-            "Hiring, or want to talk about a project? Reach me through any of the channels below.",
+            "Want to know more about me, or talk about a collaboration? Reach out through the channels below, or download my CV for more detail on my experience and skills.",
         channelsLabel: "Contact channels",
         channels: {
             zalo: { label: "Zalo" },
@@ -317,6 +322,23 @@ const CONTENT_EN: PortfolioContent = {
             facebook: { label: "Facebook" },
             linkedin: { label: "LinkedIn" },
             address: { label: "Address" },
+        },
+        copyHint: "Click to copy",
+        copied: "Copied",
+        copyFailed: "Could not copy",
+        cv: {
+            title: "Download my CV",
+            description: "PDF, available in English and Vietnamese.",
+            files: {
+                en: {
+                    label: "Download CV in English",
+                    title: "Download my CV in English (PDF)",
+                },
+                vi: {
+                    label: "Download CV in Vietnamese",
+                    title: "Download my CV in Vietnamese (PDF)",
+                },
+            },
         },
     },
     footer: {

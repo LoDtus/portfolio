@@ -9,34 +9,38 @@ import { isSupportedLocale, setStoredLocale } from "@/shared/utils/locale.util";
 // "band": chữ trắng trên thanh indigo (desktop). "drawer": nút có viền trên nền sáng của menu mobile.
 export type LocaleSwitcherVariant = "band" | "drawer";
 
+// Một nút duy nhất đổi sang ngôn ngữ kế tiếp (hiện có hai ngôn ngữ nên là "ngôn ngữ còn lại"): cả nút là vùng bấm, dễ chạm hơn hai chữ nhỏ riêng lẻ.
+// Hai mã ngôn ngữ vẫn hiện cùng lúc, mã đang dùng được tô đậm, để người xem biết trang đang ở ngôn ngữ nào.
 export default function LocaleSwitcher({
     locale,
-    label,
+    switchLabel,
     variant,
     onNavigate,
 }: {
     locale: Locale;
-    label: string;
+    // Mô tả hành động theo ngôn ngữ hiện tại, ví dụ "Chuyển sang tiếng Anh".
+    switchLabel: string;
     variant: LocaleSwitcherVariant;
     // Gọi sau khi đổi ngôn ngữ (ví dụ đóng menu mobile); null nếu không cần.
     onNavigate: (() => void) | null;
 }) {
     const pathname = usePathname();
     const router = useRouter();
+    const target = locales[(locales.indexOf(locale) + 1) % locales.length] ?? locale;
 
     // Đổi segment locale, giữ nguyên phần còn lại của đường dẫn (ví dụ /vi/projects/x → /en/projects/x).
-    const buildHref = (target: Locale) => {
+    const buildHref = (nextLocale: Locale) => {
         const segments = pathname.split("/").filter(Boolean);
         const [first] = segments;
         if (first !== undefined && isSupportedLocale(first)) {
-            segments[0] = target;
+            segments[0] = nextLocale;
         } else {
-            segments.unshift(target);
+            segments.unshift(nextLocale);
         }
         return `/${segments.join("/")}`;
     };
 
-    const handleClick = (event: MouseEvent<HTMLAnchorElement>, target: Locale) => {
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         setStoredLocale(target); // ghi nhớ đây là lựa chọn chủ động của người dùng
         // Giữ nguyên vị trí (hash) để đổi ngôn ngữ không đẩy người xem về đầu trang.
@@ -44,48 +48,46 @@ export default function LocaleSwitcher({
         if (onNavigate !== null) onNavigate();
     };
 
-    const isDrawer = variant === "drawer";
+    const styles = STYLES[variant];
 
     return (
-        <div
-            role="group"
-            aria-label={label}
-            className={isDrawer ? "flex items-center gap-2" : "flex items-center"}
+        <Link
+            href={buildHref(target)}
+            hrefLang={target}
+            aria-label={switchLabel}
+            title={switchLabel}
+            onClick={handleClick}
+            className={styles.button}
         >
-            {locales.map((target, index) => {
-                const isCurrent = target === locale;
-                return (
-                    <span key={target} className="flex items-center">
-                        {!isDrawer && index > 0 ? (
-                            <span aria-hidden="true" className="px-1 text-white/40">
-                                /
-                            </span>
-                        ) : null}
-                        <Link
-                            href={buildHref(target)}
-                            hrefLang={target}
-                            lang={target}
-                            aria-current={isCurrent ? "true" : undefined}
-                            onClick={(event) => handleClick(event, target)}
-                            className={getLinkClassName(isDrawer, isCurrent)}
-                        >
-                            {target}
-                        </Link>
-                    </span>
-                );
-            })}
-        </div>
+            {locales.map((code) => (
+                <span
+                    key={code}
+                    aria-hidden="true"
+                    className={`${styles.code} ${code === locale ? styles.active : styles.inactive}`}
+                >
+                    {code}
+                </span>
+            ))}
+        </Link>
     );
 }
 
-function getLinkClassName(isDrawer: boolean, isCurrent: boolean): string {
-    if (isDrawer) {
-        const base =
-            "inline-flex min-h-10 min-w-14 items-center justify-center border px-4 text-sm font-bold uppercase tracking-wide";
-        return isCurrent
-            ? `${base} border-band bg-band text-white`
-            : `${base} border-border-main text-heading hover:border-heading`;
-    }
-    const base = "px-1 text-sm font-bold uppercase tracking-wide";
-    return isCurrent ? `${base} text-white` : `${base} text-white/60 hover:text-white`;
-}
+const STYLES: Record<
+    LocaleSwitcherVariant,
+    { button: string; code: string; active: string; inactive: string }
+> = {
+    band: {
+        button:
+            "inline-flex h-8 items-stretch border border-white/40 text-sm font-bold uppercase tracking-wide transition-colors hover:border-white",
+        code: "inline-flex min-w-9 items-center justify-center px-2",
+        active: "bg-white text-band",
+        inactive: "text-white/75",
+    },
+    drawer: {
+        button:
+            "inline-flex min-h-11 items-stretch border border-border-main text-sm font-bold uppercase tracking-wide transition-colors hover:border-heading",
+        code: "inline-flex min-w-14 items-center justify-center px-4",
+        active: "bg-band text-white",
+        inactive: "text-heading",
+    },
+};

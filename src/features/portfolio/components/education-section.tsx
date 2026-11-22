@@ -1,6 +1,5 @@
 import Image from "next/image";
 import CountUp from "@/features/portfolio/components/count-up";
-import HighlightedText from "@/features/portfolio/components/highlighted-text";
 import PhotoSlider from "@/features/portfolio/components/photo-slider";
 import SectionHeading from "@/features/portfolio/components/section-heading";
 import { EDUCATION } from "@/features/portfolio/constants/profile.constants";
@@ -95,10 +94,7 @@ export default function EducationSection({
 
                         <div className="space-y-6">
                             <p className="leading-7 text-white/80">
-                                <HighlightedText
-                                    text={education.summary}
-                                    phrases={[education.summaryHighlight]}
-                                />
+                                {education.summary}
                             </p>
                             <a
                                 href={programUrl}

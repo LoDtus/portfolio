@@ -58,7 +58,7 @@ export default async function PortfolioPage({
 
             <RevealObserver key={locale} />
             <SpotlightEffect />
-            <CopyAsMarkdown markdown={buildPageMarkdown(content, programUrl)} />
+            <CopyAsMarkdown markdown={buildPageMarkdown(content, programUrl, getSiteUrl())} />
             <div aria-hidden="true" className="scroll-progress no-print" />
 
             <script

@@ -1,10 +1,18 @@
+import { Download } from "lucide-react";
 import ContactChannelCard from "@/features/portfolio/components/contact-channel-card";
-import { CONTACT_CHANNELS } from "@/features/portfolio/constants/profile.constants";
+import ContactCopyCard from "@/features/portfolio/components/contact-copy-card";
+import {
+    CONTACT_CHANNELS,
+    CV_FILES,
+} from "@/features/portfolio/constants/profile.constants";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
+import { locales } from "@/shared/constants/i18n.constants";
 
 export default function ContactSection({ content }: { content: PortfolioContent }) {
     const { contact } = content;
+    // Bản CV cùng ngôn ngữ với trang đứng đầu, bản còn lại đứng sau.
+    const cvLocales = [content.locale, ...locales.filter((item) => item !== content.locale)];
 
     return (
         <section
@@ -27,7 +35,7 @@ export default function ContactSection({ content }: { content: PortfolioContent 
                                 {contact.title}
                             </h2>
                         </div>
-                        <p className="max-w-xl text-lg leading-8 text-white/80">
+                        <p className="max-w-2xl text-lg leading-8 text-white/80">
                             {contact.description}
                         </p>
                     </div>
@@ -39,15 +47,57 @@ export default function ContactSection({ content }: { content: PortfolioContent 
                         {CONTACT_CHANNELS.map((channel, index) => (
                             <li
                                 key={channel.id}
-                                className={`reveal min-w-0 ${REVEAL_DELAY_CLASSES[index % 2]}`}
+                                className={`reveal min-w-0 sm:[&:last-child:nth-child(odd)]:col-span-2 ${REVEAL_DELAY_CLASSES[index % 2]}`}
                             >
-                                <ContactChannelCard
-                                    channel={channel}
-                                    label={contact.channels[channel.id].label}
-                                />
+                                {channel.copyText === null ? (
+                                    <ContactChannelCard
+                                        channel={channel}
+                                        label={contact.channels[channel.id].label}
+                                    />
+                                ) : (
+                                    <ContactCopyCard
+                                        channel={channel}
+                                        copyText={channel.copyText}
+                                        label={contact.channels[channel.id].label}
+                                        hint={contact.copyHint}
+                                        copiedLabel={contact.copied}
+                                        failedLabel={contact.copyFailed}
+                                    />
+                                )}
                             </li>
                         ))}
                     </ul>
+
+                    {/* Khối tải CV tách riêng bằng đường kẻ, tiêu đề và nút đặc có biểu tượng tải xuống, để không bị nhầm là một kênh liên hệ. */}
+                    <div className="reveal mt-12 border-t border-white/20 pt-8">
+                        <h3 className="font-display text-2xl font-bold">{contact.cv.title}</h3>
+                        <p className="mt-2 text-white/75">{contact.cv.description}</p>
+                        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                            {cvLocales.map((fileLocale, index) => {
+                                const file = CV_FILES[fileLocale];
+                                const text = contact.cv.files[fileLocale];
+                                return (
+                                    <a
+                                        key={fileLocale}
+                                        href={file.href}
+                                        download={file.fileName}
+                                        type="application/pdf"
+                                        title={text.title}
+                                        className={`btn ${index === 0 ? "btn-light" : "btn-on-dark"}`}
+                                    >
+                                        <Download aria-hidden="true" className="size-5" />
+                                        {text.label}
+                                        <span
+                                            aria-hidden="true"
+                                            className="text-xs font-bold tracking-wider opacity-70"
+                                        >
+                                            PDF
+                                        </span>
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

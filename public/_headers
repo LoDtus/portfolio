@@ -16,7 +16,7 @@
 # Logo, ảnh, tài liệu markdown: tên tệp không có hash nên chỉ cache 7 ngày
 /logo/*
   Cache-Control: public, max-age=604800
-/images/*
+/image/*
   Cache-Control: public, max-age=604800
 /markdown/*
   Cache-Control: public, max-age=604800
@@ -27,4 +27,8 @@
 /robots.txt
   Cache-Control: public, max-age=3600
 /sitemap.xml
+  Cache-Control: public, max-age=3600
+
+# CV (PDF): tên tệp cố định và có thể được thay mới bất cứ lúc nào nên chỉ cache ngắn
+/cv/*
   Cache-Control: public, max-age=3600

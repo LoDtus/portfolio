@@ -28,7 +28,7 @@ interface SiteNavProps {
         nav: string;
         openMenu: string;
         closeMenu: string;
-        language: string;
+        switchLanguage: string;
     };
 }
 
@@ -115,7 +115,7 @@ export default function SiteNav({
                         <ThemeToggle />
                         <LocaleSwitcher
                             locale={locale}
-                            label={labels.language}
+                            switchLabel={labels.switchLanguage}
                             variant="drawer"
                             onNavigate={closeMenu}
                         />

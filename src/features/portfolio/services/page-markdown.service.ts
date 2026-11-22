@@ -1,6 +1,8 @@
 import {
     CONTACT_CHANNELS,
+    CV_FILES,
     EDUCATION,
+    PROFILE,
     PROJECTS,
     REFERENCES,
     SKILL_GROUP_ORDER,
@@ -15,6 +17,7 @@ import type {
 } from "@/features/portfolio/types/portfolio.types";
 import { formatCopyright } from "@/features/portfolio/utils/copyright.utils";
 import { sortExperienceEntries } from "@/features/portfolio/utils/experience.utils";
+import { locales } from "@/shared/constants/i18n.constants";
 
 type LinkLabels = PortfolioContent["ui"]["linkLabels"];
 
@@ -125,13 +128,23 @@ function formatReferences(content: PortfolioContent): string[] {
     });
 }
 
+// Các bản CV dạng liên kết tuyệt đối (dán đi đâu cũng mở được), bản cùng ngôn ngữ với trang đứng đầu.
+function formatCvLinks(content: PortfolioContent, siteUrl: string): string[] {
+    const ordered = [content.locale, ...locales.filter((item) => item !== content.locale)];
+    return ordered.map(
+        (locale) =>
+            `- ${link(content.contact.cv.files[locale].label, `${siteUrl}${CV_FILES[locale].href}`)}`,
+    );
+}
+
 // Toàn bộ nội dung trang dạng markdown thuần (không ảnh, không biểu tượng), theo ngôn ngữ của `content` và đúng thứ tự các mục trên trang.
 // Dùng cho thao tác "chọn tất cả rồi sao chép" (xem CopyAsMarkdown). Dựng từ cùng dữ liệu với giao diện nên không lệch khi sửa nội dung;
 // mục mới thêm vào trang PHẢI được thêm vào đây (xem .claude/rules/page-markdown.md).
-// `programUrl` là địa chỉ nút "Xem ngành học" đã kiểm tra lúc build.
+// `programUrl` là địa chỉ nút "Xem ngành học" đã kiểm tra lúc build; `siteUrl` là gốc của trang (để liên kết CV là địa chỉ đầy đủ).
 export function buildPageMarkdown(
     content: PortfolioContent,
     programUrl: string,
+    siteUrl: string,
 ): string {
     const { hero, about, skills, education, experience, projects, references, contact, footer } = content;
     const educationLines = [
@@ -173,12 +186,18 @@ export function buildPageMarkdown(
         `## ${projects.title}`,
         "",
         ...formatProjects(content),
+        `- ${link(projects.moreLabel, PROFILE.githubRepositoriesUrl)}`,
+        "",
         `## ${references.title}`,
         "",
         ...formatReferences(content),
         `## ${contact.title}`,
         "",
         ...channels,
+        "",
+        `### ${contact.cv.title}`,
+        "",
+        ...formatCvLinks(content, siteUrl),
         "",
         "---",
         "",

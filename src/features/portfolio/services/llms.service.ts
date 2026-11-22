@@ -1,8 +1,10 @@
 import {
     CONTACT_CHANNELS,
+    CV_FILES,
     EDUCATION,
     PROFILE,
     PROJECTS,
+    REFERENCES,
     SKILL_GROUP_ORDER,
     SKILL_ITEMS,
 } from "@/features/portfolio/constants/profile.constants";
@@ -92,6 +94,17 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         ]);
     });
 
+    const references = REFERENCES.map((facts) => {
+        const text = main.references.items[facts.id];
+        const links = facts.links.map((item) => `[${item.label}](${item.url})`).join(", ");
+        return formatProject(facts.name, [text.role, links === "" ? null : links]);
+    });
+
+    const cvLinks = locales.map(
+        (locale) =>
+            `- [${main.contact.cv.files[locale].label}](${siteUrl}${CV_FILES[locale].href})`,
+    );
+
     const contacts = CONTACT_CHANNELS.map(
         (channel) =>
             `- ${main.contact.channels[channel.id].label}: [${channel.value}](${channel.href})`,
@@ -117,9 +130,16 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         ...experience,
         `## ${main.nav.projects}`,
         ...projects,
+        `- [${main.projects.moreLabel}](${PROFILE.githubRepositoriesUrl})`,
+        "",
+        `## ${main.nav.references}`,
+        ...references,
         "",
         `## ${main.nav.contact}`,
         ...contacts,
+        "",
+        `### ${main.contact.cv.title}`,
+        ...cvLinks,
         "",
     ].join("\n");
 }

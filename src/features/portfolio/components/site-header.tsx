@@ -36,7 +36,7 @@ export default function SiteHeader({
                     <div className="hidden lg:block">
                         <LocaleSwitcher
                             locale={locale}
-                            label={content.ui.languageLabel}
+                            switchLabel={content.ui.switchLanguage}
                             variant="band"
                             onNavigate={null}
                         />
@@ -53,7 +53,7 @@ export default function SiteHeader({
                     nav: content.ui.navLabel,
                     openMenu: content.ui.menuOpen,
                     closeMenu: content.ui.menuClose,
-                    language: content.ui.languageLabel,
+                    switchLanguage: content.ui.switchLanguage,
                 }}
             />
         </>

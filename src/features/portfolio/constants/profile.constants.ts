@@ -1,3 +1,8 @@
+import {
+    countWorkedMonths,
+    formatExperienceYears,
+} from "@/features/portfolio/utils/experience-duration.utils";
+import type { Locale } from "@/shared/constants/i18n.constants";
 import type {
     ContactChannelFacts,
     ExperienceCompany,
@@ -13,6 +18,8 @@ import type {
 export const PROFILE = {
     name: "Long Nguyen",
     githubUrl: "https://github.com/LoDtus",
+    // Trang liệt kê toàn bộ kho mã nguồn công khai (nút "xem thêm dự án" ở mục Dự án).
+    githubRepositoriesUrl: "https://github.com/LoDtus?tab=repositories",
     facebookUrl: "https://www.facebook.com/nguyentrunglong.LoDtus/",
     linkedinUrl: "https://www.linkedin.com/in/nguyentrunglong/",
     zaloUrl: "https://zalo.me/0375467302",
@@ -29,14 +36,14 @@ export const PROFILE = {
     },
     // Logo thương hiệu của trang (đã có sẵn trong public/logo).
     logo: "/logo/longvi.svg",
-    // Ảnh chân dung đã tách nền, có sẵn vòng tròn terracotta phía sau (public/images/me).
-    portrait: { src: "/images/me/me-001.avif", width: 800, height: 897 },
+    // Ảnh chân dung đã tách nền, có sẵn vòng tròn terracotta phía sau (public/image/me).
+    portrait: { src: "/image/me/me-001.avif", width: 800, height: 897 },
 } as const;
 
 // Dữ kiện SEO dùng chung cho metadata, sitemap và dữ liệu có cấu trúc.
 export const SEO = {
     // Ngày cập nhật nội dung gần nhất ("YYYY-MM-DD"); sửa nội dung trang thì nhớ đổi ngày này (dùng cho sitemap và dateModified).
-    contentUpdatedAt: "2026-11-22",
+    contentUpdatedAt: "2026-11-23",
     // Ảnh chia sẻ mạng xã hội 1200x630 (JPEG vì Facebook/Zalo không đọc ổn định AVIF/WebP).
     ogImage: { path: "/og/og-image.jpg", width: 1200, height: 630 },
     // Tên khác của chủ trang: biệt danh và tên đầy đủ có dấu (để tìm theo tên tiếng Việt).
@@ -44,16 +51,10 @@ export const SEO = {
     knowsLanguage: ["vi", "en"],
 } as const;
 
-// Các kênh liên hệ theo thứ tự hiển thị. Logo lấy từ public/logo; GitHub, điện thoại, địa chỉ dùng biểu tượng vẽ sẵn.
+// Các kênh liên hệ theo thứ tự hiển thị ở mục Liên hệ (chân trang lấy lại đúng thứ tự này, bỏ điện thoại và địa chỉ).
+// Logo lấy từ public/logo; GitHub, điện thoại, địa chỉ dùng biểu tượng vẽ sẵn.
+// Điện thoại, Gmail, địa chỉ có `copyText`: bấm vào chỉ sao chép (số điện thoại không có dấu cách để dán là gọi được ngay).
 export const CONTACT_CHANNELS: readonly ContactChannelFacts[] = [
-    {
-        id: "zalo",
-        value: PROFILE.phoneDisplay,
-        href: PROFILE.zaloUrl,
-        icon: "logo",
-        logo: "/logo/zalo.svg",
-        isExternal: true,
-    },
     {
         id: "phone",
         value: PROFILE.phoneDisplay,
@@ -61,6 +62,16 @@ export const CONTACT_CHANNELS: readonly ContactChannelFacts[] = [
         icon: "phone",
         logo: null,
         isExternal: false,
+        copyText: PROFILE.phoneDisplay.replace(/\s/g, ""),
+    },
+    {
+        id: "zalo",
+        value: PROFILE.phoneDisplay,
+        href: PROFILE.zaloUrl,
+        icon: "logo",
+        logo: "/logo/zalo.svg",
+        isExternal: true,
+        copyText: null,
     },
     {
         id: "email",
@@ -69,14 +80,7 @@ export const CONTACT_CHANNELS: readonly ContactChannelFacts[] = [
         icon: "logo",
         logo: "/logo/gmail.svg",
         isExternal: false,
-    },
-    {
-        id: "github",
-        value: "github.com/LoDtus",
-        href: PROFILE.githubUrl,
-        icon: "github",
-        logo: null,
-        isExternal: true,
+        copyText: PROFILE.email,
     },
     {
         id: "facebook",
@@ -85,6 +89,7 @@ export const CONTACT_CHANNELS: readonly ContactChannelFacts[] = [
         icon: "logo",
         logo: "/logo/facebook.svg",
         isExternal: true,
+        copyText: null,
     },
     {
         id: "linkedin",
@@ -93,6 +98,16 @@ export const CONTACT_CHANNELS: readonly ContactChannelFacts[] = [
         icon: "logo",
         logo: "/logo/linkedin.svg",
         isExternal: true,
+        copyText: null,
+    },
+    {
+        id: "github",
+        value: "github.com/LoDtus",
+        href: PROFILE.githubUrl,
+        icon: "github",
+        logo: null,
+        isExternal: true,
+        copyText: null,
     },
     {
         id: "address",
@@ -101,8 +116,21 @@ export const CONTACT_CHANNELS: readonly ContactChannelFacts[] = [
         icon: "address",
         logo: null,
         isExternal: true,
+        copyText: PROFILE.address.display,
     },
 ];
+
+// Hai bản CV (PDF) đặt trong public/cv; thêm hoặc thay file ở đó là đủ, không cần sửa code.
+export const CV_FILES: Readonly<Record<Locale, { href: string; fileName: string }>> = {
+    vi: {
+        href: "/cv/NguyenTrungLong-FullstackDeveloper-vi.pdf",
+        fileName: "NguyenTrungLong-FullstackDeveloper-vi.pdf",
+    },
+    en: {
+        href: "/cv/NguyenTrungLong-FullstackDeveloper-en.pdf",
+        fileName: "NguyenTrungLong-FullstackDeveloper-en.pdf",
+    },
+};
 
 // Trang mạng xã hội/hồ sơ của chính chủ, dùng cho dữ liệu có cấu trúc (schema.org sameAs).
 export const SAME_AS_URLS: readonly string[] = [
@@ -113,7 +141,19 @@ export const SAME_AS_URLS: readonly string[] = [
 
 export const EDUCATION = {
     schoolName: "Thang Long University",
+    // Tên tiếng Việt và các cách gọi phổ biến của trường (dữ liệu có cấu trúc, để tìm theo tên nào cũng ra).
+    schoolAlternateNames: [
+        "Trường Đại học Thăng Long",
+        "Đại học Thăng Long",
+        "ĐH Thăng Long",
+        "Thăng Long University",
+        "TLU",
+    ],
     schoolUrl: "https://thanglong.edu.vn",
+    // Trang giới thiệu trường trên Wikipedia tiếng Việt (đã kiểm tra tồn tại), dùng làm sameAs để công cụ tìm kiếm nối đúng thực thể.
+    schoolWikipediaUrl:
+        "https://vi.wikipedia.org/wiki/Tr%C6%B0%E1%BB%9Dng_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_Th%C4%83ng_Long",
+    schoolLocality: "Hà Nội",
     // Liên kết ngành học; nếu trang này không còn (404/410) thì nút "Xem ngành học" dùng `schoolUrl` (xem education-link.service.ts).
     majorUrl: "https://thanglong.edu.vn/vi/nganh-hoc/cong-nghe-thong-tin",
     // Năm thành lập trường, dùng để tính "hơn/gần N năm" theo năm hiện tại.
@@ -126,9 +166,9 @@ export const EDUCATION = {
     logoColor: "/logo/thang-long-university.webp",
     // Các ảnh của trường (slide, mỗi lần một ảnh). Ảnh nguồn nằm trong workspace/assets-source/images/education.
     photos: [
-        { src: "/images/education/thang-long-graduation.avif", width: 1200, height: 848, position: "50% 30%" },
-        { src: "/images/education/thang-long-computer-lab.avif", width: 1200, height: 800 },
-        { src: "/images/education/thang-long-study-group.avif", width: 1200, height: 800 },
+        { src: "/image/education/tlu-001.avif", width: 1200, height: 848, position: "50% 30%" },
+        { src: "/image/education/tlu-002.avif", width: 1200, height: 800 },
+        { src: "/image/education/tlu-003.avif", width: 1200, height: 800 },
     ],
 } as const;
 
@@ -139,9 +179,25 @@ export const REFERENCES: readonly ReferenceFacts[] = [
         id: "nguyen-huy-toan",
         name: "Nguyễn Huy Toán",
         organization: null,
+        seo: {
+            alternateNames: [
+                "Nguyen Huy Toan",
+                "Toan Nguyen Huy",
+                "TS. Nguyễn Huy Toán",
+                "Dr. Nguyen Huy Toan",
+            ],
+            worksFor: [
+                { name: "Verysell AI", url: "https://verysell.ai/" },
+                { name: "SmartDev", url: null },
+            ],
+            parentOrganization: "Verysell Group",
+            alumniOf: "Chonnam National University",
+            mentions: ["Europe – Vietnam Technovation Forum 2026"],
+            knowsAbout: ["Artificial Intelligence", "Deep Learning", "Computer Vision"],
+        },
         photos: [
-            { src: "/images/reference-nht/nht-001.avif", width: 400, height: 400, position: "50% 25%" },
-            { src: "/images/reference-nht/nht-002.avif", width: 1000, height: 666, position: "46% 50%" },
+            { src: "/image/reference-nht/nht-001.avif", width: 400, height: 400, position: "50% 25%" },
+            { src: "/image/reference-nht/nht-002.avif", width: 1000, height: 666, position: "46% 50%" },
         ],
         email: "toannh@udata.ai",
         phoneE164: "+84862820165",
@@ -161,8 +217,16 @@ export const REFERENCES: readonly ReferenceFacts[] = [
         id: "tran-tien-quan",
         name: "Trần Tiến Quân",
         organization: null,
+        seo: {
+            alternateNames: ["Tran Tien Quan"],
+            worksFor: [],
+            parentOrganization: null,
+            alumniOf: "Hanoi University of Science and Technology",
+            mentions: ["VinBrain", "MB Bank", "ASCEND Vietnam 2026", "Swinburne Hackathon"],
+            knowsAbout: ["AI agent", "MCP", "n8n", "Claude", "Generative AI"],
+        },
         photos: [
-            { src: "/images/reference-ttq/ttq-001.avif", width: 800, height: 1192, position: "50% 15%" },
+            { src: "/image/reference-ttq/ttq-001.avif", width: 800, height: 1192, position: "50% 15%" },
         ],
         email: "quantran98@gmail.com",
         phoneE164: "+84981044945",
@@ -246,7 +310,7 @@ export interface ProjectConfig {
     endedAt: string | null;
     links: readonly ProjectLink[];
     tech: readonly string[];
-    // Ảnh đại diện của dự án (đặt trong public/images/projects); null nghĩa là chưa có, thẻ dự án bỏ phần ảnh.
+    // Ảnh đại diện của dự án (đặt trong public/image/projects); null nghĩa là chưa có, thẻ dự án bỏ phần ảnh.
     thumbnail: { src: string; width: number; height: number } | null;
 }
 
@@ -355,15 +419,15 @@ export const UDATA: ExperienceCompany = {
     id: "udata",
     company: "Udata",
     companyUrl: null,
-    logo: "/images/experiment-udata/logo.svg",
+    logo: "/image/experiment-udata/logo.svg",
     logoWidth: 380,
     logoHeight: 100,
     startedAt: "2026-06",
-    endedAt: "2026-12",
+    endedAt: "2026-11",
     photos: [
-        { src: "/images/experiment-udata/udata-001.avif", width: 960, height: 600 },
-        { src: "/images/experiment-udata/udata-002.avif", width: 960, height: 600 },
-        { src: "/images/experiment-udata/udata-003.avif", width: 960, height: 600 },
+        { src: "/image/experiment-udata/udata-001.avif", width: 960, height: 600 },
+        { src: "/image/experiment-udata/udata-002.avif", width: 960, height: 600 },
+        { src: "/image/experiment-udata/udata-003.avif", width: 960, height: 600 },
     ],
     projects: [
         {
@@ -412,15 +476,15 @@ export const IRDOP: ExperienceCompany = {
     id: "irdop",
     company: "IRDOP",
     companyUrl: "https://irdop.org/",
-    logo: "/images/experiment-irdop/logo.webp",
+    logo: "/image/experiment-irdop/logo.webp",
     logoWidth: 360,
     logoHeight: 110,
     startedAt: "2025-10",
     endedAt: "2026-04",
     photos: [
-        { src: "/images/experiment-irdop/irdop-001.avif", width: 960, height: 600 },
-        { src: "/images/experiment-irdop/irdop-002.avif", width: 960, height: 600 },
-        { src: "/images/experiment-irdop/irdop-003.avif", width: 960, height: 600 },
+        { src: "/image/experiment-irdop/irdop-001.avif", width: 960, height: 600 },
+        { src: "/image/experiment-irdop/irdop-002.avif", width: 960, height: 600 },
+        { src: "/image/experiment-irdop/irdop-003.avif", width: 960, height: 600 },
     ],
     projects: [
         {
@@ -448,13 +512,13 @@ export const LIFETEX: ExperienceCompany = {
     id: "lifetex",
     company: "Lifetex",
     companyUrl: null,
-    logo: "/images/experiment-lifetex/logo.webp",
+    logo: "/image/experiment-lifetex/logo.webp",
     logoWidth: 178,
     logoHeight: 129,
     startedAt: "2024-03",
-    endedAt: "2026-06",
+    endedAt: "2024-06",
     photos: [
-        { src: "/images/experiment-lifetex/lifetex-001.avif", width: 960, height: 600 },
+        { src: "/image/experiment-lifetex/lifetex-001.avif", width: 960, height: 600 },
     ],
     projects: [
         {
@@ -477,3 +541,10 @@ export const LIFETEX: ExperienceCompany = {
         },
     ],
 };
+
+// Các nơi đã làm việc, dùng để tính tổng số năm kinh nghiệm (xem experience-duration.utils.ts).
+// Thêm công ty mới thì thêm vào đây; `endedAt: null` nghĩa là đang làm, tự lấy tháng hiện tại làm mốc kết thúc.
+export const EXPERIENCE_COMPANIES: readonly ExperienceCompany[] = [UDATA, IRDOP, LIFETEX];
+
+// Tổng số năm kinh nghiệm dạng chữ ("1.5+"), tính lúc build từ EXPERIENCE_COMPANIES và tháng hiện tại (xem formatExperienceYears).
+export const EXPERIENCE_YEARS = formatExperienceYears(countWorkedMonths(EXPERIENCE_COMPANIES));

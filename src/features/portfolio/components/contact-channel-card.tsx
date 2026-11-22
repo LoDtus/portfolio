@@ -1,20 +1,10 @@
-import ContactChannelIcon from "@/features/portfolio/components/contact-channel-icon";
+import ContactChannelBody, {
+    CHANNEL_CARD_CLASS,
+} from "@/features/portfolio/components/contact-channel-body";
 import type { ContactChannelFacts } from "@/features/portfolio/types/portfolio.types";
 
-// Một kênh liên hệ trên nền xanh đậm: logo (giữ nguyên màu thương hiệu, không có ô nền), nhãn và giá trị.
-// Cho phép xuống dòng ngay trước "@" của email, để địa chỉ dài không bị cắt giữa chữ.
-function renderValue(value: string) {
-    const at = value.indexOf("@");
-    if (at === -1) return value;
-    return (
-        <>
-            {value.slice(0, at)}
-            <wbr />
-            {value.slice(at)}
-        </>
-    );
-}
-
+// Thẻ kênh liên hệ dạng liên kết (Zalo, Facebook, LinkedIn, GitHub) mở sang trang khác.
+// Kênh cần sao chép (điện thoại, Gmail, địa chỉ) dùng ContactCopyCard.
 export default function ContactChannelCard({
     channel,
     label,
@@ -27,25 +17,8 @@ export default function ContactChannelCard({
         : {};
 
     return (
-        <a
-            href={channel.href}
-            {...externalProps}
-            className="group spotlight spotlight-on-dark flex h-full items-center gap-4 border border-white/20 bg-white/5 p-4 hover:border-white hover:bg-white/10"
-        >
-            <span
-                aria-hidden="true"
-                className="inline-flex size-11 shrink-0 items-center justify-center text-white transition-transform duration-200 group-hover:scale-110"
-            >
-                <ContactChannelIcon channel={channel} className="size-8" />
-            </span>
-            <span className="min-w-0">
-                <span className="block text-xs font-bold uppercase tracking-widest text-brand-mint">
-                    {label}
-                </span>
-                <span className="block break-words font-semibold text-white">
-                    {renderValue(channel.value)}
-                </span>
-            </span>
+        <a href={channel.href} {...externalProps} className={CHANNEL_CARD_CLASS}>
+            <ContactChannelBody channel={channel} label={label} trailing={null} />
         </a>
     );
 }

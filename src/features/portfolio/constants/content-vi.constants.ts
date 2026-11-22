@@ -1,5 +1,6 @@
 import {
     EDUCATION,
+    EXPERIENCE_YEARS,
     IRDOP,
     LIFETEX,
     PROFILE,
@@ -40,10 +41,11 @@ const CONTENT_VI: PortfolioContent = {
     meta: {
         title: `${PROFILE.name} | Lập trình viên Fullstack`,
         description:
-            "Long Nguyen, lập trình viên Fullstack tại Hà Nội: Next.js, NestJS, FastAPI, Docker. Kinh nghiệm tại Udata, IRDOP, Lifetex và các dự án đã triển khai.",
+            "Nguyễn Trung Long (Long Nguyen), lập trình viên Fullstack tại Hà Nội, học Công nghệ thông tin tại Đại học Thăng Long. Next.js, NestJS, FastAPI.",
         jobTitle: "Lập trình viên Fullstack",
     },
     ui: {
+        switchLanguage: "Chuyển sang tiếng Anh",
         topBarLabel: "Thông tin liên hệ nhanh",
         skipToContent: "Bỏ qua điều hướng, tới nội dung chính",
         navLabel: "Điều hướng chính",
@@ -64,7 +66,7 @@ const CONTENT_VI: PortfolioContent = {
     },
     nav: {
         about: "Giới thiệu",
-        skills: "Kỹ năng",
+        skills: "Năng lực",
         education: "Học vấn",
         experience: "Kinh nghiệm",
         projects: "Dự án",
@@ -88,12 +90,13 @@ const CONTENT_VI: PortfolioContent = {
     about: {
         title: "Giới thiệu",
         description:
-            "Tóm tắt nhanh để bạn nắm được tôi là ai và đang làm gì.",
+            "Đôi nét về tôi, những gì tôi đã làm và những điều tôi muốn hướng tới trong tương lai.",
         paragraphs: [
-            `Tôi học ngành Công nghệ thông tin tại Đại học Thăng Long trong giai đoạn ${EDUCATION.startYear} – ${EDUCATION.endYear} với GPA ${EDUCATION.gpa}/${EDUCATION.gpaScale}.`,
-            "Tôi làm việc ở cả hai đầu của một sản phẩm: giao diện (Next.js, React, React Native) và dịch vụ phía sau (NestJS, FastAPI, Spring Boot), cùng cách đóng gói, triển khai, vận hành bằng Docker, Nginx và Cloudflare.",
+            "Tôi có nền tảng Công nghệ thông tin và kinh nghiệm phát triển sản phẩm phần mềm từ khâu phát triển đến triển khai thực tế, với thế mạnh về Full-stack Development, ứng dụng AI vào quy trình làm việc, tích hợp hệ thống và triển khai hạ tầng.",
+            "Tôi quan tâm đến việc thấu hiểu bản chất vấn đề, nhu cầu nghiệp vụ cũng như những khó khăn thực tế của khách hàng và doanh nghiệp. Với tư duy hệ thống và khả năng phân tích, tôi hướng đến việc tìm kiếm những giải pháp phù hợp nhằm tối ưu quy trình, nâng cao hiệu suất và tạo ra giá trị thiết thực.",
+            "Mong muốn của tôi là khám phá và phát triển trong nhiều lĩnh vực khác nhau, từ công nghệ, kỹ thuật, cơ khí đến sản phẩm và kinh doanh. Tôi luôn sẵn sàng học hỏi, bắt đầu với những vai trò và hướng đi mới, đào sâu vào chuyên môn hiện tại, đóng góp và giải quyết những bài toán trong từng lĩnh vực.",
         ],
-        highlights: ["cả hai đầu của một sản phẩm"],
+        highlights: ["Full-stack Development"],
         facts: [
             {
                 value: `${EDUCATION.startYear} – ${EDUCATION.endYear}`,
@@ -104,15 +107,15 @@ const CONTENT_VI: PortfolioContent = {
                 label: "GPA",
             },
             {
-                value: String(PROJECTS.length),
-                label: "Dự án đã thực hiện",
+                value: EXPERIENCE_YEARS,
+                label: "Năm kinh nghiệm",
             },
         ],
     },
     skills: {
-        title: "Kỹ năng",
+        title: "Năng lực",
         description:
-            "Nhóm theo vai trò trong một sản phẩm web. Chỉ liệt kê công nghệ tôi đã dùng trong dự án thật.",
+            "Những kỹ năng, công nghệ và kiến thức tôi đã tích lũy qua quá trình học tập, làm việc và phát triển sản phẩm thực tế.",
         groups: {
             languages: "Ngôn ngữ lập trình",
             frontend: "Frontend",
@@ -134,14 +137,13 @@ const CONTENT_VI: PortfolioContent = {
     education: {
         title: "Học vấn",
         description:
-            "Chương trình đào tạo ứng dụng thực tiễn tại trường đại học ngoài công lập đầu tiên của Việt Nam.",
+            "Nền tảng học tập, chuyên ngành và những kiến thức tôi đã tích lũy trong quá trình học đại học.",
         school: "Trường Đại học Thăng Long",
         major: "Công nghệ thông tin",
         majorLabel: "Ngành",
         periodLabel: "Thời gian",
         gpaLabel: "GPA",
         summary: `Trường đại học ngoài công lập đầu tiên tại Việt Nam, với ${SCHOOL_AGE} tiên phong đào tạo ứng dụng thực tiễn.`,
-        summaryHighlight: SCHOOL_AGE,
         photoAlts: [
             "Sinh viên Đại học Thăng Long trong lễ tốt nghiệp",
             "Sinh viên thực hành tại phòng máy tính của thư viện Đại học Thăng Long",
@@ -151,7 +153,8 @@ const CONTENT_VI: PortfolioContent = {
     },
     experience: {
         title: "Kinh nghiệm",
-        description: "Nơi tôi đã làm việc và những gì tôi đã đóng góp.",
+        description:
+            "Những nơi tôi từng làm việc tiêu biểu nhất, các vai trò đã đảm nhận và những đóng góp của tôi.",
         entries: [
             {
                 ...UDATA,
@@ -238,7 +241,8 @@ const CONTENT_VI: PortfolioContent = {
     projects: {
         title: "Dự án",
         description:
-            "Các sản phẩm tôi xây dựng và triển khai, xếp từ gần nhất đến xa nhất.",
+            "Những sản phẩm và giải pháp tiêu biểu nhất mà tôi từng tham gia xây dựng, phát triển hoặc trực tiếp triển khai.",
+        moreLabel: "Xem thêm dự án khác trên GitHub",
         items: {
             "location-insight": {
                 name: "Location Insight",
@@ -278,7 +282,7 @@ const CONTENT_VI: PortfolioContent = {
     references: {
         title: "Người tham chiếu",
         description:
-            "Những người có thể xác nhận về quá trình làm việc của tôi.",
+            "Những người từng làm việc cùng tôi và có thể chia sẻ thêm về năng lực cũng như quá trình làm việc của tôi.",
         emailLabel: "Email",
         phoneLabel: "Điện thoại",
         linksLabel: "Liên kết",
@@ -309,7 +313,7 @@ const CONTENT_VI: PortfolioContent = {
     contact: {
         title: "Thông tin liên hệ",
         description:
-            "Bạn đang tuyển dụng hoặc muốn trao đổi về một dự án? Liên hệ với tôi qua bất kỳ kênh nào dưới đây.",
+            "Bạn muốn tìm hiểu thêm về tôi hoặc trao đổi về một cơ hội hợp tác? Hãy liên hệ qua các kênh dưới đây hoặc tải xuống CV để xem chi tiết hơn về kinh nghiệm và năng lực của tôi.",
         channelsLabel: "Kênh liên hệ",
         channels: {
             zalo: { label: "Zalo" },
@@ -319,6 +323,23 @@ const CONTENT_VI: PortfolioContent = {
             facebook: { label: "Facebook" },
             linkedin: { label: "LinkedIn" },
             address: { label: "Địa chỉ" },
+        },
+        copyHint: "Bấm để sao chép",
+        copied: "Đã sao chép",
+        copyFailed: "Không sao chép được",
+        cv: {
+            title: "Tải xuống CV",
+            description: "Bản PDF, có sẵn bằng tiếng Việt và tiếng Anh.",
+            files: {
+                vi: {
+                    label: "Tải CV tiếng Việt",
+                    title: "Tải xuống CV tiếng Việt (PDF)",
+                },
+                en: {
+                    label: "Tải CV tiếng Anh",
+                    title: "Tải xuống CV tiếng Anh (PDF)",
+                },
+            },
         },
     },
     footer: {

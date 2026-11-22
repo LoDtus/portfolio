@@ -3,6 +3,7 @@ import {
     EDUCATION,
     PROFILE,
     PROJECTS,
+    REFERENCES,
     SAME_AS_URLS,
     SEO,
     SKILL_GROUP_ORDER,
@@ -11,6 +12,7 @@ import {
 import type {
     NeutralSkillGroupId,
     PortfolioContent,
+    ReferenceFacts,
 } from "@/features/portfolio/types/portfolio.types";
 
 type JsonLdNode = Record<string, unknown>;
@@ -23,6 +25,80 @@ const NEUTRAL_GROUPS = SKILL_GROUP_ORDER.filter(
 function pickProjectUrl(links: readonly { kind: string; url: string }[]): string | null {
     const website = links.find((link) => link.kind === "website");
     return (website ?? links[0])?.url ?? null;
+}
+
+// Trường đã học: tên tiếng Anh, tên tiếng Việt và các cách gọi phổ biến, kèm địa điểm và năm thành lập,
+// cùng trang Wikipedia, để công cụ tìm kiếm nối đúng thực thể khi người dùng tìm theo "Đại học Thăng Long".
+function buildSchoolNode(): JsonLdNode {
+    return {
+        "@type": "CollegeOrUniversity",
+        name: EDUCATION.schoolName,
+        alternateName: EDUCATION.schoolAlternateNames,
+        url: EDUCATION.schoolUrl,
+        sameAs: [EDUCATION.schoolWikipediaUrl],
+        foundingDate: String(EDUCATION.foundedYear),
+        address: {
+            "@type": "PostalAddress",
+            addressLocality: EDUCATION.schoolLocality,
+            addressCountry: PROFILE.address.country,
+        },
+    };
+}
+
+// Người tham chiếu là một Person riêng (không gộp vào chủ trang), nối với chủ trang bằng `colleague`.
+// Chỉ đưa dữ kiện đã hiển thị trên trang; cố ý không đưa email và số điện thoại của họ vào dữ liệu có cấu trúc.
+function buildReferenceNode(
+    facts: ReferenceFacts,
+    content: PortfolioContent,
+    siteUrl: string,
+): JsonLdNode {
+    const text = content.references.items[facts.id];
+    const { seo } = facts;
+    const [photo] = facts.photos;
+    const parent =
+        seo.parentOrganization === null
+            ? {}
+            : {
+                  parentOrganization: {
+                      "@type": "Organization",
+                      name: seo.parentOrganization,
+                  },
+              };
+
+    return {
+        "@type": "Person",
+        "@id": `${siteUrl}/#reference-${facts.id}`,
+        name: facts.name,
+        alternateName: seo.alternateNames,
+        ...(text.role === null ? {} : { jobTitle: text.role }),
+        ...(text.summary === null ? {} : { description: text.summary }),
+        ...(photo === undefined ? {} : { image: `${siteUrl}${photo.src}` }),
+        sameAs: facts.links.map((link) => link.url),
+        ...(seo.worksFor.length === 0
+            ? {}
+            : {
+                  worksFor: seo.worksFor.map((org) => ({
+                      "@type": "Organization",
+                      name: org.name,
+                      ...(org.url === null ? {} : { url: org.url }),
+                      ...parent,
+                  })),
+              }),
+        ...(seo.alumniOf === null
+            ? {}
+            : { alumniOf: { "@type": "EducationalOrganization", name: seo.alumniOf } }),
+        knowsAbout: seo.knowsAbout,
+    };
+}
+
+// Tên công ty, tổ chức, sự kiện được nhắc trong phần giới thiệu người tham chiếu: trang "nhắc tới" các tên này.
+function collectReferenceMentions(): readonly JsonLdNode[] {
+    const names = REFERENCES.flatMap(({ seo }) => [
+        ...seo.worksFor.map((org) => org.name),
+        ...(seo.parentOrganization === null ? [] : [seo.parentOrganization]),
+        ...seo.mentions,
+    ]);
+    return [...new Set(names)].map((name) => ({ "@type": "Thing", name }));
 }
 
 // JSON-LD (schema.org) dạng @graph gồm: WebSite, ProfilePage (trang hồ sơ của một người), Person và danh sách dự án.
@@ -58,11 +134,10 @@ export function buildPersonJsonLd(
             addressCountry: PROFILE.address.country,
         },
         sameAs: SAME_AS_URLS,
-        alumniOf: {
-            "@type": "CollegeOrUniversity",
-            name: EDUCATION.schoolName,
-            url: EDUCATION.schoolUrl,
-        },
+        alumniOf: buildSchoolNode(),
+        colleague: REFERENCES.map((facts) => ({
+            "@id": `${siteUrl}/#reference-${facts.id}`,
+        })),
         knowsAbout,
         knowsLanguage: SEO.knowsLanguage,
         contactPoint: CONTACT_CHANNELS.filter(
@@ -96,6 +171,7 @@ export function buildPersonJsonLd(
         isPartOf: { "@id": websiteId },
         mainEntity: { "@id": personId },
         primaryImageOfPage: imageUrl,
+        mentions: collectReferenceMentions(),
     };
 
     const projectList: JsonLdNode = {
@@ -124,7 +200,13 @@ export function buildPersonJsonLd(
 
     return {
         "@context": "https://schema.org",
-        "@graph": [website, profilePage, person, projectList],
+        "@graph": [
+            website,
+            profilePage,
+            person,
+            ...REFERENCES.map((facts) => buildReferenceNode(facts, content, siteUrl)),
+            projectList,
+        ],
     };
 }
 
