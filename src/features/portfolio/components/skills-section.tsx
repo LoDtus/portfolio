@@ -39,7 +39,7 @@ export default function SkillsSection({ content }: { content: PortfolioContent }
                     {groups.map((group, index) => (
                         <li
                             key={group}
-                            className={`reveal min-w-0 ${REVEAL_DELAY_CLASSES[index % 2]}`}
+                            className={`reveal min-w-0 [&:last-child:nth-child(odd)]:col-span-2 ${REVEAL_DELAY_CLASSES[index % 2]}`}
                         >
                             <article className="card-lift spotlight spotlight-on-dark h-full border border-white/20 bg-white/5 p-4 sm:p-6 lg:p-8">
                                 <p className="font-display text-[length:clamp(0.6875rem,3vw,0.875rem)] font-bold tracking-widest text-brand-mint">

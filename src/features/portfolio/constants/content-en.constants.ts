@@ -115,6 +115,7 @@ const CONTENT_EN: PortfolioContent = {
             languages: "Languages",
             frontend: "Frontend",
             backend: "Backend",
+            database: "Databases",
             deploy: "Deployment",
             tools: "Other tools",
             soft: "Soft skills",

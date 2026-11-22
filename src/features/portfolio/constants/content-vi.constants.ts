@@ -117,6 +117,7 @@ const CONTENT_VI: PortfolioContent = {
             languages: "Ngôn ngữ",
             frontend: "Frontend",
             backend: "Backend",
+            database: "Cơ sở dữ liệu",
             deploy: "Triển khai",
             tools: "Các công cụ khác",
             soft: "Kỹ năng mềm",

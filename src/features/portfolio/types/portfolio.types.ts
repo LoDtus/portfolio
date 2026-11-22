@@ -13,6 +13,7 @@ export type SkillGroupId =
     | "languages"
     | "frontend"
     | "backend"
+    | "database"
     | "deploy"
     | "tools"
     | "soft";

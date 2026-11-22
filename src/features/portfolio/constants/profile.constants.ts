@@ -187,15 +187,24 @@ export const CLOUDFLARE_ECOSYSTEM = "Cloudflare ecosystem (Tunnel, Workers, Page
 // Danh sách công nghệ theo nhóm. Kỹ năng mềm có chữ theo ngôn ngữ nên nằm trong `skills.softSkills` của nội dung.
 export const SKILL_ITEMS: Record<NeutralSkillGroupId, readonly string[]> = {
     languages: ["TypeScript", "JavaScript", "Java", "Python"],
-    frontend: ["Next.js", "React", "React Native"],
+    frontend: [
+        "Next.js",
+        "React",
+        "React Native",
+        "Flutter",
+        "Tailwind CSS",
+        "Ant Design",
+        "Redux Toolkit",
+    ],
     backend: [
         "NestJS",
         "Node.js",
         "FastAPI",
-        "FastMCP",
         "Spring Boot",
+        "WebSocket",
         "Apache Kafka",
     ],
+    database: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Elasticsearch"],
     deploy: [
         "Docker",
         "Docker Compose",
@@ -203,7 +212,7 @@ export const SKILL_ITEMS: Record<NeutralSkillGroupId, readonly string[]> = {
         CLOUDFLARE_ECOSYSTEM,
     ],
     tools: [
-        "Claude Code (Max)",
+        "Claude Code",
         "Cursor",
         "Firebase",
         "Synology NAS",
@@ -221,6 +230,7 @@ export const SKILL_GROUP_ORDER: readonly SkillGroupId[] = [
     "languages",
     "frontend",
     "backend",
+    "database",
     "deploy",
     "tools",
     "soft",
@@ -265,7 +275,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "MinIO",
             "Docker",
             "Docker Compose",
-            "Claude Max",
+            "Claude Code",
         ],
         thumbnail: null,
     },

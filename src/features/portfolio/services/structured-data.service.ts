@@ -34,7 +34,7 @@ export function buildPersonJsonLd(
     const pageUrl = `${siteUrl}/${content.locale}`;
     const personId = `${siteUrl}/#person`;
     const websiteId = `${siteUrl}/#website`;
-    // Bỏ phần chú thích trong ngoặc ("Claude Code (Max)" -> "Claude Code") để tên gọn như người ta tìm kiếm.
+    // Bỏ phần chú thích trong ngoặc ("Cloudflare ecosystem (Tunnel, Workers, Pages, R2)" -> "Cloudflare ecosystem") để tên gọn như người ta tìm kiếm.
     const knowsAbout = NEUTRAL_GROUPS.flatMap((group) => SKILL_ITEMS[group]).map(
         (name) => name.replace(/\s*\(.*\)$/, ""),
     );

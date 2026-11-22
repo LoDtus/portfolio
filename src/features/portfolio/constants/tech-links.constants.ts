@@ -16,6 +16,8 @@ export const TECH_LINKS: Readonly<Record<string, string>> = {
     "React Native": "https://reactnative.dev/",
     "Tailwind CSS": "https://tailwindcss.com/",
     Redux: "https://redux.js.org/",
+    "Redux Toolkit": "https://redux-toolkit.js.org/",
+    Flutter: "https://flutter.dev/",
     "Ant Design": "https://ant.design/",
     Leaflet: "https://leafletjs.com/",
     StompJS: "https://stomp-js.github.io/",
@@ -24,7 +26,6 @@ export const TECH_LINKS: Readonly<Record<string, string>> = {
     NestJS: "https://nestjs.com/",
     "Node.js": "https://nodejs.org/",
     FastAPI: "https://fastapi.tiangolo.com/",
-    FastMCP: "https://gofastmcp.com/",
     "Spring Boot": "https://spring.io/projects/spring-boot",
     "Spring Framework": "https://spring.io/projects/spring-framework",
     "Apache Kafka": "https://kafka.apache.org/",
@@ -68,13 +69,11 @@ export const TECH_LINKS: Readonly<Record<string, string>> = {
 
     // AI và API
     "Claude API": "https://www.anthropic.com/api",
-    "Claude Max": "https://claude.com/pricing/max",
     "Gemini AI": "https://gemini.google/",
     "Vietmap API": "https://maps.vietmap.vn/",
     "Google Maps API": "https://developers.google.com/maps",
 
     // Công cụ
-    "Claude Code (Max)": "https://claude.com/product/claude-code",
     "Claude Code": "https://claude.com/product/claude-code",
     Cursor: "https://cursor.com/",
     Firebase: "https://firebase.google.com/",
