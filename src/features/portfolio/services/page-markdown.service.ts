@@ -13,6 +13,7 @@ import type {
     ProjectLink,
     SkillGroupId,
 } from "@/features/portfolio/types/portfolio.types";
+import { formatCopyright } from "@/features/portfolio/utils/copyright.utils";
 import { sortExperienceEntries } from "@/features/portfolio/utils/experience.utils";
 
 type LinkLabels = PortfolioContent["ui"]["linkLabels"];
@@ -183,7 +184,7 @@ export function buildPageMarkdown(
         "",
         footer.credit,
         "",
-        footer.builtWith,
+        formatCopyright(footer),
         "",
     ].join("\n");
 }

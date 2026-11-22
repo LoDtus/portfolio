@@ -318,8 +318,8 @@ const CONTENT_EN: PortfolioContent = {
         },
     },
     footer: {
-        credit: `Logo and images of ${EDUCATION.schoolName} belong to the university (thanglong.edu.vn). Logos and photos of Udata, IRDOP and Lifetex belong to their respective owners.`,
-        builtWith: "Built with Next.js and Tailwind CSS.",
+        credit: "Logos and images of Thang Long University, Udata, IRDOP and Lifetex belong to their respective owners.",
+        builtWith: "Next.js · Tailwind CSS",
     },
 };
 

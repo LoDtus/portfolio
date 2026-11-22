@@ -320,8 +320,8 @@ const CONTENT_VI: PortfolioContent = {
         },
     },
     footer: {
-        credit: `Logo và hình ảnh của ${EDUCATION.schoolName} thuộc nhà trường (thanglong.edu.vn). Logo và ảnh của Udata, IRDOP, Lifetex thuộc các đơn vị tương ứng.`,
-        builtWith: "Xây dựng bằng Next.js và Tailwind CSS.",
+        credit: "Logo và hình ảnh của Đại học Thăng Long, Udata, IRDOP, Lifetex thuộc về các đơn vị tương ứng.",
+        builtWith: "Next.js · Tailwind CSS",
     },
 };
 

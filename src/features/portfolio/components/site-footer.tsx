@@ -8,6 +8,7 @@ import {
 } from "@/features/portfolio/constants/profile.constants";
 import { NAV_SECTION_IDS } from "@/features/portfolio/constants/sections.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
+import { formatCopyright } from "@/features/portfolio/utils/copyright.utils";
 import type { Locale } from "@/shared/constants/i18n.constants";
 
 // Chân trang indigo đậm theo thanglong.edu.vn; dòng ghi nguồn logo/ảnh nằm gọn ở đây (không chú thích dưới ảnh).
@@ -23,8 +24,6 @@ export default function SiteFooter({
     locale: Locale;
     content: PortfolioContent;
 }) {
-    const year = new Date().getFullYear();
-
     return (
         <footer className="no-print bg-band-deep text-white/80">
             <div className="site-container flex flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between">
@@ -76,9 +75,7 @@ export default function SiteFooter({
             <div className="border-t border-white/10">
                 <div className="site-container flex flex-col gap-2 py-6 text-[13px] leading-5 text-white/70 md:flex-row md:items-center md:justify-between">
                     <p>{content.footer.credit}</p>
-                    <p>
-                        © {year} {PROFILE.name}. {content.footer.builtWith}
-                    </p>
+                    <p>{formatCopyright(content.footer)}</p>
                 </div>
             </div>
         </footer>
