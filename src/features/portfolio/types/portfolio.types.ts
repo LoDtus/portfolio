@@ -217,14 +217,15 @@ export interface PortfolioContent {
     hero: {
         eyebrow: string;
         name: string;
+        // Dòng lĩnh vực ngay dưới tên.
         role: string;
-        headline: string;
-        summary: string;
+        // Đoạn giới thiệu định hướng ở hero.
+        intro: string;
         primaryCta: string;
         secondaryCta: string;
         photoAlt: string;
-        // Cụm chữ trong `headline` được tô nhấn (phải xuất hiện nguyên văn trong headline).
-        headlineHighlight: string;
+        // Cụm chữ trong `intro` được tô nhấn (phải xuất hiện nguyên văn trong intro).
+        introHighlight: string;
     };
     about: {
         title: string;

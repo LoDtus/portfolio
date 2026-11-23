@@ -35,7 +35,7 @@ export default function HeroSection({
                     {/* Mỗi từ của tên trồi lên từ sau một "khung cắt" (xem .hero-word trong globals.css), lần lượt từng từ. */}
                     <h1
                         id="hero-title"
-                        className="font-display text-5xl font-bold leading-[1.05] text-heading sm:text-6xl lg:text-7xl"
+                        className="font-display text-5xl font-bold uppercase leading-[1.05] text-heading sm:text-6xl lg:text-7xl"
                     >
                         {hero.name.split(" ").map((word, index) => (
                             <span key={`${word}-${index}`}>
@@ -54,30 +54,23 @@ export default function HeroSection({
                     <p
                         data-enter
                         style={{ "--enter-index": 2 } as CSSProperties}
-                        className="mt-5 font-display text-xl font-semibold text-accent-ink sm:text-2xl"
+                        className="mt-5 text-balance font-display text-xl font-semibold text-accent-ink sm:text-2xl"
                     >
                         {hero.role}
                     </p>
                     <p
                         data-enter
                         style={{ "--enter-index": 3 } as CSSProperties}
-                        className="mt-8 max-w-xl text-xl leading-9 text-text-main"
+                        className="mt-8 max-w-xl text-lg leading-8 text-text-main"
                     >
                         <HighlightedText
-                            text={hero.headline}
-                            phrases={[hero.headlineHighlight]}
+                            text={hero.intro}
+                            phrases={[hero.introHighlight]}
                         />
-                    </p>
-                    <p
-                        data-enter
-                        style={{ "--enter-index": 4 } as CSSProperties}
-                        className="mt-4 max-w-xl text-base leading-8 text-text-sub"
-                    >
-                        {hero.summary}
                     </p>
                     <div
                         data-enter
-                        style={{ "--enter-index": 5 } as CSSProperties}
+                        style={{ "--enter-index": 4 } as CSSProperties}
                         className="mt-10 flex flex-wrap gap-4"
                     >
                         <SectionLink

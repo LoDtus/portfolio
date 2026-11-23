@@ -75,28 +75,26 @@ const CONTENT_EN: PortfolioContent = {
         contact: "Contact",
     },
     hero: {
-        eyebrow: "Portfolio · Fullstack Developer",
+        eyebrow: "Portfolio · Technology & Engineering",
         name: PROFILE.name,
-        role: "Fullstack · Deployment · Operations",
-        headline:
-            "I build and ship web products, from the interface down to the infrastructure that runs them.",
-        summary:
-            "Information Technology, Thang Long University (2021 – 2026). I work with Next.js, React, NestJS and FastAPI, package with Docker and run on Cloudflare.",
+        role: "Technology - Software - Engineering - Product & Business",
+        intro:
+            "I aim to grow at the intersection of technology, engineering, mechanical engineering, product and business. I'm interested in how these fields connect to create useful products, improve operations and solve real-world problems.",
         primaryCta: "View projects",
         secondaryCta: "Contact",
         photoAlt: "Portrait of Long Nguyen",
-        headlineHighlight: "the infrastructure that runs them",
+        introHighlight: "the intersection of technology, engineering, mechanical engineering, product and business",
     },
     about: {
         title: "About",
         description:
             "A few words about me, what I have done and where I want to go next.",
         paragraphs: [
-            "I studied Information Technology and have worked on software projects from the early stages all the way to deployment. I'm good at full-stack development, working with AI tools, connecting different systems, and setting up infrastructure.",
+            "I studied Information Technology and have worked on software projects from the early stages all the way to deployment. I'm good at fullstack development, working with AI tools, connecting different systems, and setting up infrastructure.",
             "I enjoy learning about different problems, understanding what people and businesses really need, and finding ways to solve them. I like thinking things through, looking at problems from different angles, and finding simple ways to make things work better.",
             "I'm interested in many different fields, not just technology, but also mechanical engineering, product development, and business. I enjoy trying new things, learning how different fields work, and taking on new challenges. I also want to keep getting better at what I already know while picking up new skills along the way.",
         ],
-        highlights: ["full-stack development"],
+        highlights: ["fullstack development"],
         facts: [
             {
                 value: `${EDUCATION.startYear} – ${EDUCATION.endYear}`,

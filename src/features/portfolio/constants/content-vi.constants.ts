@@ -75,29 +75,27 @@ const CONTENT_VI: PortfolioContent = {
         contact: "Liên hệ",
     },
     hero: {
-        eyebrow: "Portfolio · Lập trình viên Fullstack",
+        eyebrow: "Portfolio · Technology & Engineering",
         // Tiêu đề hero dùng tên đầy đủ có dấu; thanh điều hướng và chân trang vẫn dùng PROFILE.name.
         name: "Nguyễn Trung Long",
-        role: "Fullstack · Triển khai · Vận hành",
-        headline:
-            "Tôi xây dựng và triển khai sản phẩm web, từ giao diện đến hạ tầng chạy thật.",
-        summary:
-            "Công nghệ thông tin, Đại học Thăng Long (2021 – 2026). Làm việc với Next.js, React, NestJS, FastAPI; đóng gói bằng Docker và chạy trên Cloudflare.",
+        role: "Technology - Software - Engineering - Product & Business",
+        intro:
+            "Tôi định hướng phát triển tại giao điểm giữa công nghệ, kỹ thuật, cơ khí, sản phẩm và kinh doanh. Tôi quan tâm đến cách các lĩnh vực này kết nối để tạo nên sản phẩm hữu ích, cải tiến hoạt động và giải quyết những bài toán thực tiễn.",
         primaryCta: "Xem dự án",
         secondaryCta: "Liên hệ",
         photoAlt: "Chân dung Nguyễn Trung Long",
-        headlineHighlight: "từ giao diện đến hạ tầng chạy thật",
+        introHighlight: "giao điểm giữa công nghệ, kỹ thuật, cơ khí, sản phẩm và kinh doanh",
     },
     about: {
         title: "Giới thiệu",
         description:
             "Đôi nét về tôi, những gì tôi đã làm và những điều tôi muốn hướng tới trong tương lai.",
         paragraphs: [
-            "Tôi có nền tảng Công nghệ thông tin và kinh nghiệm phát triển sản phẩm phần mềm từ khâu phát triển đến triển khai thực tế, với thế mạnh về Full-stack Development, ứng dụng AI vào quy trình làm việc, tích hợp hệ thống và triển khai hạ tầng.",
+            "Tôi có nền tảng Công nghệ thông tin và kinh nghiệm phát triển sản phẩm phần mềm từ khâu phát triển đến triển khai thực tế, với thế mạnh về Fullstack Development, ứng dụng AI vào quy trình làm việc, tích hợp hệ thống và triển khai hạ tầng.",
             "Tôi quan tâm đến việc thấu hiểu bản chất vấn đề, nhu cầu nghiệp vụ cũng như những khó khăn thực tế của khách hàng và doanh nghiệp. Với tư duy hệ thống và khả năng phân tích, tôi hướng đến việc tìm kiếm những giải pháp phù hợp nhằm tối ưu quy trình, nâng cao hiệu suất và tạo ra giá trị thiết thực.",
             "Mong muốn của tôi là khám phá và phát triển trong nhiều lĩnh vực khác nhau, từ công nghệ, kỹ thuật, cơ khí đến sản phẩm và kinh doanh. Tôi luôn sẵn sàng học hỏi, bắt đầu với những vai trò và hướng đi mới, đào sâu vào chuyên môn hiện tại, đóng góp và giải quyết những bài toán trong từng lĩnh vực.",
         ],
-        highlights: ["Full-stack Development"],
+        highlights: ["Fullstack Development"],
         facts: [
             {
                 value: `${EDUCATION.startYear} – ${EDUCATION.endYear}`,
