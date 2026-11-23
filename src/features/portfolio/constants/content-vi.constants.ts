@@ -238,7 +238,7 @@ const CONTENT_VI: PortfolioContent = {
                 ]),
                 projects: attachProjectTexts(LIFETEX.projects, {
                     "life-office": {
-                        name: "Life Office - Hệ thống quản trị doanh nghiệp của Công ty Môi trường đô thị Hà Nội Urenco",
+                        name: "Life Office - Hệ thống quản trị doanh nghiệp",
                         summary: null,
                         highlights: [
                             "Phát triển các module trên ứng dụng di động phục vụ quản lý văn bản, tài sản và theo dõi phương tiện.",
