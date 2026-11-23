@@ -78,13 +78,13 @@ const CONTENT_VI: PortfolioContent = {
         eyebrow: "Portfolio · Technology & Engineering",
         // Tiêu đề hero dùng tên đầy đủ có dấu; thanh điều hướng và chân trang vẫn dùng PROFILE.name.
         name: "Nguyễn Trung Long",
-        role: "Technology - Software - Engineering - Product & Business",
+        role: "Technology · Software · Engineering · Product & Business",
         intro:
-            "Tôi định hướng phát triển tại giao điểm giữa công nghệ, kỹ thuật, cơ khí, sản phẩm và kinh doanh. Tôi quan tâm đến cách các lĩnh vực này kết nối để tạo nên sản phẩm hữu ích, cải tiến hoạt động và giải quyết những bài toán thực tiễn.",
+            "Tôi định hướng phát triển tại giao điểm giữa công nghệ, kỹ thuật, sản phẩm và kinh doanh. Tôi quan tâm đến cách các lĩnh vực này kết nối để tạo nên sản phẩm hữu ích, cải tiến hoạt động và giải quyết những bài toán thực tiễn.",
         primaryCta: "Xem dự án",
         secondaryCta: "Liên hệ",
         photoAlt: "Chân dung Nguyễn Trung Long",
-        introHighlight: "giao điểm giữa công nghệ, kỹ thuật, cơ khí, sản phẩm và kinh doanh",
+        introHighlight: "giao điểm giữa công nghệ, kỹ thuật, sản phẩm và kinh doanh",
     },
     about: {
         title: "Giới thiệu",

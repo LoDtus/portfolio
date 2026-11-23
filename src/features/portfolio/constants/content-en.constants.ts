@@ -77,13 +77,13 @@ const CONTENT_EN: PortfolioContent = {
     hero: {
         eyebrow: "Portfolio · Technology & Engineering",
         name: PROFILE.name,
-        role: "Technology - Software - Engineering - Product & Business",
+        role: "Technology · Software · Engineering · Product & Business",
         intro:
-            "I aim to grow at the intersection of technology, engineering, mechanical engineering, product and business. I'm interested in how these fields connect to create useful products, improve operations and solve real-world problems.",
+            "I aim to grow at the intersection of technology, engineering, product and business. I'm interested in how these fields connect to create useful products, improve operations and solve real-world problems.",
         primaryCta: "View projects",
         secondaryCta: "Contact",
         photoAlt: "Portrait of Long Nguyen",
-        introHighlight: "the intersection of technology, engineering, mechanical engineering, product and business",
+        introHighlight: "the intersection of technology, engineering, product and business",
     },
     about: {
         title: "About",
