@@ -90,8 +90,8 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         return formatProject(text.name, [
             text.period,
             text.summary,
-            ...text.highlights,
             `${main.ui.roleLabel}: ${text.role}`,
+            ...text.highlights,
             links === "" ? null : links,
             `Stack: ${config.tech.join(", ")}`,
         ]);

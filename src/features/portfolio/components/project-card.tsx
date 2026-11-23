@@ -7,7 +7,7 @@ import type {
     ProjectText,
 } from "@/features/portfolio/types/portfolio.types";
 
-// Thẻ project: ảnh đại diện (nếu có), thời gian, tên, liên kết (ngay dưới tên), thẻ vai trò, mô tả, công nghệ.
+// Thẻ project: ảnh đại diện (nếu có), thời gian, tên, liên kết (ngay dưới tên), mô tả, các ý chính (đầu tiên là số thành viên và vai trò), công nghệ.
 // Phần nào chưa có dữ liệu (mô tả, thời gian) thì bỏ qua, không bịa nội dung.
 export default function ProjectCard({
     config,
@@ -49,29 +49,31 @@ export default function ProjectCard({
                         links={config.links}
                         labels={ui.linkLabels}
                     />
-                    {/* Số thành viên và vai trò: cùng một giá trị ở mọi dự án cá nhân nên hiển thị dạng thẻ, không phải một đầu mục. */}
-                    <p>
-                        <span className="inline-block bg-band px-3 py-1 text-xs font-bold text-white">
-                            <span className="sr-only">{ui.roleLabel}: </span>
-                            {text.role}
-                        </span>
-                    </p>
                     {text.summary === null ? null : (
                         <p className="leading-7 text-text-main">{text.summary}</p>
                     )}
-                    {text.highlights.length === 0 ? null : (
-                        <ul className="space-y-2 leading-7 text-text-main">
-                            {text.highlights.map((highlight) => (
-                                <li key={highlight} className="flex gap-3">
-                                    <span
-                                        aria-hidden="true"
-                                        className="mt-3 size-1.5 shrink-0 rotate-45 bg-accent"
-                                    />
-                                    {highlight}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+                    {/* Số thành viên và vai trò: bullet dạng "nhãn: giá trị", đứng đầu danh sách các ý chính. */}
+                    <ul className="space-y-2 leading-7 text-text-main">
+                        <li className="flex gap-3">
+                            <span
+                                aria-hidden="true"
+                                className="mt-3 size-1.5 shrink-0 rotate-45 bg-accent"
+                            />
+                            <span>
+                                <span className="font-bold text-heading">{ui.roleLabel}:</span>{" "}
+                                {text.role}
+                            </span>
+                        </li>
+                        {text.highlights.map((highlight) => (
+                            <li key={highlight} className="flex gap-3">
+                                <span
+                                    aria-hidden="true"
+                                    className="mt-3 size-1.5 shrink-0 rotate-45 bg-accent"
+                                />
+                                {highlight}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
                 <div className="mt-auto text-sm">
