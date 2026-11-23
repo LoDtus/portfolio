@@ -91,7 +91,10 @@ function formatProjects(content: PortfolioContent): string[] {
             ...(links === "" ? [] : ["", links]),
             ...(text.summary === null ? [] : ["", text.summary]),
             "",
-            ...bullets([`${content.ui.roleLabel}: ${text.role}`, ...text.highlights]),
+            ...bullets([
+                { label: content.ui.roleLabel, value: text.role },
+                ...text.facts,
+            ].map((fact) => `${fact.label}: ${fact.value}`)),
             "",
             `${content.ui.stackLabel}: ${config.tech.map(formatTech).join(", ")}`,
             "",

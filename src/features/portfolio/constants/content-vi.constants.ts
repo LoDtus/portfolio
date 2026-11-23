@@ -266,7 +266,7 @@ const CONTENT_VI: PortfolioContent = {
                 name: "Location Insight - Nền tảng phân tích và định giá bất động sản",
                 summary:
                     "Nền tảng bất động sản kết hợp phân tích vị trí trên bản đồ, ước lượng khoảng giá và cho phép người dùng rao bán/cho thuê. Người mua xem được ưu nhược điểm của các bất động sản dựa trên dữ liệu thực tế và có thể tìm kiếm, tham khảo các tin đang rao bán.",
-                highlights: [],
+                facts: [],
                 role: "1 người – Fullstack",
                 period: projectPeriod(0),
             },
@@ -274,8 +274,11 @@ const CONTENT_VI: PortfolioContent = {
                 name: "Vinfastreev - Website showroom xe điện VinFast",
                 summary:
                     "Website giới thiệu, tư vấn xe điện cho các showroom Vinfast tại Hà Nội. Khách hàng có thể xem danh mục các xe, lựa chọn, so sánh, theo dõi các tin tức mới nhất và đăng ký tham gia lái thử. Đồng thời, quản trị viên có thể tự cập nhật các thông tin và theo dõi khách hàng tiềm năng qua CMS.",
-                highlights: [
-                    "Phục vụ khoảng 50 người và khoảng 200 lượt truy cập mỗi ngày, trung bình có khoảng 10 lead mỗi tháng.",
+                facts: [
+                    {
+                        label: "Số liệu thực tế",
+                        value: "phục vụ khoảng 50 người, khoảng 200 lượt truy cập mỗi ngày, trung bình khoảng 10 lead mỗi tháng",
+                    },
                 ],
                 role: "1 người – Fullstack",
                 period: projectPeriod(1),
@@ -284,7 +287,7 @@ const CONTENT_VI: PortfolioContent = {
                 name: "Website gợi ý và điều hướng sản phẩm thương mại điện tử",
                 summary:
                     "Nền tảng giúp người dùng so sánh giá và thông tin của một sản phẩm từ nhiều sàn thương mại điện tử khác nhau, đồng thời gợi ý giúp người dùng chọn mua sản phẩm và kiếm được tiền từ affiliate.",
-                highlights: [],
+                facts: [],
                 role: "1 người – Fullstack",
                 period: projectPeriod(2),
             },
@@ -292,7 +295,7 @@ const CONTENT_VI: PortfolioContent = {
                 name: "CIMS - Website quản lý sự cố trong thành phố",
                 summary:
                     "Ứng dụng hỗ trợ người dân và các cơ quan, tổ chức có thể theo dõi, báo cáo và xử lý các sự cố diễn ra xung quanh khu vực sinh sống theo thời gian thực.",
-                highlights: [],
+                facts: [],
                 role: "1 người – Fullstack",
                 period: projectPeriod(3),
             },

@@ -121,7 +121,8 @@ export interface ProjectText {
     name: string;
     // null nghĩa là chưa có mô tả: thẻ dự án bỏ phần đó.
     summary: string | null;
-    highlights: readonly string[];
+    // Số liệu thực tế của dự án, hiển thị dạng bullet "nhãn: giá trị" sau dòng số thành viên và vai trò; rỗng nếu chưa có.
+    facts: readonly Fact[];
     // Số thành viên và vai trò.
     role: string;
     // Thời gian thực hiện đã định dạng theo ngôn ngữ; null nếu chưa có.

@@ -91,7 +91,7 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
             text.period,
             text.summary,
             `${main.ui.roleLabel}: ${text.role}`,
-            ...text.highlights,
+            ...text.facts.map((fact) => `${fact.label}: ${fact.value}`),
             links === "" ? null : links,
             `Stack: ${config.tech.join(", ")}`,
         ]);
