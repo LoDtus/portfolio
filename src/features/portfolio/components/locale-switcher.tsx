@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import type { MouseEvent } from "react";
 import { locales, type Locale } from "@/shared/constants/i18n.constants";
+import { trackEvent } from "@/shared/utils/analytics.util";
 import { isSupportedLocale, setStoredLocale } from "@/shared/utils/locale.util";
 
 // "band": chữ trắng trên thanh indigo (desktop). "drawer": nút có viền trên nền sáng của menu mobile.
@@ -42,6 +43,7 @@ export default function LocaleSwitcher({
     // và JSON-LD đều đúng ngay từ HTML tĩnh, và React không phải dựng lại thẻ <script> (của next-themes, JSON-LD) ở phía client.
     const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
         setStoredLocale(target); // ghi nhớ đây là lựa chọn chủ động của người dùng
+        trackEvent("change_language", { language: target });
         // Giữ nguyên vị trí (hash) để đổi ngôn ngữ không đẩy người xem về đầu trang.
         event.currentTarget.href = `${buildHref(target)}${window.location.hash}`;
         if (onNavigate !== null) onNavigate();

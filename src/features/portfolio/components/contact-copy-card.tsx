@@ -6,6 +6,7 @@ import ContactChannelBody, {
     CHANNEL_CARD_CLASS,
 } from "@/features/portfolio/components/contact-channel-body";
 import type { ContactChannelFacts } from "@/features/portfolio/types/portfolio.types";
+import { trackEvent } from "@/shared/utils/analytics.util";
 import { copyTextToClipboard } from "@/shared/utils/clipboard.util";
 
 type CopyStatus = "idle" | "copied" | "failed";
@@ -36,6 +37,7 @@ export default function ContactCopyCard({
     useEffect(() => () => window.clearTimeout(resetTimerRef.current), []);
 
     const handleClick = async () => {
+        trackEvent("copy_contact", { channel: channel.id });
         const isCopied = await copyTextToClipboard(copyText);
         setStatus(isCopied ? "copied" : "failed");
         window.clearTimeout(resetTimerRef.current);

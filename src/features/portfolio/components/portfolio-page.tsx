@@ -1,5 +1,6 @@
 import CopyAsMarkdown from "@/features/portfolio/components/copy-as-markdown";
 import AboutSection from "@/features/portfolio/components/about-section";
+import AnalyticsConsent from "@/features/portfolio/components/analytics-consent";
 import ContactSection from "@/features/portfolio/components/contact-section";
 import EducationSection from "@/features/portfolio/components/education-section";
 import ExperienceSection from "@/features/portfolio/components/experience-section";
@@ -23,6 +24,7 @@ import {
 } from "@/features/portfolio/services/structured-data.service";
 import type { SectionId } from "@/features/portfolio/types/portfolio.types";
 import type { Locale } from "@/shared/constants/i18n.constants";
+import ENV from "@/shared/constants/env.constants";
 import { getSiteUrl } from "@/shared/utils/site-url.util";
 
 // Một trang cuộn render hoàn toàn phía server (chữ nằm sẵn trong HTML cho HR và AI quét).
@@ -59,6 +61,9 @@ export default async function PortfolioPage({
 
             <RevealObserver key={locale} />
             <StaticCopyPreparer />
+            {ENV.GA_ID ? (
+                <AnalyticsConsent measurementId={ENV.GA_ID} labels={content.ui.analytics} />
+            ) : null}
             <SpotlightEffect />
             <CopyAsMarkdown markdown={buildPageMarkdown(content, programUrl, getSiteUrl())} />
             <div aria-hidden="true" className="scroll-progress no-print" />

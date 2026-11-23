@@ -26,6 +26,8 @@ concurrency:
 env:
   # Biến lúc build: được đóng vào HTML (canonical, sitemap, og:url). Không kèm cổng, không có dấu "/" cuối.
   NEXT_PUBLIC_APP_URL: https://portfolio.longvi.org
+  # Measurement ID của Google Analytics 4 (công khai trong HTML, không phải bí mật). Chỉ tải sau khi người xem đồng ý cookie.
+  NEXT_PUBLIC_GA_ID: G-NV754NB5GV
   NEXT_TELEMETRY_DISABLED: "1"
 
 jobs:

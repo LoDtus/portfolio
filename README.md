@@ -43,6 +43,14 @@ Cấu hình nằm ở `wrangler.jsonc` (thư mục `out/`, trang 404, tên miề
 
 Dependabot (`.github/dependabot.yml`) mở PR cập nhật gói và action mỗi tuần.
 
+### Google Analytics
+
+- Measurement ID (`G-NV754NB5GV`, tài khoản "Portfolio Long Nguyen", tài sản `portfolio.longvi.org`) nằm trong `NEXT_PUBLIC_GA_ID` của `ci-cd.yml`. Không phải bí mật. Biến trống (ví dụ khi chạy dev) thì không tải Analytics và không hiện banner.
+- Chạy `npm run deploy:cloudflare` trên máy thì phải đặt `NEXT_PUBLIC_GA_ID` (và `NEXT_PUBLIC_APP_URL`) trong `.env` trước khi build.
+- Chỉ tải `gtag.js` sau khi người xem bấm "Đồng ý" ở banner cookie; lựa chọn lưu trong trình duyệt và đổi được ở nút "Cài đặt cookie" ở chân trang.
+- Sự kiện tự đo: lượt xem trang, cuộn, bấm link ra ngoài, tải file (CV PDF). Sự kiện tùy chỉnh: `change_language`, `copy_contact`.
+- Domain của Google được cho phép riêng trong CSP (`public/_headers`); thêm dịch vụ ngoài khác phải sửa cả CSP lẫn `scripts/check-build-output.mjs`.
+
 ### Thiết lập một lần
 
 1. **Tạo API token:** Cloudflare Dashboard → My Profile → API Tokens → Create Token → mẫu **Edit Cloudflare Workers**
