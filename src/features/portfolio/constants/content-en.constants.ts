@@ -238,7 +238,9 @@ const CONTENT_EN: PortfolioContent = {
                 ]),
                 projects: attachProjectTexts(LIFETEX.projects, {
                     "life-office": {
-                        name: "Life Office - Business management system",
+                        name: "Life Office - Business management system for Hanoi Urban Environment Company (Urenco)",
+                        // Keep the client's name (Urenco) out of llms.txt.
+                        searchName: "Business management system",
                         summary: null,
                         highlights: [
                             "Built mobile modules for managing documents, assets and vehicle tracking.",

@@ -44,7 +44,9 @@ function formatExperienceProject(
     isDiscoverable: boolean,
 ): string {
     const links = isDiscoverable ? formatLinks(project.links, labels) : "";
-    const name = isDiscoverable ? project.name : stripBrandPrefix(project.name);
+    const name = isDiscoverable
+        ? project.name
+        : (project.searchName ?? stripBrandPrefix(project.name));
     return formatProject(name, [
         project.summary,
         ...project.highlights,
