@@ -76,9 +76,6 @@ export interface ExperienceProjectFacts {
 // Chữ mô tả theo ngôn ngữ của một dự án làm tại công ty.
 export interface ExperienceProjectText {
     name: string;
-    // Tên dùng ở kênh tìm kiếm (llms.txt) khi nơi làm chỉ được liệt kê (`isDiscoverable: false`), để bỏ cả tên khách hàng
-    // hay đối tác khỏi tìm kiếm mà vẫn hiển thị đầy đủ trên trang. Không có thì dùng tên đã bỏ phần trước " - " (stripBrandPrefix).
-    searchName?: string;
     // null nghĩa là chưa có: giao diện bỏ phần đó thay vì bịa nội dung.
     summary: string | null;
     highlights: readonly string[];

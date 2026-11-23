@@ -16,10 +16,7 @@ import type {
     ProjectLink,
     SkillGroupId,
 } from "@/features/portfolio/types/portfolio.types";
-import {
-    sortExperienceEntries,
-    stripBrandPrefix,
-} from "@/features/portfolio/utils/experience.utils";
+import { sortExperienceEntries } from "@/features/portfolio/utils/experience.utils";
 import { defaultLocale, locales } from "@/shared/constants/i18n.constants";
 
 function formatLinks(
@@ -37,17 +34,12 @@ function formatProject(
     return details.length === 0 ? `- ${name}` : `- ${name}: ${details.join(" · ")}`;
 }
 
-// Nơi chỉ liệt kê (`isDiscoverable: false`): bỏ tên sản phẩm (phần trước " - ") và liên kết, chỉ giữ chủ đề và công việc.
 function formatExperienceProject(
     project: ExperienceProject,
     labels: PortfolioContent["ui"]["linkLabels"],
-    isDiscoverable: boolean,
 ): string {
-    const links = isDiscoverable ? formatLinks(project.links, labels) : "";
-    const name = isDiscoverable
-        ? project.name
-        : (project.searchName ?? stripBrandPrefix(project.name));
-    return formatProject(name, [
+    const links = formatLinks(project.links, labels);
+    return formatProject(project.name, [
         project.summary,
         ...project.highlights,
         links === "" ? null : links,
@@ -76,17 +68,16 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         return `- [${content.meta.title}](${siteUrl}/${locale}) (${locale}): ${content.meta.description}`;
     });
 
-    // Nơi chỉ liệt kê: không nêu tên nơi làm, chỉ giữ vai trò, thời gian và chủ đề công việc.
+    // Đủ tên nơi làm và dự án để AI/agent đánh giá và đối chiếu được với CV, LinkedIn. File này gắn noindex (public/_headers)
+    // nên không xuất hiện trên Google/Bing: tên các nơi chỉ liệt kê (isDiscoverable: false) không thành một trang tìm kiếm mới.
     const experience = sortExperienceEntries(main.experience.entries).flatMap((entry) => {
-        const heading = [entry.isDiscoverable ? entry.company : null, entry.role, entry.period]
+        const heading = [entry.company, entry.role, entry.period]
             .filter((part): part is string => part !== null)
             .join(" · ");
-        const site = entry.isDiscoverable && entry.companyUrl !== null ? ` (${entry.companyUrl})` : "";
+        const site = entry.companyUrl === null ? "" : ` (${entry.companyUrl})`;
         return [
             `### ${heading}${site}`,
-            ...entry.projects.map((project) =>
-                formatExperienceProject(project, main.ui.linkLabels, entry.isDiscoverable),
-            ),
+            ...entry.projects.map((project) => formatExperienceProject(project, main.ui.linkLabels)),
             "",
         ];
     });

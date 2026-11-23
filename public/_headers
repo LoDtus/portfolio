@@ -35,8 +35,18 @@
   Cache-Control: public, max-age=604800
 
 # Tệp mô tả cho công cụ tìm kiếm và AI: cho phép cache ngắn để cập nhật nhanh
+# llms.txt có đủ tên các nơi đã làm để AI/agent đánh giá đúng, nhưng không được hiện trên Google/Bing (noindex):
+# AI vẫn đọc được khi mở trang hoặc file này trực tiếp.
 /llms.txt
   Cache-Control: public, max-age=3600
+  X-Robots-Tag: noindex
+# Dữ liệu trang dạng RSC của Next.js (dùng nội bộ khi điều hướng): không phải trang cho người đọc, không cho index.
+/index.txt
+  X-Robots-Tag: noindex
+/vi.txt
+  X-Robots-Tag: noindex
+/en.txt
+  X-Robots-Tag: noindex
 /robots.txt
   Cache-Control: public, max-age=3600
 /sitemap.xml
