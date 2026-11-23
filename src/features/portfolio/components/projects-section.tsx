@@ -2,10 +2,17 @@ import GithubIcon from "@/features/portfolio/components/github-icon";
 import ProjectCard from "@/features/portfolio/components/project-card";
 import SectionHeading from "@/features/portfolio/components/section-heading";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
-import { PROFILE, PROJECTS } from "@/features/portfolio/constants/profile.constants";
+import { PROFILE, type ProjectConfig } from "@/features/portfolio/constants/profile.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
 
-export default function ProjectsSection({ content }: { content: PortfolioContent }) {
+export default function ProjectsSection({
+    content,
+    projects: projectConfigs,
+}: {
+    content: PortfolioContent;
+    // Dự án cá nhân đã bỏ các liên kết không còn truy cập được (xem getLivePortfolio).
+    projects: readonly ProjectConfig[];
+}) {
     const { projects } = content;
 
     return (
@@ -23,7 +30,7 @@ export default function ProjectsSection({ content }: { content: PortfolioContent
                 />
 
                 <ul className="grid gap-6 md:grid-cols-2">
-                    {PROJECTS.map((config, index) => (
+                    {projectConfigs.map((config, index) => (
                         <li
                             key={config.slug}
                             className={`reveal ${REVEAL_DELAY_CLASSES[index % 2]}`}

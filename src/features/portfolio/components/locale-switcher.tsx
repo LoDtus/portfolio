@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import type { MouseEvent } from "react";
 import { locales, type Locale } from "@/shared/constants/i18n.constants";
 import { isSupportedLocale, setStoredLocale } from "@/shared/utils/locale.util";
@@ -25,7 +24,6 @@ export default function LocaleSwitcher({
     onNavigate: (() => void) | null;
 }) {
     const pathname = usePathname();
-    const router = useRouter();
     const target = locales[(locales.indexOf(locale) + 1) % locales.length] ?? locale;
 
     // Đổi segment locale, giữ nguyên phần còn lại của đường dẫn (ví dụ /vi/projects/x → /en/projects/x).
@@ -40,18 +38,19 @@ export default function LocaleSwitcher({
         return `/${segments.join("/")}`;
     };
 
+    // Thẻ <a> thường (không phải next/link): trình duyệt tải lại cả trang của ngôn ngữ mới, nên <html lang>, metadata
+    // và JSON-LD đều đúng ngay từ HTML tĩnh, và React không phải dựng lại thẻ <script> (của next-themes, JSON-LD) ở phía client.
     const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
         setStoredLocale(target); // ghi nhớ đây là lựa chọn chủ động của người dùng
         // Giữ nguyên vị trí (hash) để đổi ngôn ngữ không đẩy người xem về đầu trang.
-        router.push(`${buildHref(target)}${window.location.hash}`);
+        event.currentTarget.href = `${buildHref(target)}${window.location.hash}`;
         if (onNavigate !== null) onNavigate();
     };
 
     const styles = STYLES[variant];
 
     return (
-        <Link
+        <a
             href={buildHref(target)}
             hrefLang={target}
             aria-label={switchLabel}
@@ -68,7 +67,7 @@ export default function LocaleSwitcher({
                     {code}
                 </span>
             ))}
-        </Link>
+        </a>
     );
 }
 
@@ -78,14 +77,14 @@ const STYLES: Record<
 > = {
     band: {
         button:
-            "inline-flex h-8 items-stretch border border-white/40 text-sm font-bold uppercase tracking-wide transition-colors hover:border-white",
+            "inline-flex h-8 items-stretch border border-white/40 text-sm font-bold uppercase tracking-wide transition-all duration-200 active:scale-98 hover:border-white",
         code: "inline-flex min-w-9 items-center justify-center px-2",
         active: "bg-white text-band",
         inactive: "text-white/75",
     },
     drawer: {
         button:
-            "inline-flex min-h-11 items-stretch border border-border-main text-sm font-bold uppercase tracking-wide transition-colors hover:border-heading",
+            "inline-flex min-h-11 items-stretch border border-border-main text-sm font-bold uppercase tracking-wide transition-all duration-200 active:scale-98 hover:border-heading",
         code: "inline-flex min-w-14 items-center justify-center px-4",
         active: "bg-band text-white",
         inactive: "text-heading",

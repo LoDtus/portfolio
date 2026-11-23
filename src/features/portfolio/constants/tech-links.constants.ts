@@ -69,7 +69,7 @@ export const TECH_LINKS: Readonly<Record<string, string>> = {
     Sentry: "https://sentry.io/",
     "Better Stack": "https://betterstack.com/",
     "Telegram Bot": "https://core.telegram.org/bots",
-    Frigate: "https://frigate.video/",
+    "Frigate NVR": "https://frigate.video/",
 
     // AI và API
     "Claude API": "https://www.anthropic.com/api",
@@ -85,6 +85,8 @@ export const TECH_LINKS: Readonly<Record<string, string>> = {
     "Visual Studio Code": "https://code.visualstudio.com/",
     Firebase: "https://firebase.google.com/",
     "Synology NAS": "https://www.synology.com/",
+    Tailscale: "https://tailscale.com/",
+    Headscale: "https://headscale.net/",
     Postman: "https://www.postman.com/",
     Figma: "https://www.figma.com/",
     "Microsoft Office": "https://www.microsoft365.com/",

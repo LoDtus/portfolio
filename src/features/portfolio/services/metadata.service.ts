@@ -13,6 +13,7 @@ const OPEN_GRAPH_LOCALE: Record<Locale, string> = {
 };
 
 // Từ khóa meta: Google bỏ qua nhưng Bing và một số công cụ vẫn đọc; chỉ liệt kê cụm có thật trong nội dung.
+// Không đưa tên các nơi đã làm (chỉ liệt kê, xem ExperienceCompany.isDiscoverable); chủ đề nghiệp vụ lấy từ SEO.domainTopics.
 const KEYWORDS: Record<Locale, readonly string[]> = {
     vi: [
         "Long Nguyen",
@@ -34,10 +35,6 @@ const KEYWORDS: Record<Locale, readonly string[]> = {
         "FastAPI",
         "React",
         "Docker",
-        "kiểm nghiệm",
-        "kiểm định",
-        "y tế",
-        "ISO/IEC 17025",
         "portfolio",
     ],
     en: [
@@ -60,10 +57,6 @@ const KEYWORDS: Record<Locale, readonly string[]> = {
         "FastAPI",
         "React",
         "Docker",
-        "laboratory testing",
-        "inspection",
-        "healthcare",
-        "ISO/IEC 17025",
         "portfolio",
     ],
 };
@@ -126,7 +119,7 @@ export function buildHomeMetadata(locale: Locale): Metadata {
         title: content.meta.title,
         description: content.meta.description,
         applicationName: PROFILE.name,
-        keywords: [...KEYWORDS[locale]],
+        keywords: [...new Set([...KEYWORDS[locale], ...SEO.domainTopics[locale]])],
         authors: [{ name: PROFILE.name, url: PROFILE.githubUrl }],
         creator: PROFILE.name,
         publisher: PROFILE.name,

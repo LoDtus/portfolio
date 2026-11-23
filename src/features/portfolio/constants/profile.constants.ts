@@ -44,17 +44,60 @@ export const PROFILE = {
 // Dữ kiện SEO dùng chung cho metadata, sitemap và dữ liệu có cấu trúc.
 export const SEO = {
     // Ngày cập nhật nội dung gần nhất ("YYYY-MM-DD"); sửa nội dung trang thì nhớ đổi ngày này (dùng cho sitemap và dateModified).
-    contentUpdatedAt: "2026-11-23",
+    contentUpdatedAt: "2026-11-24",
     // Ảnh chia sẻ mạng xã hội 1200x630 (JPEG vì Facebook/Zalo không đọc ổn định AVIF/WebP).
     ogImage: { path: "/og/og-image.jpg", width: 1200, height: 630 },
     // Tên khác của chủ trang: biệt danh và tên đầy đủ có dấu (để tìm theo tên tiếng Việt).
     alternateNames: ["LoDtus", "Nguyễn Trung Long"],
     knowsLanguage: ["vi", "en"],
-    // Lĩnh vực nghiệp vụ đã làm (không gắn tên nơi làm): để người tìm theo chủ đề kiểm nghiệm, kiểm định, y tế vẫn gặp trang.
-    // Mọi cụm đều có thật trong nội dung trang (kỹ năng mềm và dự án ERP).
+    // Lĩnh vực và chủ đề đã làm (không gắn tên nơi làm hay tên sản phẩm của nơi làm): để người tìm theo chủ đề
+    // (AI, nhà máy, sản xuất, kiểm nghiệm, y tế...) vẫn gặp trang. Dùng cho knowsAbout (JSON-LD), từ khóa và llms.txt.
+    // BẮT BUỘC: mỗi cụm phải có thật trong chữ hiển thị của trang ở đúng ngôn ngữ đó (Google cấm đánh dấu nội dung
+    // người xem không thấy); bỏ câu chứa cụm nào khỏi trang thì bỏ luôn cụm đó ở đây.
     domainTopics: {
-        vi: ["Kiểm nghiệm", "Kiểm định", "Y tế", "ISO/IEC 17025", "Quản lý hồ sơ kiểm nghiệm", "Phần mềm ERP"],
-        en: ["Laboratory testing", "Inspection", "Healthcare", "ISO/IEC 17025", "Testing record management", "ERP software"],
+        vi: [
+            "Trí tuệ nhân tạo (AI)",
+            "AI Agent",
+            "Kỹ thuật",
+            "Nhà máy",
+            "Sản xuất công nghiệp",
+            "Kiểm kê khí thải carbon",
+            "ESG",
+            "Kiểm nghiệm",
+            "Kiểm định",
+            "Y tế",
+            "Dược phẩm",
+            "ISO/IEC 17025",
+            "Quản lý hồ sơ kiểm nghiệm",
+            "Hệ thống ERP",
+            "Kho vận",
+            "Quản lý dòng tiền",
+            "Chăm sóc khách hàng",
+            "Bất động sản",
+            "Thương mại điện tử",
+            "Quản lý sự cố",
+        ],
+        en: [
+            "Artificial intelligence (AI)",
+            "AI agents",
+            "Engineering",
+            "Factories",
+            "Manufacturing",
+            "Carbon emissions tracking",
+            "ESG",
+            "Lab testing",
+            "Inspection",
+            "Healthcare",
+            "Pharmaceutical",
+            "ISO/IEC 17025",
+            "ERP",
+            "Warehouse monitoring",
+            "Cash flow management",
+            "Customer care",
+            "Real estate",
+            "Online marketplaces",
+            "Incidents management",
+        ],
     },
 } as const;
 
@@ -429,21 +472,21 @@ export const PROJECTS: readonly ProjectConfig[] = [
 // Thứ tự hiển thị (gần nhất đến xa nhất) do người dùng cung cấp: Udata, IRDOP, Lifetex.
 // Có đủ `startedAt` nên sortExperienceEntries tự xếp theo ngày; thứ tự khai báo ở content-vi/en là phương án dự phòng.
 // Tên công ty đầy đủ theo từng ngôn ngữ nằm ở content-vi/en; `company` ở đây là tên gọi ngắn.
-// IRDOP và Lifetex chỉ được liệt kê (`isDiscoverable: false`): không làm SEO cho hai nơi này, xem ExperienceCompany.
+// Cả ba nơi chỉ được liệt kê (`isDiscoverable: false`): không làm SEO cho các nơi này, xem ExperienceCompany.
 export const UDATA: ExperienceCompany = {
     id: "udata",
     company: "Udata",
     companyUrl: null,
-    isDiscoverable: true,
-    logo: "/image/experiment-udata/logo.svg",
+    isDiscoverable: false,
+    logo: "/image/experiment-01/logo.svg",
     logoWidth: 380,
     logoHeight: 100,
     startedAt: "2026-06",
     endedAt: "2026-11",
     photos: [
-        { src: "/image/experiment-udata/udata-001.avif", width: 960, height: 600 },
-        { src: "/image/experiment-udata/udata-002.avif", width: 960, height: 600 },
-        { src: "/image/experiment-udata/udata-003.avif", width: 960, height: 600 },
+        { src: "/image/experiment-01/workplace-01-001.avif", width: 960, height: 600 },
+        { src: "/image/experiment-01/workplace-01-002.avif", width: 960, height: 600 },
+        { src: "/image/experiment-01/workplace-01-003.avif", width: 960, height: 600 },
     ],
     projects: [
         {
@@ -551,7 +594,10 @@ export const IRDOP: ExperienceCompany = {
                 "MinIO",
                 "Docker",
                 "Docker Compose",
-                "Frigate",
+                "Frigate NVR",
+                "Tailscale",
+                "Headscale",
+                "Synology NAS",
                 "Cursor",
             ]),
         },

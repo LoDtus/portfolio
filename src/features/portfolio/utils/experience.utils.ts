@@ -67,3 +67,12 @@ export function getAutoplayOffsets(
         return offset;
     });
 }
+
+const BRAND_SEPARATOR = " - ";
+
+// "Uboard ESG - Hệ thống kiểm kê khí thải carbon cho nhà máy" -> "Hệ thống kiểm kê khí thải carbon cho nhà máy".
+// Dùng cho nơi chỉ liệt kê: giữ chủ đề của dự án, bỏ tên sản phẩm gắn với nơi làm. Không có dấu phân cách thì giữ nguyên.
+export function stripBrandPrefix(name: string): string {
+    const index = name.indexOf(BRAND_SEPARATOR);
+    return index === -1 ? name : name.slice(index + BRAND_SEPARATOR.length);
+}

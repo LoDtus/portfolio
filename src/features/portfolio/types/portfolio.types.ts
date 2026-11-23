@@ -178,6 +178,8 @@ export interface ReferenceText {
 
 export interface ContactChannelText {
     label: string;
+    // Giá trị hiển thị riêng cho ngôn ngữ này (ví dụ địa chỉ không dấu ở bản tiếng Anh); không có thì dùng `value` chung của kênh.
+    value?: string;
 }
 
 // Kênh liên hệ không phụ thuộc ngôn ngữ. `icon` "logo" dùng ảnh trong `logo`; các giá trị khác là biểu tượng vẽ sẵn.

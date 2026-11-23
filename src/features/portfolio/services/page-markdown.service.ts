@@ -3,7 +3,7 @@ import {
     CV_FILES,
     EDUCATION,
     PROFILE,
-    PROJECTS,
+    type ProjectConfig,
     REFERENCES,
     SKILL_GROUP_ORDER,
     SKILL_ITEMS,
@@ -15,6 +15,7 @@ import type {
     ProjectLink,
     SkillGroupId,
 } from "@/features/portfolio/types/portfolio.types";
+import { localizeContactChannel } from "@/features/portfolio/utils/contact-channel.utils";
 import { formatCopyright } from "@/features/portfolio/utils/copyright.utils";
 import { sortExperienceEntries } from "@/features/portfolio/utils/experience.utils";
 import { locales } from "@/shared/constants/i18n.constants";
@@ -81,8 +82,11 @@ function formatExperience(content: PortfolioContent): string[] {
     });
 }
 
-function formatProjects(content: PortfolioContent): string[] {
-    return PROJECTS.flatMap((config) => {
+function formatProjects(
+    content: PortfolioContent,
+    projectConfigs: readonly ProjectConfig[],
+): string[] {
+    return projectConfigs.flatMap((config) => {
         const text = content.projects.items[config.slug];
         const links = formatLinks(config.links, content.ui.linkLabels);
         return [
@@ -146,9 +150,10 @@ function formatCvLinks(content: PortfolioContent, siteUrl: string): string[] {
 // Toàn bộ nội dung trang dạng markdown thuần (không ảnh, không biểu tượng), theo ngôn ngữ của `content` và đúng thứ tự các mục trên trang.
 // Dùng cho thao tác "chọn tất cả rồi sao chép" (xem CopyAsMarkdown). Dựng từ cùng dữ liệu với giao diện nên không lệch khi sửa nội dung;
 // mục mới thêm vào trang PHẢI được thêm vào đây (xem .claude/rules/page-markdown.md).
-// `programUrl` là địa chỉ nút "Xem ngành học" đã kiểm tra lúc build; `siteUrl` là gốc của trang (để liên kết CV là địa chỉ đầy đủ).
+// `projectConfigs` là dự án cá nhân đã bỏ liên kết không còn truy cập được; `programUrl` là địa chỉ nút "Xem ngành học" đã kiểm tra lúc build; `siteUrl` là gốc của trang (để liên kết CV là địa chỉ đầy đủ).
 export function buildPageMarkdown(
     content: PortfolioContent,
+    projectConfigs: readonly ProjectConfig[],
     programUrl: string,
     siteUrl: string,
 ): string {
@@ -158,10 +163,10 @@ export function buildPageMarkdown(
         `- ${education.periodLabel}: ${EDUCATION.startYear} – ${EDUCATION.endYear}`,
         `- ${education.gpaLabel}: ${EDUCATION.gpa} / ${EDUCATION.gpaScale}`,
     ];
-    const channels = CONTACT_CHANNELS.map(
-        (channel) =>
-            `- ${contact.channels[channel.id].label}: ${link(channel.value, channel.href)}`,
-    );
+    const channels = CONTACT_CHANNELS.map((facts) => {
+        const channel = localizeContactChannel(facts, contact.channels[facts.id]);
+        return `- ${contact.channels[channel.id].label}: ${link(channel.value, channel.href)}`;
+    });
 
     return [
         `# ${hero.name}`,
@@ -189,7 +194,7 @@ export function buildPageMarkdown(
         ...formatExperience(content),
         `## ${projects.title}`,
         "",
-        ...formatProjects(content),
+        ...formatProjects(content, projectConfigs),
         `- ${link(projects.moreLabel, PROFILE.githubRepositoriesUrl)}`,
         "",
         `## ${references.title}`,

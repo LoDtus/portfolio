@@ -29,7 +29,7 @@ export default function ProjectLinks({
                         target="_blank"
                         rel={isDiscoverable ? "noopener noreferrer" : "nofollow noopener noreferrer"}
                         aria-label={`${projectName}: ${labels[link.kind]}`}
-                        className="inline-flex items-center gap-1 border border-border-main bg-surface px-3 py-1 text-sm font-semibold text-heading hover:border-band hover:bg-band hover:text-white"
+                        className="inline-flex items-center gap-1 transition-all duration-200 active:scale-98 border border-border-main bg-surface px-3 py-1 text-sm font-semibold text-heading hover:border-band hover:bg-band hover:text-white"
                     >
                         {labels[link.kind]}
                         <ArrowUpRight size={14} aria-hidden="true" />

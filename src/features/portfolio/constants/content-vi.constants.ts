@@ -4,7 +4,6 @@ import {
     IRDOP,
     LIFETEX,
     PARTICIPATED_PROJECTS,
-    PROFILE,
     PROJECTS,
     UDATA,
 } from "@/features/portfolio/constants/profile.constants";
@@ -40,9 +39,9 @@ function projectPeriod(index: number): string | null {
 const CONTENT_VI: PortfolioContent = {
     locale: "vi",
     meta: {
-        title: `${PROFILE.name} | Lập trình viên Fullstack`,
+        title: "Nguyễn Trung Long | Lập trình viên Fullstack & AI tại Hà Nội",
         description:
-            "Nguyễn Trung Long (Long Nguyen), lập trình viên Fullstack tại Hà Nội, học Công nghệ thông tin tại Đại học Thăng Long. Next.js, NestJS, FastAPI.",
+            "Portfolio của Nguyễn Trung Long (Long Nguyen), lập trình viên Fullstack tại Hà Nội, xây dựng phần mềm ứng dụng AI cho nhà máy, sản xuất, kiểm nghiệm và y tế. Next.js, NestJS, FastAPI.",
         jobTitle: "Lập trình viên Fullstack",
     },
     ui: {
@@ -80,20 +79,20 @@ const CONTENT_VI: PortfolioContent = {
         name: "Nguyễn Trung Long",
         role: "Technology · Software · Engineering · Product & Business",
         intro:
-            "Tôi định hướng phát triển tại giao điểm giữa công nghệ, kỹ thuật, sản phẩm và kinh doanh. Tôi quan tâm đến cách các lĩnh vực này kết nối để tạo nên sản phẩm hữu ích, cải tiến hoạt động và giải quyết những bài toán thực tiễn.",
-        primaryCta: "Xem dự án",
+            "Tôi định hướng phát triển theo hướng kết hợp giữa công nghệ, AI, kỹ thuật, tư duy sản phẩm và kinh doanh. Tôi quan tâm đến cách vận dụng những yếu tố này để xây dựng sản phẩm có giá trị, tối ưu hoạt động và giải quyết các vấn đề thực tiễn.",
+        primaryCta: "Xem các dự án của tôi",
         secondaryCta: "Liên hệ",
         photoAlt: "Chân dung Nguyễn Trung Long",
-        introHighlight: "giao điểm giữa công nghệ, kỹ thuật, sản phẩm và kinh doanh",
+        introHighlight: "công nghệ, AI, kỹ thuật, tư duy sản phẩm và kinh doanh",
     },
     about: {
         title: "Giới thiệu",
         description:
             "Đôi nét về tôi, những gì tôi đã làm và những điều tôi muốn hướng tới trong tương lai.",
         paragraphs: [
-            "Tôi có nền tảng Công nghệ thông tin và kinh nghiệm phát triển sản phẩm phần mềm từ khâu phát triển đến triển khai thực tế, với thế mạnh về Fullstack Development, ứng dụng AI vào quy trình làm việc, tích hợp hệ thống và triển khai hạ tầng.",
-            "Tôi quan tâm đến việc thấu hiểu bản chất vấn đề, nhu cầu nghiệp vụ cũng như những khó khăn thực tế của khách hàng và doanh nghiệp. Với tư duy hệ thống và khả năng phân tích, tôi hướng đến việc tìm kiếm những giải pháp phù hợp nhằm tối ưu quy trình, nâng cao hiệu suất và tạo ra giá trị thiết thực.",
-            "Mong muốn của tôi là khám phá và phát triển trong nhiều lĩnh vực khác nhau, từ công nghệ, kỹ thuật, cơ khí đến sản phẩm và kinh doanh. Tôi luôn sẵn sàng học hỏi, bắt đầu với những vai trò và hướng đi mới, đào sâu vào chuyên môn hiện tại, đóng góp và giải quyết những bài toán trong từng lĩnh vực.",
+            "Tôi có nền tảng Công nghệ thông tin và kinh nghiệm phát triển sản phẩm phần mềm từ khâu thiết kế đến triển khai thực tế, với thế mạnh và kinh nghiệm về Fullstack Development, ứng dụng AI vào quy trình làm việc, tích hợp hệ thống và triển khai hạ tầng.",
+            "Tôi quan tâm đến việc hiểu rõ bản chất vấn đề, nhu cầu nghiệp vụ cũng như những khó khăn thực tế của khách hàng và doanh nghiệp. Với tư duy hệ thống cùng khả năng phân tích, tôi luôn muốn tìm kiếm những giải pháp phù hợp nhằm tối ưu quy trình, nâng cao hiệu suất và tạo ra giá trị có lợi cho người dùng.",
+            "Mong muốn của tôi là tìm hiểu, tham gia và phát triển trong nhiều lĩnh vực khác nhau, từ công nghệ, AI, kỹ thuật đến sản phẩm và kinh doanh. Tôi luôn sẵn sàng học hỏi, bắt đầu với những vai trò và hướng đi mới, đào sâu vào chuyên môn hiện tại, đóng góp và giải quyết những bài toán trong từng lĩnh vực.",
         ],
         highlights: ["Fullstack Development"],
         facts: [
@@ -124,9 +123,9 @@ const CONTENT_VI: PortfolioContent = {
             frontend: "Frontend",
             backend: "Backend",
             database: "Cơ sở dữ liệu",
-            deploy: "Triển khai & vận hành",
+            deploy: "Triển khai & Vận hành",
             tools: "Công cụ phát triển",
-            design: "Thiết kế & nội dung",
+            design: "Thiết kế & Nội dung",
             soft: "Kỹ năng mềm",
         },
         softSkills: [
@@ -167,9 +166,9 @@ const CONTENT_VI: PortfolioContent = {
                 summary: null,
                 highlights: [],
                 photos: attachPhotoAlts(UDATA.photos, [
-                    "Lễ ký kết biên bản ghi nhớ của Udata",
-                    "Ảnh nhóm tại hiện trường, phía sau có biển hiệu Udata",
-                    "Ảnh nhóm kỹ sư tại hiện trường, phía sau có biển hiệu Udata",
+                    "Lễ ký kết biên bản ghi nhớ hợp tác",
+                    "Ảnh nhóm tại hiện trường triển khai dự án",
+                    "Ảnh nhóm kỹ sư tại hiện trường triển khai dự án",
                 ]),
                 projects: attachProjectTexts(UDATA.projects, {
                     "uboard-esg": {
@@ -196,7 +195,7 @@ const CONTENT_VI: PortfolioContent = {
                             "Nền tảng AI hợp nhất dữ liệu từ ERP, kho, kế toán và email để cảnh báo sớm rủi ro thiếu hụt dòng tiền, hàng tồn đọng và đứt hàng. Mục tiêu là giúp CEO/CFO nắm tình hình trong vài phút thay vì mất hàng giờ tổng hợp từ nhiều hệ thống.",
                         highlights: [
                             "Thiết kế và phát triển API Gateway cho hệ thống multi-tenant SaaS, xử lý routing và điều phối các dịch vụ ERP, AI analytics và các modules tài chính.",
-                            "Xây dựng giao diện cho người dùng và quản trị viên, phục vụ hiển thị trực quan các số liệu biểu đồ, theo dõi, cảnh báo và quản lý dữ liệu của doanh nghiệp theo thời gian thực, hỗ trợ trò chuyện với AI Agent. Xây dựng giao diện quản trị tập trung, trực quan hóa dữ liệu qua dashboard, biểu đồ và hệ thống cảnh báo; tích hợp AI Agent, hỗ trợ doanh nghiệp khai thác thông tin, theo dõi hoạt động và quản lý từ nhiều nguồn dữ liệu khác nhau.",
+                            "Xây dựng giao diện quản trị tập trung, trực quan hóa dữ liệu qua dashboard, biểu đồ và hệ thống cảnh báo; tích hợp AI Agent, hỗ trợ doanh nghiệp khai thác thông tin, theo dõi hoạt động và quản lý từ nhiều nguồn dữ liệu khác nhau.",
                         ],
                     },
                 }),
@@ -218,8 +217,10 @@ const CONTENT_VI: PortfolioContent = {
                         name: "Hệ thống ERP quản lý doanh nghiệp nội bộ",
                         summary: null,
                         highlights: [
-                            "Phát triển và nâng cấp các module ERP phục vụ quản lý hồ sơ kiểm nghiệm theo ISO/IEC 17025, lưu trữ tài liệu, xác thực dữ liệu và các nghiệp vụ kế toán nội bộ.",
+                            "Phát triển và nâng cấp các module ERP phục vụ quy trình kiểm nghiệm trong lĩnh vực dược phẩm: quản lý hồ sơ kiểm nghiệm theo ISO/IEC 17025, lưu trữ và xác thực tài liệu, cùng các nghiệp vụ hỗ trợ kế toán nội bộ.",
+                            "Tích hợp các dịch vụ AI để xử lý văn bản, nhận dạng chữ viết tay (OCR) và phát hiện người trong video.",
                             "Đồng bộ các thao tác của kiểm nghiệm viên trên các thiết bị y tế, các thiết bị IoT và đồng bộ dữ liệu, backup lên NAS Synology và hệ thống quản lý.",
+                            "Triển khai và cấu hình hạ tầng nội bộ với Tailscale, Headscale và NAS Synology cho kết nối mạng, lưu trữ và chia sẻ dữ liệu.",
                             "Hệ thống phục vụ hơn 80 người dùng nội bộ và cộng tác viên bên ngoài, góp phần tự động hóa quy trình quản lý tài liệu, hồ sơ mẫu, giảm quy mô nhân sự vận hành thủ công từ 5 người xuống còn 1 người, đồng thời nâng cao hiệu quả xử lý và giảm sai sót nhập liệu.",
                         ],
                     },
@@ -240,8 +241,10 @@ const CONTENT_VI: PortfolioContent = {
                         name: "Life Office - Hệ thống quản trị doanh nghiệp của Công ty Môi trường đô thị Hà Nội Urenco",
                         summary: null,
                         highlights: [
-                            "Tham gia phát triển module quản lý văn phòng, quản lý tài sản và theo dõi phương tiện trên nền tảng di động.",
-                            "Tích hợp Google Maps API để hiển thị bản đồ và chỉ đường cho người dùng.",
+                            "Phát triển các module trên ứng dụng di động phục vụ quản lý văn bản, tài sản và theo dõi phương tiện.",
+                            "Tích hợp Google Maps API để hiển thị bản đồ, tìm đường và dẫn đường.",
+                            "Xây dựng tính năng theo dõi lịch làm việc cá nhân.",
+                            "Build và phát hành ứng dụng lên App Store và Google Play.",
                         ],
                     },
                 }),
@@ -372,7 +375,7 @@ const CONTENT_VI: PortfolioContent = {
         },
     },
     footer: {
-        credit: "Logo và hình ảnh của Đại học Thăng Long, Udata, IRDOP, Lifetex thuộc về các đơn vị tương ứng.",
+        credit: "Logo và hình ảnh của Đại học Thăng Long và các đơn vị trong mục Kinh nghiệm thuộc về chủ sở hữu tương ứng.",
         builtWith: "Next.js · Tailwind CSS",
     },
 };

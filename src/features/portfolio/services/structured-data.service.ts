@@ -2,7 +2,7 @@ import {
     CONTACT_CHANNELS,
     EDUCATION,
     PROFILE,
-    PROJECTS,
+    type ProjectConfig,
     REFERENCES,
     SAME_AS_URLS,
     SEO,
@@ -109,6 +109,7 @@ function collectReferenceMentions(): readonly JsonLdNode[] {
 // Dùng @id để các nút tham chiếu nhau. Chỉ đưa dữ kiện có thật trong trang (không bịa số liệu, đánh giá).
 export function buildPersonJsonLd(
     content: PortfolioContent,
+    projectConfigs: readonly ProjectConfig[],
     siteUrl: string,
 ): JsonLdNode {
     const pageUrl = `${siteUrl}/${content.locale}`;
@@ -183,7 +184,7 @@ export function buildPersonJsonLd(
         "@type": "ItemList",
         "@id": `${pageUrl}#projects`,
         name: content.projects.title,
-        itemListElement: PROJECTS.map((config, index) => {
+        itemListElement: projectConfigs.map((config, index) => {
             const text = content.projects.items[config.slug];
             const url = pickProjectUrl(config.links);
             return {

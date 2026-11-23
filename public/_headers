@@ -19,6 +19,8 @@
 /image/*
   Cache-Control: public, max-age=604800
 # Ảnh của nơi chỉ liệt kê (không làm SEO): không đưa vào Google Images, vẫn hiển thị bình thường trên trang
+/image/experiment-01/*
+  X-Robots-Tag: noindex
 /image/experiment-02/*
   X-Robots-Tag: noindex
 /image/experiment-03/*

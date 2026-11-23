@@ -3,20 +3,23 @@ import {
     CV_FILES,
     EDUCATION,
     PROFILE,
-    PROJECTS,
     REFERENCES,
     SEO,
     SKILL_GROUP_ORDER,
     SKILL_ITEMS,
 } from "@/features/portfolio/constants/profile.constants";
 import { getPortfolioContent } from "@/features/portfolio/services/content.service";
+import { getLivePortfolio } from "@/features/portfolio/services/link-availability.service";
 import type {
     ExperienceProject,
     PortfolioContent,
     ProjectLink,
     SkillGroupId,
 } from "@/features/portfolio/types/portfolio.types";
-import { sortExperienceEntries } from "@/features/portfolio/utils/experience.utils";
+import {
+    sortExperienceEntries,
+    stripBrandPrefix,
+} from "@/features/portfolio/utils/experience.utils";
 import { defaultLocale, locales } from "@/shared/constants/i18n.constants";
 
 function formatLinks(
@@ -34,12 +37,15 @@ function formatProject(
     return details.length === 0 ? `- ${name}` : `- ${name}: ${details.join(" · ")}`;
 }
 
+// Nơi chỉ liệt kê (`isDiscoverable: false`): bỏ tên sản phẩm (phần trước " - ") và liên kết, chỉ giữ chủ đề và công việc.
 function formatExperienceProject(
     project: ExperienceProject,
     labels: PortfolioContent["ui"]["linkLabels"],
+    isDiscoverable: boolean,
 ): string {
-    const links = formatLinks(project.links, labels);
-    return formatProject(project.name, [
+    const links = isDiscoverable ? formatLinks(project.links, labels) : "";
+    const name = isDiscoverable ? project.name : stripBrandPrefix(project.name);
+    return formatProject(name, [
         project.summary,
         ...project.highlights,
         links === "" ? null : links,
@@ -60,7 +66,7 @@ function formatSkills(content: PortfolioContent): string[] {
 // dự án, cách liên hệ, kèm liên kết thật. Chỉ dùng dữ kiện đã có trên trang. Viết bằng ngôn ngữ mặc định (vi),
 // kèm tóm tắt tiếng Anh ngắn ở đầu cho các hệ thống đọc tiếng Anh.
 export async function buildLlmsTxt(siteUrl: string): Promise<string> {
-    const main = getPortfolioContent(defaultLocale);
+    const { content: main, projects: projectConfigs } = await getLivePortfolio(defaultLocale);
     const english = getPortfolioContent("en");
 
     const pages = locales.map((locale) => {
@@ -68,23 +74,22 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         return `- [${content.meta.title}](${siteUrl}/${locale}) (${locale}): ${content.meta.description}`;
     });
 
-    const experience = sortExperienceEntries(main.experience.entries)
-        .filter((entry) => entry.isDiscoverable)
-        .flatMap((entry) => {
-        const heading = [entry.company, entry.role, entry.period]
+    // Nơi chỉ liệt kê: không nêu tên nơi làm, chỉ giữ vai trò, thời gian và chủ đề công việc.
+    const experience = sortExperienceEntries(main.experience.entries).flatMap((entry) => {
+        const heading = [entry.isDiscoverable ? entry.company : null, entry.role, entry.period]
             .filter((part): part is string => part !== null)
             .join(" · ");
-        const site = entry.companyUrl === null ? "" : ` (${entry.companyUrl})`;
+        const site = entry.isDiscoverable && entry.companyUrl !== null ? ` (${entry.companyUrl})` : "";
         return [
             `### ${heading}${site}`,
             ...entry.projects.map((project) =>
-                formatExperienceProject(project, main.ui.linkLabels),
+                formatExperienceProject(project, main.ui.linkLabels, entry.isDiscoverable),
             ),
             "",
         ];
     });
 
-    const projects = PROJECTS.map((config) => {
+    const projects = projectConfigs.map((config) => {
         const text = main.projects.items[config.slug];
         const links = formatLinks(config.links, main.ui.linkLabels);
         return formatProject(text.name, [

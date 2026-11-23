@@ -31,7 +31,10 @@ export default function TopContactBar({
         >
             {TOP_BAR_ITEMS.map((item, index) => {
                 const Icon = ICONS[item.id];
-                const label = content.contact.channels[item.id].label;
+                const text = content.contact.channels[item.id];
+                const label = text.label;
+                // Giá trị riêng theo ngôn ngữ (ví dụ địa chỉ không dấu ở bản tiếng Anh), không có thì dùng giá trị chung.
+                const value = text.value ?? item.value;
 
                 return (
                     <li
@@ -46,7 +49,7 @@ export default function TopContactBar({
                         <span className="inline-flex min-w-0 items-center gap-2 text-white/85">
                             <Icon aria-hidden="true" className="size-4 shrink-0" />
                             <span className="sr-only">{label}: </span>
-                            <span className="truncate">{item.value}</span>
+                            <span className="truncate">{value}</span>
                         </span>
                     </li>
                 );

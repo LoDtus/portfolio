@@ -57,7 +57,7 @@ export const TECH_PRIORITY: readonly string[] = [
     "Langfuse",
     "FastMCP",
     "Node-RED",
-    "Frigate",
+    "Frigate NVR",
     "Vietmap API",
     "Google Maps API",
     // Triển khai và vận hành
@@ -65,6 +65,8 @@ export const TECH_PRIORITY: readonly string[] = [
     "Docker Compose",
     "Nginx",
     "Cloudflare Tunnel",
+    "Tailscale",
+    "Headscale",
     "GitHub Actions CI/CD",
     "Sentry",
     "Better Stack",

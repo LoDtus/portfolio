@@ -4,7 +4,7 @@ import type { ContactChannelFacts } from "@/features/portfolio/types/portfolio.t
 
 // Khung chung của thẻ kênh liên hệ trên nền xanh đậm: dùng cho cả thẻ liên kết và thẻ sao chép để hai loại giống hệt nhau.
 export const CHANNEL_CARD_CLASS =
-    "group spotlight spotlight-on-dark flex h-full w-full items-center gap-4 border border-white/20 bg-white/5 p-4 text-left hover:border-white hover:bg-white/10";
+    "group spotlight spotlight-on-dark transition-all duration-200 active:scale-98 flex h-full w-full items-center gap-4 border border-white/20 bg-white/5 p-4 text-left hover:border-white hover:bg-white/10";
 
 // Cho phép xuống dòng ngay trước "@" của email, để địa chỉ dài không bị cắt giữa chữ.
 function renderValue(value: string) {

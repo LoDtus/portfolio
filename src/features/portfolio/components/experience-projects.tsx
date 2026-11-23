@@ -51,16 +51,17 @@ export default function ExperienceProjects({
                                 </p>
                             )}
                             {project.stack.length === 0 ? null : (
-                                <ul
-                                    aria-label={labels.stack}
-                                    className="flex flex-wrap gap-1.5"
-                                >
-                                    {project.stack.map((item) => (
-                                        <li key={item}>
-                                            <TechBadge name={item} tone="muted" />
-                                        </li>
-                                    ))}
-                                </ul>
+                                <div className="text-sm">
+                                    {/* Cùng tiêu đề "Công nghệ sử dụng" như thẻ ở mục Dự án cá nhân. */}
+                                    <h6 className="mb-2 font-bold text-heading">{labels.stack}</h6>
+                                    <ul className="flex flex-wrap gap-1.5">
+                                        {project.stack.map((item) => (
+                                            <li key={item}>
+                                                <TechBadge name={item} tone="muted" />
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             )}
                             {project.highlights.length === 0 ? null : (
                                 <ul className="space-y-2 text-sm leading-6 text-text-main">

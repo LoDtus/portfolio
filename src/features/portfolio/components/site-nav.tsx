@@ -92,7 +92,7 @@ export default function SiteNav({
                     </SectionLink>
                     <button
                         type="button"
-                        className="inline-flex size-10 items-center justify-center border border-border-main text-heading lg:hidden"
+                        className="inline-flex size-10 items-center justify-center border border-border-main text-heading transition-all duration-200 active:scale-98 lg:hidden"
                         aria-haspopup="dialog"
                         aria-expanded={isMenuOpen}
                         aria-controls={MOBILE_MENU_ID}

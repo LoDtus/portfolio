@@ -7,6 +7,7 @@ import {
 } from "@/features/portfolio/constants/profile.constants";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
+import { localizeContactChannel } from "@/features/portfolio/utils/contact-channel.utils";
 import { keepWordsTogether } from "@/features/portfolio/utils/no-break.utils";
 import { locales } from "@/shared/constants/i18n.constants";
 
@@ -14,6 +15,9 @@ export default function ContactSection({ content }: { content: PortfolioContent 
     const { contact } = content;
     // Bản CV cùng ngôn ngữ với trang đứng đầu, bản còn lại đứng sau.
     const cvLocales = [content.locale, ...locales.filter((item) => item !== content.locale)];
+    const channels = CONTACT_CHANNELS.map((channel) =>
+        localizeContactChannel(channel, contact.channels[channel.id]),
+    );
 
     return (
         <section
@@ -45,7 +49,7 @@ export default function ContactSection({ content }: { content: PortfolioContent 
                         aria-label={contact.channelsLabel}
                         className="mt-10 grid gap-3 sm:grid-cols-2"
                     >
-                        {CONTACT_CHANNELS.map((channel, index) => (
+                        {channels.map((channel, index) => (
                             <li
                                 key={channel.id}
                                 className={`reveal min-w-0 sm:[&:last-child:nth-child(odd)]:col-span-2 ${REVEAL_DELAY_CLASSES[index % 2]}`}
