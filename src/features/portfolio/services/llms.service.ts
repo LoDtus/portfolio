@@ -135,7 +135,7 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         `- Lĩnh vực / Domain: ${[...new Set([...SEO.domainTopics.vi, ...SEO.domainTopics.en])].join(", ")}`,
         "",
         `## ${main.nav.education}`,
-        `- [${EDUCATION.schoolName}](${EDUCATION.schoolUrl}): ${main.education.major}, ${EDUCATION.startYear} – ${EDUCATION.endYear}, GPA ${EDUCATION.gpa}/${EDUCATION.gpaScale}`,
+        `- [${EDUCATION.schoolName}](${EDUCATION.schoolUrl}): ${main.education.major}, ${EDUCATION.startYear} - ${EDUCATION.endYear}, GPA ${EDUCATION.gpa}/${EDUCATION.gpaScale}`,
         "",
         `## ${main.nav.experience}`,
         ...experience,

@@ -156,7 +156,7 @@ export function buildPageMarkdown(
     const { hero, about, skills, education, experience, projects, references, contact, footer } = content;
     const educationLines = [
         `- ${education.school}: ${link(education.major, programUrl)}`,
-        `- ${education.periodLabel}: ${EDUCATION.startYear} – ${EDUCATION.endYear}`,
+        `- ${education.periodLabel}: ${EDUCATION.startYear} - ${EDUCATION.endYear}`,
         `- ${education.gpaLabel}: ${EDUCATION.gpa} / ${EDUCATION.gpaScale}`,
     ];
     const channels = CONTACT_CHANNELS.map((facts) => {

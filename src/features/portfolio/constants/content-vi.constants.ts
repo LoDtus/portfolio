@@ -97,7 +97,7 @@ const CONTENT_VI: PortfolioContent = {
         highlights: ["Fullstack Development"],
         facts: [
             {
-                value: `${EDUCATION.startYear} – ${EDUCATION.endYear}`,
+                value: `${EDUCATION.startYear} - ${EDUCATION.endYear}`,
                 label: "Đại học Thăng Long · Công nghệ thông tin",
             },
             {
@@ -176,7 +176,7 @@ const CONTENT_VI: PortfolioContent = {
                         summary:
                             "Nền tảng kiểm kê và báo cáo khí nhà kính (carbon, ESG) cho doanh nghiệp sản xuất công nghiệp, tập trung vào nhà máy xi măng.",
                         highlights: [
-                            "Tự động hóa quy trình nhập liệu, đối soát, kiểm tra và xác thực dữ liệu phát thải Scope 1–2 theo danh mục Quyết định 2626, hỗ trợ quản lý, truy vết và giải trình số liệu kiểm kê.",
+                            "Tự động hóa quy trình nhập liệu, đối soát, kiểm tra và xác thực dữ liệu phát thải Scope 1-2 theo danh mục Quyết định 2626, hỗ trợ quản lý, truy vết và giải trình số liệu kiểm kê.",
                             "Xây dựng hệ thống phân quyền động DRBAC theo vai trò và đơn vị, tích hợp SSO; thiết kế kiến trúc multi-tenant với lõi dùng chung và khả năng triển khai độc lập cho từng tổ chức.",
                         ],
                     },
@@ -272,7 +272,7 @@ const CONTENT_VI: PortfolioContent = {
                 summary:
                     "Nền tảng bất động sản kết hợp phân tích vị trí trên bản đồ, ước lượng khoảng giá và cho phép người dùng rao bán/cho thuê. Người mua xem được ưu nhược điểm của các bất động sản dựa trên dữ liệu thực tế và có thể tìm kiếm, tham khảo các tin đang rao bán.",
                 facts: [],
-                role: "1 người – Fullstack",
+                role: "1 người - Fullstack",
                 period: projectPeriod(0),
             },
             vinfastreev: {
@@ -285,7 +285,7 @@ const CONTENT_VI: PortfolioContent = {
                         value: "phục vụ khoảng 50 người, khoảng 200 lượt truy cập mỗi ngày, trung bình khoảng 10 lead mỗi tháng",
                     },
                 ],
-                role: "1 người – Fullstack",
+                role: "1 người - Fullstack",
                 period: projectPeriod(1),
             },
             "affiliate-product-catalog": {
@@ -293,7 +293,7 @@ const CONTENT_VI: PortfolioContent = {
                 summary:
                     "Nền tảng giúp người dùng so sánh giá và thông tin của một sản phẩm từ nhiều sàn thương mại điện tử khác nhau, đồng thời gợi ý giúp người dùng chọn mua sản phẩm và kiếm được tiền từ affiliate.",
                 facts: [],
-                role: "1 người – Fullstack",
+                role: "1 người - Fullstack",
                 period: projectPeriod(2),
             },
             "city-incidents-management-system": {
@@ -301,7 +301,7 @@ const CONTENT_VI: PortfolioContent = {
                 summary:
                     "Ứng dụng hỗ trợ người dân và các cơ quan, tổ chức có thể theo dõi, báo cáo và xử lý các sự cố diễn ra xung quanh khu vực sinh sống theo thời gian thực.",
                 facts: [],
-                role: "1 người – Fullstack",
+                role: "1 người - Fullstack",
                 period: projectPeriod(3),
             },
         },
@@ -319,11 +319,11 @@ const CONTENT_VI: PortfolioContent = {
                 role: "Giám đốc Công nghệ (CTO), Verysell AI & SmartDev",
                 summary: null,
                 highlights: [
-                    "CTO tại Verysell AI (05/2025 – nay) và SmartDev (11/2025 – nay), hai công ty công nghệ thuộc Verysell Group (Thụy Sĩ).",
+                    "CTO tại Verysell AI (05/2025 - nay) và SmartDev (11/2025 - nay), hai công ty công nghệ thuộc Verysell Group (Thụy Sĩ).",
                     "Tại SmartDev, định hướng xây dựng công ty phát triển phần mềm ứng dụng AI tại Việt Nam, tối ưu hiệu suất vận hành và mang lại giá trị đo lường được cho khách hàng trong toàn bộ vòng đời phát triển phần mềm, từ ý tưởng đến bàn giao sản phẩm.",
                     "Dẫn dắt đội ngũ AI Engineering triển khai các giải pháp AI từ giai đoạn Proof of Concept đến vận hành thực tế cho khách hàng tại châu Âu, Trung Đông và khu vực APAC.",
                     "Nhiều năm kinh nghiệm về trí tuệ nhân tạo (AI), Deep Learning và Computer Vision.",
-                    "Tiến sĩ Điện tử và Kỹ thuật máy tính, Đại học Quốc gia Chonnam (Hàn Quốc); nghiên cứu sau tiến sĩ 03/2020 – 11/2021, nghiên cứu sinh 03/2015 – 02/2020.",
+                    "Tiến sĩ Điện tử và Kỹ thuật máy tính, Đại học Quốc gia Chonnam (Hàn Quốc); nghiên cứu sau tiến sĩ 03/2020 - 11/2021, nghiên cứu sinh 03/2015 - 02/2020.",
                 ],
                 photoAlts: [
                     "Chân dung TS. Nguyễn Huy Toán",

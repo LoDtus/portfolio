@@ -35,7 +35,7 @@ function readToken(match: string): NumberToken {
     };
 }
 
-// Chạy mọi con số trong `value` tới giá trị thật (ví dụ "2021 – 2026", "3.2", "4"), giữ nguyên các ký tự còn lại; xem MAX_COUNT_SPAN.
+// Chạy mọi con số trong `value` tới giá trị thật (ví dụ "2021 - 2026", "3.2", "4"), giữ nguyên các ký tự còn lại; xem MAX_COUNT_SPAN.
 // HTML từ server chứa sẵn giá trị cuối (SEO, không JS, không nhảy bố cục); client đặt về giá trị đầu rồi đếm lên khi con số hiện trên màn hình.
 // Chạy lại mỗi lần cuộn tới: con số ra khỏi màn hình hoàn toàn thì về giá trị đầu, lần hiện sau lại đếm từ đầu (ra một phần thì chưa reset, tránh số nhảy khi còn nhìn thấy).
 // Cập nhật thẳng vào DOM bằng requestAnimationFrame (không setState mỗi khung hình). Giảm chuyển động thì đứng yên ở giá trị cuối.

@@ -97,7 +97,7 @@ const CONTENT_EN: PortfolioContent = {
         highlights: ["Fullstack Development"],
         facts: [
             {
-                value: `${EDUCATION.startYear} – ${EDUCATION.endYear}`,
+                value: `${EDUCATION.startYear} - ${EDUCATION.endYear}`,
                 label: "Thang Long University · Information Technology",
             },
             {
@@ -176,7 +176,7 @@ const CONTENT_EN: PortfolioContent = {
                         summary:
                             "A platform that tracks and reports greenhouse gas emissions (carbon, ESG) for manufacturers, with a focus on cement plants.",
                         highlights: [
-                            "Automated data entry, cross-checking and validation of Scope 1–2 emissions data based on the categories in Decision 2626, so the numbers are easy to manage, trace and explain.",
+                            "Automated data entry, cross-checking and validation of Scope 1-2 emissions data based on the categories in Decision 2626, so the numbers are easy to manage, trace and explain.",
                             "Built a dynamic permission system (DRBAC) by role and department with SSO; designed a multi-tenant setup with a shared core that can also be deployed separately for each organization.",
                         ],
                     },
@@ -238,7 +238,7 @@ const CONTENT_EN: PortfolioContent = {
                 ]),
                 projects: attachProjectTexts(LIFETEX.projects, {
                     "life-office": {
-                        name: "Life Office – Enterprise Management System for URENCO (Hanoi Urban Environment Company)",
+                        name: "Life Office - Enterprise Management System for URENCO (Hanoi Urban Environment Company)",
                         // Keep the client's name (URENCO) out of llms.txt.
                         searchName: "Enterprise Management System",
                         summary: null,
@@ -272,7 +272,7 @@ const CONTENT_EN: PortfolioContent = {
                 summary:
                     "A real estate platform that analyzes locations on a map, estimates a price range and lets people list homes for sale or rent. Buyers can see the pros and cons of each property based on real data, and search and browse current listings.",
                 facts: [],
-                role: "1 person – Fullstack",
+                role: "1 person - Fullstack",
                 period: projectPeriod(0),
             },
             vinfastreev: {
@@ -285,7 +285,7 @@ const CONTENT_EN: PortfolioContent = {
                         value: "serves about 50 people and about 200 visits a day, with about 10 leads a month on average",
                     },
                 ],
-                role: "1 person – Fullstack",
+                role: "1 person - Fullstack",
                 period: projectPeriod(1),
             },
             "affiliate-product-catalog": {
@@ -293,7 +293,7 @@ const CONTENT_EN: PortfolioContent = {
                 summary:
                     "A platform that lets people compare the price and details of a product across different online marketplaces, and suggests what to buy, earning money through affiliate links.",
                 facts: [],
-                role: "1 person – Fullstack",
+                role: "1 person - Fullstack",
                 period: projectPeriod(2),
             },
             "city-incidents-management-system": {
@@ -301,7 +301,7 @@ const CONTENT_EN: PortfolioContent = {
                 summary:
                     "A real-time system that helps people and local authorities keep track of, report and handle incidents around the city.",
                 facts: [],
-                role: "1 person – Fullstack",
+                role: "1 person - Fullstack",
                 period: projectPeriod(3),
             },
         },
@@ -319,11 +319,11 @@ const CONTENT_EN: PortfolioContent = {
                 role: "Chief Technology Officer (CTO), Verysell AI & SmartDev",
                 summary: null,
                 highlights: [
-                    "CTO at Verysell AI (05/2025 – present) and SmartDev (11/2025 – present), two tech companies under Verysell Group (Switzerland).",
+                    "CTO at Verysell AI (05/2025 - present) and SmartDev (11/2025 - present), two tech companies under Verysell Group (Switzerland).",
                     "At SmartDev, he is building an AI-first software company in Vietnam that helps clients work more efficiently and get real, measurable results across the whole software process, from the first idea to the finished product.",
                     "Leads the AI Engineering team that takes AI solutions from proof of concept to real use for clients in Europe, the Middle East and APAC.",
                     "Many years of experience in artificial intelligence (AI), Deep Learning and Computer Vision.",
-                    "PhD in Electronics and Computer Engineering from Chonnam National University (Korea); postdoctoral researcher 03/2020 – 11/2021, graduate researcher 03/2015 – 02/2020.",
+                    "PhD in Electronics and Computer Engineering from Chonnam National University (Korea); postdoctoral researcher 03/2020 - 11/2021, graduate researcher 03/2015 - 02/2020.",
                 ],
                 photoAlts: [
                     "Portrait of Dr. Nguyen Huy Toan",

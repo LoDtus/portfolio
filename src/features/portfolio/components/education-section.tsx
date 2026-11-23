@@ -75,7 +75,7 @@ export default function EducationSection({
                                 </dt>
                                 <dd className="font-display text-2xl font-bold lg:text-3xl">
                                     <CountUp
-                                        value={`${EDUCATION.startYear} – ${EDUCATION.endYear}`}
+                                        value={`${EDUCATION.startYear} - ${EDUCATION.endYear}`}
                                     />
                                 </dd>
                             </div>
