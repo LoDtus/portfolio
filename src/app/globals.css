@@ -454,19 +454,85 @@
     }
 }
 
+/* 6c. In ấn và lưu PDF (Ctrl+P): khổ A4, giữ màu nền, không ngắt trang giữa thẻ, tiêu đề luôn đi cùng nội dung bên dưới.
+   Lớp trợ giúp: `print-keep` (không ngắt bên trong), `print-keep-next` (không bỏ lại một mình cuối trang),
+   `print-flow` (khối quá dài, được phép ngắt trang), `print-auto-height` (bỏ chiều cao tối thiểu theo màn hình). */
+/* Sau Ctrl+S: bản lưu phải hiện đủ nội dung dù chưa cuộn tới và dù script không chạy lại. */
+.static-copy .reveal,
+.static-copy .reveal-bar {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
 @media print {
+    html {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Hiện đủ nội dung: hiệu ứng cuộn chỉ để xem trên màn hình. */
     .reveal,
     .reveal-bar {
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
+        animation: none !important;
     }
-}
 
-/* In CV: chỉ in nội dung, bỏ điều hướng */
-@media print {
-    .no-print {
+    /* Bỏ điều hướng, thanh tiến độ, nút kêu gọi (vô nghĩa trên giấy). */
+    .no-print,
+    .swiper-button-prev,
+    .swiper-button-next,
+    .swiper-pagination {
         display: none !important;
+    }
+
+    /* Bỏ hiệu ứng rê chuột và bóng đổ; các phần tử không bị dịch chuyển khi in. */
+    .card-lift,
+    .spotlight,
+    .tilt-frame {
+        transform: none !important;
+        box-shadow: none !important;
+        transition: none !important;
+    }
+
+    /* Khoảng cách giữa các mục gọn hơn để ít trang và ít khoảng trắng cuối trang. */
+    section[id] {
+        padding-block: 1.75rem !important;
+    }
+    .print-auto-height {
+        min-height: 0 !important;
+        padding-block: 1rem !important;
+    }
+    .print-keep-next.mb-12 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* Không ngắt trang giữa một thẻ, một ý, một khung ảnh. */
+    section li:not(.print-flow),
+    section article:not(.print-flow),
+    .print-keep,
+    .print-keep-next {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    .print-keep-next {
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+    p {
+        orphans: 3;
+        widows: 3;
     }
 }
 

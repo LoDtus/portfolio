@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { PREPARE_STATIC_COPY_EVENT } from "@/features/portfolio/constants/static-copy.constants";
 import { usePrefersMotion } from "@/shared/hooks/use-prefers-motion";
 
 const NUMBER_PATTERN = /\d+(?:[.,]\d+)?/g;
@@ -76,6 +77,13 @@ export default function CountUp({ value }: { value: string }) {
 
         element.textContent = format(0);
 
+        // Sắp in hoặc lưu trang: dừng đếm và hiện ngay giá trị cuối (nếu không, số ngoài màn hình sẽ in ra giá trị đầu).
+        const showFinalValue = () => {
+            stop();
+            element.textContent = value;
+        };
+        window.addEventListener(PREPARE_STATIC_COPY_EVENT, showFinalValue);
+
         const observer = new IntersectionObserver(
             (entries) => {
                 const entry = entries[entries.length - 1];
@@ -95,6 +103,7 @@ export default function CountUp({ value }: { value: string }) {
         observer.observe(element);
 
         return () => {
+            window.removeEventListener(PREPARE_STATIC_COPY_EVENT, showFinalValue);
             observer.disconnect();
             stop();
             element.textContent = value;

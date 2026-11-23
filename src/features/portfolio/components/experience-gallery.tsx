@@ -54,7 +54,7 @@ export default function ExperienceGallery({
     return (
         <div
             ref={containerRef}
-            className={`reveal reveal-zoom mt-6 ${wideCount === 1 ? "md:max-w-2xl" : ""}`}
+            className={`print-keep reveal reveal-zoom mt-6 ${wideCount === 1 ? "md:max-w-2xl" : ""}`}
         >
             <Swiper
                 modules={[A11y, Autoplay, Keyboard, Navigation, Pagination]}

@@ -22,7 +22,7 @@ export default function HeroSection({
             aria-labelledby="hero-title"
             className="bg-bg-main"
         >
-            <div className="site-container grid min-h-[calc(100dvh-6.75rem)] items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+            <div className="print-auto-height site-container grid min-h-[calc(100dvh-6.75rem)] items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
                 <div>
                     <p
                         data-enter
@@ -71,7 +71,7 @@ export default function HeroSection({
                     <div
                         data-enter
                         style={{ "--enter-index": 4 } as CSSProperties}
-                        className="mt-10 flex flex-wrap gap-4"
+                        className="no-print mt-10 flex flex-wrap gap-4"
                     >
                         <SectionLink
                             locale={locale}

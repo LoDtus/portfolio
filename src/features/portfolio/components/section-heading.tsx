@@ -15,7 +15,7 @@ export default function SectionHeading({
     const isDark = tone === "dark";
 
     return (
-        <div className="reveal mb-12 grid gap-4 lg:grid-cols-2 lg:items-end lg:gap-12">
+        <div className="print-keep-next reveal mb-12 grid gap-4 lg:grid-cols-2 lg:items-end lg:gap-12">
             <div className="flex items-stretch gap-4">
                 <span
                     aria-hidden="true"

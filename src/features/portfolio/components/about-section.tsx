@@ -35,7 +35,7 @@ export default function AboutSection({ content }: { content: PortfolioContent })
                         ))}
                     </div>
 
-                    <dl className="grid gap-4">
+                    <dl className="print-keep grid gap-4">
                         {about.facts.map((fact, index) => (
                             <div
                                 key={fact.label}

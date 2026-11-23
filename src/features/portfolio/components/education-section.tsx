@@ -33,7 +33,7 @@ export default function EducationSection({
                     tone="light"
                 />
 
-                <div className="grid border border-border-main lg:grid-cols-2">
+                <div className="print-keep grid border border-border-main lg:grid-cols-2">
                     <PhotoSlider
                         photos={photos}
                         labels={content.experience.gallery}

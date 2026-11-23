@@ -23,7 +23,7 @@ export default function ContactSection({ content }: { content: PortfolioContent 
         >
             <div className="site-container">
                 <div className="max-w-4xl">
-                    <div className="reveal reveal-left">
+                    <div className="print-keep-next reveal reveal-left">
                         <div className="mb-8 flex items-stretch gap-4">
                             <span
                                 aria-hidden="true"
@@ -70,7 +70,7 @@ export default function ContactSection({ content }: { content: PortfolioContent 
                     </ul>
 
                     {/* Khối tải CV tách riêng bằng đường kẻ, tiêu đề và nút đặc có biểu tượng tải xuống, để không bị nhầm là một kênh liên hệ. */}
-                    <div className="reveal mt-12 border-t border-white/20 pt-8">
+                    <div className="print-keep reveal mt-12 border-t border-white/20 pt-8">
                         <h3 className="font-display text-2xl font-bold">{contact.cv.title}</h3>
                         <p className="mt-2 text-white/75">{contact.cv.description}</p>
                         <div className="mt-5 flex flex-col gap-3 sm:flex-row">

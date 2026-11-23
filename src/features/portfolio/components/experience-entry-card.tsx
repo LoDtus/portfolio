@@ -28,9 +28,9 @@ export default function ExperienceEntryCard({
         <article
             // Nơi chỉ liệt kê (không làm SEO): Google không lấy đoạn trích từ thẻ này.
             data-nosnippet={entry.isDiscoverable ? undefined : ""}
-            className="card-lift spotlight border border-border-main bg-muted p-5 sm:p-6 lg:p-8"
+            className="print-flow card-lift spotlight border border-border-main bg-muted p-5 sm:p-6 lg:p-8"
         >
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <div className="print-keep-next flex flex-wrap items-center gap-x-5 gap-y-3">
                 {/* Logo đặt thẳng trên nền thẻ. Chỉ giao diện tối mới cần nền trắng, vì logo màu xanh đậm sẽ chìm trên nền tối. */}
                 <span className="inline-flex h-12 items-center dark:bg-white dark:px-3">
                     <Image
@@ -63,9 +63,9 @@ export default function ExperienceEntryCard({
             </div>
 
             {entry.role === null ? (
-                <p className="mt-4 italic text-text-sub">{labels.pendingNote}</p>
+                <p className="print-keep-next mt-4 italic text-text-sub">{labels.pendingNote}</p>
             ) : (
-                <p className="mt-4 font-semibold text-accent-ink">{entry.role}</p>
+                <p className="print-keep-next mt-4 font-semibold text-accent-ink">{entry.role}</p>
             )}
 
             {entry.summary === null ? null : (

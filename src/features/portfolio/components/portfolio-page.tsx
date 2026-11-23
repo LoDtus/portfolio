@@ -9,6 +9,7 @@ import ProjectsSection from "@/features/portfolio/components/projects-section";
 import ReferencesSection from "@/features/portfolio/components/references-section";
 import RevealObserver from "@/features/portfolio/components/reveal-observer";
 import SpotlightEffect from "@/features/portfolio/components/spotlight-effect";
+import StaticCopyPreparer from "@/features/portfolio/components/static-copy-preparer";
 import SiteFooter from "@/features/portfolio/components/site-footer";
 import SiteHeader from "@/features/portfolio/components/site-header";
 import SkillsSection from "@/features/portfolio/components/skills-section";
@@ -57,6 +58,7 @@ export default async function PortfolioPage({
             <SiteFooter locale={locale} content={content} />
 
             <RevealObserver key={locale} />
+            <StaticCopyPreparer />
             <SpotlightEffect />
             <CopyAsMarkdown markdown={buildPageMarkdown(content, programUrl, getSiteUrl())} />
             <div aria-hidden="true" className="scroll-progress no-print" />
