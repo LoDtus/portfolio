@@ -3,7 +3,7 @@ import {
     CV_FILES,
     EDUCATION,
     PROFILE,
-    type ProjectConfig,
+    PROJECTS,
     REFERENCES,
     SKILL_GROUP_ORDER,
     SKILL_ITEMS,
@@ -82,11 +82,8 @@ function formatExperience(content: PortfolioContent): string[] {
     });
 }
 
-function formatProjects(
-    content: PortfolioContent,
-    projectConfigs: readonly ProjectConfig[],
-): string[] {
-    return projectConfigs.flatMap((config) => {
+function formatProjects(content: PortfolioContent): string[] {
+    return PROJECTS.flatMap((config) => {
         const text = content.projects.items[config.slug];
         const links = formatLinks(config.links, content.ui.linkLabels);
         return [
@@ -150,10 +147,9 @@ function formatCvLinks(content: PortfolioContent, siteUrl: string): string[] {
 // Toàn bộ nội dung trang dạng markdown thuần (không ảnh, không biểu tượng), theo ngôn ngữ của `content` và đúng thứ tự các mục trên trang.
 // Dùng cho thao tác "chọn tất cả rồi sao chép" (xem CopyAsMarkdown). Dựng từ cùng dữ liệu với giao diện nên không lệch khi sửa nội dung;
 // mục mới thêm vào trang PHẢI được thêm vào đây (xem .claude/rules/page-markdown.md).
-// `projectConfigs` là dự án cá nhân đã bỏ liên kết không còn truy cập được; `programUrl` là địa chỉ nút "Xem ngành học" đã kiểm tra lúc build; `siteUrl` là gốc của trang (để liên kết CV là địa chỉ đầy đủ).
+// `programUrl` là địa chỉ nút "Xem ngành học" đã kiểm tra lúc build; `siteUrl` là gốc của trang (để liên kết CV là địa chỉ đầy đủ).
 export function buildPageMarkdown(
     content: PortfolioContent,
-    projectConfigs: readonly ProjectConfig[],
     programUrl: string,
     siteUrl: string,
 ): string {
@@ -194,7 +190,7 @@ export function buildPageMarkdown(
         ...formatExperience(content),
         `## ${projects.title}`,
         "",
-        ...formatProjects(content, projectConfigs),
+        ...formatProjects(content),
         `- ${link(projects.moreLabel, PROFILE.githubRepositoriesUrl)}`,
         "",
         `## ${references.title}`,

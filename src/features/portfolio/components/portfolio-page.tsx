@@ -14,7 +14,7 @@ import SiteFooter from "@/features/portfolio/components/site-footer";
 import SiteHeader from "@/features/portfolio/components/site-header";
 import SkillsSection from "@/features/portfolio/components/skills-section";
 import { MAIN_CONTENT_ID } from "@/features/portfolio/constants/sections.constants";
-import { getLivePortfolio } from "@/features/portfolio/services/link-availability.service";
+import { getPortfolioContent } from "@/features/portfolio/services/content.service";
 import { buildPageMarkdown } from "@/features/portfolio/services/page-markdown.service";
 import { resolveProgramUrl } from "@/features/portfolio/services/education-link.service";
 import {
@@ -34,9 +34,8 @@ export default async function PortfolioPage({
     locale: Locale;
     initialSection: SectionId | null;
 }) {
-    // Nội dung đã bỏ các nút "Website" không còn truy cập được (kiểm tra lúc build).
-    const { content, projects } = await getLivePortfolio(locale);
-    const jsonLd = serializeJsonLd(buildPersonJsonLd(content, projects, getSiteUrl()));
+    const content = getPortfolioContent(locale);
+    const jsonLd = serializeJsonLd(buildPersonJsonLd(content, getSiteUrl()));
     const programUrl = await resolveProgramUrl();
 
     return (
@@ -51,7 +50,7 @@ export default async function PortfolioPage({
                 <SkillsSection content={content} />
                 <EducationSection content={content} programUrl={programUrl} />
                 <ExperienceSection content={content} />
-                <ProjectsSection content={content} projects={projects} />
+                <ProjectsSection content={content} />
                 <ReferencesSection content={content} />
                 <ContactSection content={content} />
             </main>
@@ -61,7 +60,7 @@ export default async function PortfolioPage({
             <RevealObserver key={locale} />
             <StaticCopyPreparer />
             <SpotlightEffect />
-            <CopyAsMarkdown markdown={buildPageMarkdown(content, projects, programUrl, getSiteUrl())} />
+            <CopyAsMarkdown markdown={buildPageMarkdown(content, programUrl, getSiteUrl())} />
             <div aria-hidden="true" className="scroll-progress no-print" />
 
             <script

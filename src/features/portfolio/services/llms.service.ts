@@ -3,13 +3,13 @@ import {
     CV_FILES,
     EDUCATION,
     PROFILE,
+    PROJECTS,
     REFERENCES,
     SEO,
     SKILL_GROUP_ORDER,
     SKILL_ITEMS,
 } from "@/features/portfolio/constants/profile.constants";
 import { getPortfolioContent } from "@/features/portfolio/services/content.service";
-import { getLivePortfolio } from "@/features/portfolio/services/link-availability.service";
 import type {
     ExperienceProject,
     PortfolioContent,
@@ -68,7 +68,7 @@ function formatSkills(content: PortfolioContent): string[] {
 // dự án, cách liên hệ, kèm liên kết thật. Chỉ dùng dữ kiện đã có trên trang. Viết bằng ngôn ngữ mặc định (vi),
 // kèm tóm tắt tiếng Anh ngắn ở đầu cho các hệ thống đọc tiếng Anh.
 export async function buildLlmsTxt(siteUrl: string): Promise<string> {
-    const { content: main, projects: projectConfigs } = await getLivePortfolio(defaultLocale);
+    const main = getPortfolioContent(defaultLocale);
     const english = getPortfolioContent("en");
 
     const pages = locales.map((locale) => {
@@ -91,7 +91,7 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         ];
     });
 
-    const projects = projectConfigs.map((config) => {
+    const projects = PROJECTS.map((config) => {
         const text = main.projects.items[config.slug];
         const links = formatLinks(config.links, main.ui.linkLabels);
         return formatProject(text.name, [
