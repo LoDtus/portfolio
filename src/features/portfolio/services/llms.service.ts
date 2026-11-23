@@ -133,7 +133,7 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         `## ${main.nav.experience}`,
         ...experience,
 
-        `## ${main.nav.projects}`,
+        `## ${main.projects.title}`,
         ...projects,
         `- [${main.projects.moreLabel}](${PROFILE.githubRepositoriesUrl})`,
         "",

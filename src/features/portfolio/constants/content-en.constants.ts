@@ -256,22 +256,23 @@ const CONTENT_EN: PortfolioContent = {
         },
     },
     projects: {
-        title: "Projects",
+        title: "Personal projects",
         description:
             "The most notable products and solutions I have built, developed or deployed myself.",
         moreLabel: "See more projects on GitHub",
         items: {
             "location-insight": {
-                name: "Location Insight",
-                summary: null,
+                name: "Location Insight - Real estate analysis and valuation platform",
+                summary:
+                    "A real estate platform that combines location analysis on a map, price range estimation, and the ability for users to list properties for sale or rent. Buyers can see the pros and cons of each property based on real data, and search and browse current listings.",
                 highlights: [],
                 role: "1 person – Fullstack",
                 period: projectPeriod(0),
             },
             vinfastreev: {
-                name: "Vinfastreev",
+                name: "Vinfastreev - VinFast electric car showroom website",
                 summary:
-                    "An introduction and consultation website for electric cars at Vinfast showrooms in Hanoi. Customers can browse the vehicle catalog, choose and compare models, follow the latest news and register for a test drive. Content is managed and published by the dealer. The project runs on a VPS and AWS Lightsail behind Cloudflare Tunnel, with CI/CD through GitHub Actions and Docker, monitoring with Sentry and Better Stack, and an alerting system plus daily reports through Telegram.",
+                    "An introduction and consultation website for electric cars at Vinfast showrooms in Hanoi. Customers can browse the vehicle catalog, choose and compare models, follow the latest news and register for a test drive. Administrators can also update information and follow potential customers through the CMS.",
                 highlights: [
                     "Serves about 50 people and about 200 visits per day, with about 10 leads per month on average.",
                 ],
@@ -279,7 +280,7 @@ const CONTENT_EN: PortfolioContent = {
                 period: projectPeriod(1),
             },
             "affiliate-product-catalog": {
-                name: "Affiliate Product Catalog",
+                name: "E-commerce product recommendation and referral website",
                 summary:
                     "A platform that lets users compare the price and details of a product across several e-commerce marketplaces, and suggests which product to buy so they can earn money from affiliate commissions.",
                 highlights: [],
@@ -287,11 +288,11 @@ const CONTENT_EN: PortfolioContent = {
                 period: projectPeriod(2),
             },
             "city-incidents-management-system": {
-                name: "City Incidents Management System",
+                name: "CIMS - City incident management website",
                 summary:
                     "An application that helps residents, agencies and organizations follow, report and handle incidents around where they live in real time.",
                 highlights: [],
-                role: "Solo project – came up with the idea, wrote the documentation and built the whole project.",
+                role: "1 person – Fullstack",
                 period: projectPeriod(3),
             },
         },

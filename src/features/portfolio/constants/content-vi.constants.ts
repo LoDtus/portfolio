@@ -257,22 +257,23 @@ const CONTENT_VI: PortfolioContent = {
         },
     },
     projects: {
-        title: "Dự án",
+        title: "Dự án cá nhân",
         description:
             "Những sản phẩm và giải pháp tiêu biểu nhất mà tôi từng tham gia xây dựng, phát triển hoặc trực tiếp triển khai.",
         moreLabel: "Xem thêm dự án khác trên GitHub",
         items: {
             "location-insight": {
-                name: "Location Insight",
-                summary: null,
+                name: "Location Insight - Nền tảng phân tích và định giá bất động sản",
+                summary:
+                    "Nền tảng bất động sản kết hợp phân tích vị trí trên bản đồ, ước lượng khoảng giá và cho phép người dùng rao bán/cho thuê. Người mua xem được ưu nhược điểm của các bất động sản dựa trên dữ liệu thực tế và có thể tìm kiếm, tham khảo các tin đang rao bán.",
                 highlights: [],
                 role: "1 người – Fullstack",
                 period: projectPeriod(0),
             },
             vinfastreev: {
-                name: "Vinfastreev",
+                name: "Vinfastreev - Website showroom xe điện VinFast",
                 summary:
-                    "Website giới thiệu, tư vấn xe điện cho các showroom Vinfast tại Hà Nội. Khách hàng có thể xem danh mục các xe, lựa chọn, so sánh, theo dõi các tin tức mới nhất và đăng ký tham gia lái thử. Nội dung do đại lý tự quản trị và đăng tải. Dự án được triển khai trên VPS, AWS Lightsail qua Cloudflare Tunnel, CI/CD bằng GitHub Actions và Docker, giám sát bằng Sentry, Better Stack và hệ thống cảnh báo, báo cáo hằng ngày qua Telegram.",
+                    "Website giới thiệu, tư vấn xe điện cho các showroom Vinfast tại Hà Nội. Khách hàng có thể xem danh mục các xe, lựa chọn, so sánh, theo dõi các tin tức mới nhất và đăng ký tham gia lái thử. Đồng thời, quản trị viên có thể tự cập nhật các thông tin và theo dõi khách hàng tiềm năng qua CMS.",
                 highlights: [
                     "Phục vụ khoảng 50 người và khoảng 200 lượt truy cập mỗi ngày, trung bình có khoảng 10 lead mỗi tháng.",
                 ],
@@ -280,7 +281,7 @@ const CONTENT_VI: PortfolioContent = {
                 period: projectPeriod(1),
             },
             "affiliate-product-catalog": {
-                name: "Affiliate Product Catalog",
+                name: "Website gợi ý và điều hướng sản phẩm thương mại điện tử",
                 summary:
                     "Nền tảng giúp người dùng so sánh giá và thông tin của một sản phẩm từ nhiều sàn thương mại điện tử khác nhau, đồng thời gợi ý giúp người dùng chọn mua sản phẩm và kiếm được tiền từ affiliate.",
                 highlights: [],
@@ -288,11 +289,11 @@ const CONTENT_VI: PortfolioContent = {
                 period: projectPeriod(2),
             },
             "city-incidents-management-system": {
-                name: "City Incidents Management System",
+                name: "CIMS - Website quản lý sự cố trong thành phố",
                 summary:
                     "Ứng dụng hỗ trợ người dân và các cơ quan, tổ chức có thể theo dõi, báo cáo và xử lý các sự cố diễn ra xung quanh khu vực sinh sống theo thời gian thực.",
                 highlights: [],
-                role: "Phát triển cá nhân – Lên ý tưởng, viết tài liệu và phát triển toàn bộ dự án.",
+                role: "1 người – Fullstack",
                 period: projectPeriod(3),
             },
         },

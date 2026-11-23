@@ -88,12 +88,13 @@ function formatProjects(content: PortfolioContent): string[] {
         return [
             `### ${text.name}`,
             ...(text.period === null ? [] : ["", text.period]),
+            ...(links === "" ? [] : ["", links]),
+            "",
+            `${content.ui.roleLabel}: ${text.role}`,
             ...(text.summary === null ? [] : ["", text.summary]),
             ...(text.highlights.length === 0 ? [] : ["", ...bullets(text.highlights)]),
             "",
-            `- ${content.ui.roleLabel}: ${text.role}`,
-            `- ${content.ui.stackLabel}: ${config.tech.map(formatTech).join(", ")}`,
-            ...(links === "" ? [] : [`- ${links}`]),
+            `${content.ui.stackLabel}: ${config.tech.map(formatTech).join(", ")}`,
             "",
         ];
     });

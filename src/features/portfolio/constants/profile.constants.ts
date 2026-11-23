@@ -2,6 +2,7 @@ import {
     countWorkedMonths,
     formatExperienceYears,
 } from "@/features/portfolio/utils/experience-duration.utils";
+import { sortTechByPriority } from "@/features/portfolio/utils/tech-order.utils";
 import type { Locale } from "@/shared/constants/i18n.constants";
 import type {
     ContactChannelFacts,
@@ -330,7 +331,8 @@ export const PROJECTS: readonly ProjectConfig[] = [
             { kind: "website", url: "https://moanland.com" },
             { kind: "github", url: "https://github.com/LoDtus/location-insight" },
         ],
-        tech: [
+        tech: sortTechByPriority([
+            "TypeScript",
             "NestJS",
             "TypeORM",
             "Next.js",
@@ -349,7 +351,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "Docker",
             "Docker Compose",
             "Claude Code",
-        ],
+        ]),
         thumbnail: null,
     },
     {
@@ -357,18 +359,21 @@ export const PROJECTS: readonly ProjectConfig[] = [
         startedAt: "2026-09",
         endedAt: "2026-09",
         links: [{ kind: "website", url: "https://vinfastreev.com/" }],
-        tech: [
+        tech: sortTechByPriority([
+            "TypeScript",
+            "PHP",
             "Next.js",
             "Headless WordPress",
-            "PHP",
             "MariaDB",
             "Docker",
+            "Docker Compose",
             "GitHub Actions CI/CD",
             "Cloudflare Tunnel",
             "Sentry",
             "Better Stack",
             "Telegram Bot",
-        ],
+            "Claude Code",
+        ]),
         thumbnail: null,
     },
     {
@@ -381,7 +386,8 @@ export const PROJECTS: readonly ProjectConfig[] = [
                 url: "https://github.com/LoDtus/affiliate-product-catalog",
             },
         ],
-        tech: [
+        tech: sortTechByPriority([
+            "TypeScript",
             "Next.js",
             "NestJS",
             "MongoDB",
@@ -390,20 +396,22 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "JWT",
             "Docker",
             "Cloudflare Tunnel",
-        ],
+        ]),
         thumbnail: null,
     },
     {
         slug: "city-incidents-management-system",
-        startedAt: null,
-        endedAt: null,
+        startedAt: "2024-11",
+        endedAt: "2025-05",
         links: [
             {
                 kind: "github",
                 url: "https://github.com/LoDtus/city-incidents-management-system",
             },
         ],
-        tech: [
+        tech: sortTechByPriority([
+            "Java",
+            "JavaScript",
             "Spring Framework",
             "Next.js",
             "Redux",
@@ -413,7 +421,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
             "RESTful API",
             "WebSocket",
             "JWT",
-        ],
+        ]),
         thumbnail: null,
     },
 ];
@@ -441,7 +449,7 @@ export const UDATA: ExperienceCompany = {
         {
             id: "uboard-esg",
             links: [{ kind: "website", url: "https://uboardesg.vn/" }],
-            stack: [
+            stack: sortTechByPriority([
                 "Python",
                 "TypeScript",
                 "Next.js",
@@ -459,12 +467,12 @@ export const UDATA: ExperienceCompany = {
                 "Docker",
                 "Docker Compose",
                 "Claude Code",
-            ],
+            ]),
         },
         {
             id: "uleadgen",
             links: [{ kind: "website", url: "https://uleadgen.net/" }],
-            stack: [
+            stack: sortTechByPriority([
                 "Python",
                 "TypeScript",
                 "Next.js",
@@ -480,7 +488,7 @@ export const UDATA: ExperienceCompany = {
                 "Docker",
                 "Docker Compose",
                 "Claude Code",
-            ],
+            ]),
         },
         {
             id: "ugate",
@@ -494,7 +502,7 @@ export const UDATA: ExperienceCompany = {
                     url: "https://apps.apple.com/vn/app/ugate-industrial-ai/id6755030679",
                 },
             ],
-            stack: [
+            stack: sortTechByPriority([
                 "Python",
                 "TypeScript",
                 "FastAPI",
@@ -506,7 +514,7 @@ export const UDATA: ExperienceCompany = {
                 "Tailwind CSS",
                 "Docker Compose",
                 "Cursor",
-            ],
+            ]),
         },
     ],
 };
@@ -531,7 +539,7 @@ export const IRDOP: ExperienceCompany = {
         {
             id: "internal-erp",
             links: [{ kind: "website", url: "https://irdop.org/" }],
-            stack: [
+            stack: sortTechByPriority([
                 "TypeScript",
                 "React",
                 "Node-RED",
@@ -545,7 +553,7 @@ export const IRDOP: ExperienceCompany = {
                 "Docker Compose",
                 "Frigate",
                 "Cursor",
-            ],
+            ]),
         },
     ],
 };
@@ -580,7 +588,7 @@ export const LIFETEX: ExperienceCompany = {
                     url: "https://www.youtube.com/watch?v=GzqXdYtChQM",
                 },
             ],
-            stack: ["React Native", "Firebase", "Google Maps API"],
+            stack: sortTechByPriority(["React Native", "Firebase", "Google Maps API"]),
         },
     ],
 };
