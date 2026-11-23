@@ -1,13 +1,19 @@
 # Cloudflare Pages / Workers static assets: https://developers.cloudflare.com/pages/configuration/headers/
 # File này được Next.js chép nguyên vào out/ khi build.
 
+# Content-Security-Policy: trang chỉ được tải script, style, ảnh, font và dữ liệu từ chính nó. Script hay iframe lạ
+# bị chèn vào (mã độc, quảng cáo cờ bạc tải từ domain khác) sẽ bị trình duyệt chặn. 'unsafe-inline' cần cho các script
+# nhúng sẵn của Next.js (dữ liệu trang, chống nháy giao diện tối); trang không có ô nhập liệu nào nên không có đường chèn mã vào HTML.
+# Thêm dịch vụ ngoài (ví dụ analytics) thì phải thêm domain của nó vào đây.
 /*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Cross-Origin-Opener-Policy: same-origin
+  X-Permitted-Cross-Domain-Policies: none
 
 # Tệp có hash trong tên (JS, CSS, font): cache vĩnh viễn
 /_next/static/*
