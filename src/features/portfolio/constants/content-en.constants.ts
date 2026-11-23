@@ -160,6 +160,7 @@ const CONTENT_EN: PortfolioContent = {
         entries: [
             {
                 ...UDATA,
+                company: "Udata Joint Stock Company",
                 role: "Fullstack Developer",
                 period: formatMonthRange(UDATA.startedAt, UDATA.endedAt, PRESENT),
                 summary: null,
@@ -172,52 +173,66 @@ const CONTENT_EN: PortfolioContent = {
                 projects: attachProjectTexts(UDATA.projects, {
                     "uboard-esg": {
                         name: "Uboard ESG",
-                        summary: null,
-                        highlights: [],
+                        summary:
+                            "A platform for inventorying and reporting greenhouse gas emissions (carbon, ESG) for industrial manufacturers, focused on cement plants. It replaces manual, scattered emission data collection with one place to enter, control and finalize figures.",
+                        highlights: [
+                            "Automated data entry, reconciliation, checking and validation of Scope 1–2 emission data following the categories of Decision 2626, supporting management, traceability and justification of inventory figures.",
+                            "Built a dynamic DRBAC permission system by role and unit with SSO integration; designed a multi-tenant architecture with a shared core and independent deployment for each organization.",
+                        ],
                     },
                     uleadgen: {
                         name: "UleadGen",
-                        summary: null,
-                        highlights: [],
+                        summary:
+                            "An AI customer care platform. Businesses upload documents or crawl their website content, then embed a chat widget into their own pages. The agent answers from the real content and cites its sources.",
+                        highlights: [
+                            "Built chat and lead scoring features, plus a mechanism that automatically hands customers over to the right salesperson.",
+                            "Developed real-time voice calling from the website to Zalo and Facebook Messenger, converting speech into messages.",
+                        ],
                     },
                     ugate: {
                         name: "Ugate",
                         summary: null,
-                        highlights: [],
+                        highlights: [
+                            "Designed and developed an API Gateway for a multi-tenant SaaS system, handling routing and orchestration between ERP, AI analytics and financial modules.",
+                            "Built user and administrator interfaces for visualizing charts and metrics, monitoring, alerts and real-time management of business data, with chat support for an AI Agent.",
+                            "Built a centralized admin interface that visualizes data through dashboards, charts and an alert system; integrated an AI Agent to help businesses extract insights, monitor operations and manage data from many different sources.",
+                        ],
                     },
                 }),
             },
             {
                 ...IRDOP,
+                company: "Institute of Research and Development of Natural Products (IRDOP)",
                 role: "Fullstack Developer",
                 period: formatMonthRange(IRDOP.startedAt, IRDOP.endedAt, PRESENT),
                 summary: null,
                 highlights: [],
                 photos: attachPhotoAlts(IRDOP.photos, [
-                    "Group photo at the IRDOP 10th anniversary ceremony",
-                    "Photo from the IRDOP Christmas event",
-                    "IRDOP team photo in a Lunar New Year frame",
+                    "Group photo at the 10th anniversary ceremony",
+                    "Photo from the Christmas event",
+                    "Team photo in a Lunar New Year frame",
                 ]),
                 projects: attachProjectTexts(IRDOP.projects, {
                     "internal-erp": {
                         name: "Internal enterprise ERP system",
                         summary: null,
                         highlights: [
-                            "Developed and upgraded ERP modules for managing testing records, document storage, data verification and internal accounting operations.",
-                            "Synchronized laboratory technicians' operations on medical devices and IoT devices, and synchronized data, backups and audit logs to Synology NAS and the management system.",
-                            "Integrated Gemini AI to automate document processing, handwriting recognition and person recognition from video.",
+                            "Developed and upgraded ERP modules for managing testing records under ISO/IEC 17025, document storage, data verification and internal accounting operations.",
+                            "Synchronized laboratory technicians' operations on medical devices and IoT devices, and synchronized data and backups to Synology NAS and the management system.",
+                            "The system serves more than 80 internal users and external collaborators, helping automate document and sample record management, cutting manual operations staff from 5 people to 1, while improving processing efficiency and reducing data-entry errors.",
                         ],
                     },
                 }),
             },
             {
                 ...LIFETEX,
+                company: "LifeteX Joint Stock Company",
                 role: "Frontend Intern",
                 period: formatMonthRange(LIFETEX.startedAt, LIFETEX.endedAt, PRESENT),
                 summary: null,
                 highlights: [],
                 photos: attachPhotoAlts(LIFETEX.photos, [
-                    "Team photo at Lifetex",
+                    "Team photo at the workplace",
                 ]),
                 projects: attachProjectTexts(LIFETEX.projects, {
                     "life-office": {
@@ -227,6 +242,11 @@ const CONTENT_EN: PortfolioContent = {
                             "Contributed to the office management, asset management and vehicle tracking modules on the mobile platform.",
                             "Integrated the Google Maps API to show maps and give directions to users.",
                         ],
+                    },
+                    "urenco-enterprise-management": {
+                        name: "Enterprise management system of Hanoi Urban Environment Company (Urenco)",
+                        summary: null,
+                        highlights: [],
                     },
                 }),
             },

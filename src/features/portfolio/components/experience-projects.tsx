@@ -6,13 +6,15 @@ import type {
     ProjectLinkKind,
 } from "@/features/portfolio/types/portfolio.types";
 
-// Các dự án đã làm tại một nơi: thẻ nhỏ gồm tên, liên kết, mô tả, ý chính và danh sách công nghệ.
+// Các dự án đã làm tại một nơi: thẻ nhỏ gồm tên, liên kết (ngay dưới tên), mô tả dự án là gì, công nghệ, rồi các ý về vai trò và kết quả.
 // Phần nào chưa có dữ liệu (mô tả null, không có link, không có stack) thì bỏ hẳn, không bịa nội dung.
 export default function ExperienceProjects({
     projects,
     labels,
+    isDiscoverable,
 }: {
     projects: readonly ExperienceProject[];
+    isDiscoverable: boolean;
     labels: {
         heading: string;
         stack: string;
@@ -31,16 +33,34 @@ export default function ExperienceProjects({
                 {projects.map((project, index) => (
                     <li
                         key={project.id}
-                        className={`reveal ${REVEAL_DELAY_CLASSES[index % 2]}`}
+                        className={`reveal md:[&:last-child:nth-child(odd)]:col-span-2 ${REVEAL_DELAY_CLASSES[index % 2]}`}
                     >
                         <article className="card-lift spotlight flex h-full flex-col gap-4 border border-border-main bg-surface p-5">
                             <h5 className="font-display text-lg font-bold text-heading">
                                 {project.name}
                             </h5>
+                            <ProjectLinks
+                                projectName={project.name}
+                                links={project.links}
+                                labels={labels.links}
+                                isDiscoverable={isDiscoverable}
+                            />
                             {project.summary === null ? null : (
                                 <p className="leading-7 text-text-main">
                                     {project.summary}
                                 </p>
+                            )}
+                            {project.stack.length === 0 ? null : (
+                                <ul
+                                    aria-label={labels.stack}
+                                    className="flex flex-wrap gap-1.5"
+                                >
+                                    {project.stack.map((item) => (
+                                        <li key={item}>
+                                            <TechBadge name={item} tone="muted" />
+                                        </li>
+                                    ))}
+                                </ul>
                             )}
                             {project.highlights.length === 0 ? null : (
                                 <ul className="space-y-2 text-sm leading-6 text-text-main">
@@ -51,23 +71,6 @@ export default function ExperienceProjects({
                                                 className="mt-2 size-1.5 shrink-0 rotate-45 bg-accent"
                                             />
                                             {highlight}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                            <ProjectLinks
-                                projectName={project.name}
-                                links={project.links}
-                                labels={labels.links}
-                            />
-                            {project.stack.length === 0 ? null : (
-                                <ul
-                                    aria-label={labels.stack}
-                                    className="mt-auto flex flex-wrap gap-1.5"
-                                >
-                                    {project.stack.map((item) => (
-                                        <li key={item}>
-                                            <TechBadge name={item} tone="muted" />
                                         </li>
                                     ))}
                                 </ul>

@@ -25,7 +25,11 @@ export default function ExperienceEntryCard({
     };
 }) {
     return (
-        <article className="card-lift spotlight border border-border-main bg-muted p-5 sm:p-6 lg:p-8">
+        <article
+            // Nơi chỉ liệt kê (không làm SEO): Google không lấy đoạn trích từ thẻ này.
+            data-nosnippet={entry.isDiscoverable ? undefined : ""}
+            className="card-lift spotlight border border-border-main bg-muted p-5 sm:p-6 lg:p-8"
+        >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
                 {/* Logo đặt thẳng trên nền thẻ. Chỉ giao diện tối mới cần nền trắng, vì logo màu xanh đậm sẽ chìm trên nền tối. */}
                 <span className="inline-flex h-12 items-center dark:bg-white dark:px-3">
@@ -44,7 +48,7 @@ export default function ExperienceEntryCard({
                         <a
                             href={entry.companyUrl}
                             target="_blank"
-                            rel="noopener noreferrer"
+                            rel={entry.isDiscoverable ? "noopener noreferrer" : "nofollow noopener noreferrer"}
                             className="link-draw"
                         >
                             {entry.company}
@@ -90,6 +94,7 @@ export default function ExperienceEntryCard({
 
             <ExperienceProjects
                 projects={entry.projects}
+                isDiscoverable={entry.isDiscoverable}
                 labels={{
                     heading: labels.projects,
                     stack: labels.stack,

@@ -58,7 +58,7 @@ const CONTENT_VI: PortfolioContent = {
         roleLabel: "Số lượng thành viên và vai trò",
         periodLabel: "Thời gian thực hiện",
         linkLabels: {
-            website: "Trang web",
+            website: "Website",
             googlePlay: "Google Play",
             appStore: "App Store",
             youtube: "YouTube",
@@ -161,6 +161,7 @@ const CONTENT_VI: PortfolioContent = {
         entries: [
             {
                 ...UDATA,
+                company: "Công ty cổ phần Udata",
                 role: "Lập trình viên Fullstack",
                 period: formatMonthRange(UDATA.startedAt, UDATA.endedAt, PRESENT),
                 summary: null,
@@ -173,52 +174,66 @@ const CONTENT_VI: PortfolioContent = {
                 projects: attachProjectTexts(UDATA.projects, {
                     "uboard-esg": {
                         name: "Uboard ESG",
-                        summary: null,
-                        highlights: [],
+                        summary:
+                            "Nền tảng kiểm kê và báo cáo khí nhà kính (carbon, ESG) cho doanh nghiệp sản xuất công nghiệp, tập trung vào nhà máy xi măng. Mục tiêu là thay quy trình gom số liệu phát thải thủ công, rời rạc bằng một nơi nhập liệu, kiểm soát và chốt số liệu thống nhất.",
+                        highlights: [
+                            "Tự động hóa quy trình nhập liệu, đối soát, kiểm tra và xác thực dữ liệu phát thải Scope 1–2 theo danh mục Quyết định 2626, hỗ trợ quản lý, truy vết và giải trình số liệu kiểm kê.",
+                            "Xây dựng hệ thống phân quyền động DRBAC theo vai trò và đơn vị, tích hợp SSO; thiết kế kiến trúc multi-tenant với lõi dùng chung và khả năng triển khai độc lập cho từng tổ chức.",
+                        ],
                     },
                     uleadgen: {
                         name: "UleadGen",
-                        summary: null,
-                        highlights: [],
+                        summary:
+                            "Nền tảng AI chăm sóc khách hàng. Doanh nghiệp tải tài liệu hoặc thu thập nội dung website, rồi nhúng widget chat vào trang của mình. Agent trả lời dựa trên nội dung thật và có trích dẫn nguồn.",
+                        highlights: [
+                            "Xây dựng tính năng trò chuyện và chấm điểm khách hàng tiềm năng, cùng với cơ chế bàn giao khách hàng tự động tới sales phù hợp.",
+                            "Phát triển tính năng gọi thoại thời gian thực từ Website tới Zalo và Facebook Messenger, chuyển lời thoại thành tin nhắn.",
+                        ],
                     },
                     ugate: {
                         name: "Ugate",
                         summary: null,
-                        highlights: [],
+                        highlights: [
+                            "Thiết kế và phát triển API Gateway cho hệ thống multi-tenant SaaS, xử lý routing và orchestration giữa các dịch vụ ERP, AI analytics và financial modules.",
+                            "Xây dựng giao diện cho người dùng và quản trị viên, phục vụ hiển thị trực quan các số liệu biểu đồ, theo dõi, cảnh báo và quản lý dữ liệu của doanh nghiệp theo thời gian thực, hỗ trợ trò chuyện với AI Agent.",
+                            "Xây dựng giao diện quản trị tập trung, trực quan hóa dữ liệu qua dashboard, biểu đồ và hệ thống cảnh báo; tích hợp AI Agent, hỗ trợ doanh nghiệp khai thác thông tin, theo dõi hoạt động và quản lý từ nhiều nguồn dữ liệu khác nhau.",
+                        ],
                     },
                 }),
             },
             {
                 ...IRDOP,
+                company: "Viện nghiên cứu và phát triển sản phẩm thiên nhiên (IRDOP)",
                 role: "Lập trình viên Fullstack",
                 period: formatMonthRange(IRDOP.startedAt, IRDOP.endedAt, PRESENT),
                 summary: null,
                 highlights: [],
                 photos: attachPhotoAlts(IRDOP.photos, [
-                    "Ảnh tập thể tại lễ kỷ niệm 10 năm thành lập IRDOP",
-                    "Ảnh chụp tại sự kiện Giáng sinh của IRDOP",
-                    "Ảnh tập thể đội ngũ IRDOP trong khung chúc mừng năm mới",
+                    "Ảnh tập thể tại lễ kỷ niệm 10 năm thành lập",
+                    "Ảnh chụp tại sự kiện Giáng sinh",
+                    "Ảnh tập thể đội ngũ trong khung chúc mừng năm mới",
                 ]),
                 projects: attachProjectTexts(IRDOP.projects, {
                     "internal-erp": {
                         name: "Hệ thống ERP quản lý doanh nghiệp nội bộ",
                         summary: null,
                         highlights: [
-                            "Phát triển và nâng cấp các module ERP phục vụ quản lý hồ sơ kiểm nghiệm, lưu trữ tài liệu, xác thực dữ liệu và các nghiệp vụ kế toán nội bộ.",
-                            "Đồng bộ các thao tác của kiểm nghiệm viên trên các thiết bị y tế, các thiết bị IoT và đồng bộ dữ liệu, backup, audit lên NAS Synology và hệ thống quản lý.",
-                            "Tích hợp Gemini AI để tự động hóa xử lý tài liệu, nhận diện chữ viết tay và nhận diện con người từ video.",
+                            "Phát triển và nâng cấp các module ERP phục vụ quản lý hồ sơ kiểm nghiệm theo ISO/IEC 17025, lưu trữ tài liệu, xác thực dữ liệu và các nghiệp vụ kế toán nội bộ.",
+                            "Đồng bộ các thao tác của kiểm nghiệm viên trên các thiết bị y tế, các thiết bị IoT và đồng bộ dữ liệu, backup lên NAS Synology và hệ thống quản lý.",
+                            "Hệ thống phục vụ hơn 80 người dùng nội bộ và cộng tác viên bên ngoài, góp phần tự động hóa quy trình quản lý tài liệu, hồ sơ mẫu, giảm quy mô nhân sự vận hành thủ công từ 5 người xuống còn 1 người, đồng thời nâng cao hiệu quả xử lý và giảm sai sót nhập liệu.",
                         ],
                     },
                 }),
             },
             {
                 ...LIFETEX,
+                company: "Công ty cổ phần LifeteX",
                 role: "Thực tập sinh Frontend",
                 period: formatMonthRange(LIFETEX.startedAt, LIFETEX.endedAt, PRESENT),
                 summary: null,
                 highlights: [],
                 photos: attachPhotoAlts(LIFETEX.photos, [
-                    "Ảnh tập thể đội ngũ tại Lifetex",
+                    "Ảnh tập thể đội ngũ tại nơi làm việc",
                 ]),
                 projects: attachProjectTexts(LIFETEX.projects, {
                     "life-office": {
@@ -228,6 +243,11 @@ const CONTENT_VI: PortfolioContent = {
                             "Tham gia phát triển module quản lý văn phòng, quản lý tài sản và theo dõi phương tiện trên nền tảng di động.",
                             "Tích hợp Google Maps API để hiển thị bản đồ và chỉ đường cho người dùng.",
                         ],
+                    },
+                    "urenco-enterprise-management": {
+                        name: "Hệ thống quản trị doanh nghiệp của Công ty Môi trường đô thị Hà Nội Urenco",
+                        summary: null,
+                        highlights: [],
                     },
                 }),
             },

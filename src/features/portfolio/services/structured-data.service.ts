@@ -118,6 +118,7 @@ export function buildPersonJsonLd(
     const knowsAbout = NEUTRAL_GROUPS.flatMap((group) => SKILL_ITEMS[group]).map(
         (name) => name.replace(/\s*\(.*\)$/, ""),
     );
+    const topics = [...knowsAbout, ...SEO.domainTopics[content.locale]];
     const imageUrl = `${siteUrl}${SEO.ogImage.path}`;
 
     const person: JsonLdNode = {
@@ -142,7 +143,7 @@ export function buildPersonJsonLd(
         colleague: REFERENCES.map((facts) => ({
             "@id": `${siteUrl}/#reference-${facts.id}`,
         })),
-        knowsAbout,
+        knowsAbout: topics,
         knowsLanguage: SEO.knowsLanguage,
         contactPoint: CONTACT_CHANNELS.filter(
             (channel) => channel.id === "email" || channel.id === "phone",

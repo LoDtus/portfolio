@@ -5,6 +5,7 @@ import {
     PROFILE,
     PROJECTS,
     REFERENCES,
+    SEO,
     SKILL_GROUP_ORDER,
     SKILL_ITEMS,
 } from "@/features/portfolio/constants/profile.constants";
@@ -67,7 +68,9 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         return `- [${content.meta.title}](${siteUrl}/${locale}) (${locale}): ${content.meta.description}`;
     });
 
-    const experience = sortExperienceEntries(main.experience.entries).flatMap((entry) => {
+    const experience = sortExperienceEntries(main.experience.entries)
+        .filter((entry) => entry.isDiscoverable)
+        .flatMap((entry) => {
         const heading = [entry.company, entry.role, entry.period]
             .filter((part): part is string => part !== null)
             .join(" · ");
@@ -122,12 +125,14 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         "",
         `## ${main.nav.skills}`,
         ...formatSkills(main),
+        `- Lĩnh vực / Domain: ${[...new Set([...SEO.domainTopics.vi, ...SEO.domainTopics.en])].join(", ")}`,
         "",
         `## ${main.nav.education}`,
         `- [${EDUCATION.schoolName}](${EDUCATION.schoolUrl}): ${main.education.major}, ${EDUCATION.startYear} – ${EDUCATION.endYear}, GPA ${EDUCATION.gpa}/${EDUCATION.gpaScale}`,
         "",
         `## ${main.nav.experience}`,
         ...experience,
+
         `## ${main.nav.projects}`,
         ...projects,
         `- [${main.projects.moreLabel}](${PROFILE.githubRepositoriesUrl})`,

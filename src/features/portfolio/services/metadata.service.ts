@@ -34,6 +34,10 @@ const KEYWORDS: Record<Locale, readonly string[]> = {
         "FastAPI",
         "React",
         "Docker",
+        "kiểm nghiệm",
+        "kiểm định",
+        "y tế",
+        "ISO/IEC 17025",
         "portfolio",
     ],
     en: [
@@ -56,6 +60,10 @@ const KEYWORDS: Record<Locale, readonly string[]> = {
         "FastAPI",
         "React",
         "Docker",
+        "laboratory testing",
+        "inspection",
+        "healthcare",
+        "ISO/IEC 17025",
         "portfolio",
     ],
 };

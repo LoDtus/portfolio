@@ -92,6 +92,9 @@ export interface ExperienceCompany {
     company: string;
     // null nghĩa là chưa có địa chỉ: tên công ty hiển thị dạng chữ thường, không có liên kết.
     companyUrl: string | null;
+    // false nghĩa là chỉ liệt kê trên trang, không làm SEO cho nơi này: bỏ khỏi llms.txt, dữ liệu có cấu trúc, từ khóa;
+    // liên kết ra ngoài gắn nofollow, thẻ gắn data-nosnippet và ảnh gắn X-Robots-Tag noindex (xem public/_headers).
+    isDiscoverable: boolean;
     logo: string;
     logoWidth: number;
     logoHeight: number;

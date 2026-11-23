@@ -46,12 +46,12 @@ function formatExperienceProject(
     const links = formatLinks(project.links, labels.linkLabels);
     return [
         `#### ${project.name}`,
-        ...(project.summary === null ? [] : ["", project.summary]),
-        ...(project.highlights.length === 0 ? [] : ["", ...bullets(project.highlights)]),
         ...(links === "" ? [] : ["", links]),
+        ...(project.summary === null ? [] : ["", project.summary]),
         ...(project.stack.length === 0
             ? []
             : ["", `${labels.stackLabel}: ${project.stack.map(formatTech).join(", ")}`]),
+        ...(project.highlights.length === 0 ? [] : ["", ...bullets(project.highlights)]),
         "",
     ];
 }

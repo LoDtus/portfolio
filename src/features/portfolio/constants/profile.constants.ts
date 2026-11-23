@@ -49,6 +49,12 @@ export const SEO = {
     // Tên khác của chủ trang: biệt danh và tên đầy đủ có dấu (để tìm theo tên tiếng Việt).
     alternateNames: ["LoDtus", "Nguyễn Trung Long"],
     knowsLanguage: ["vi", "en"],
+    // Lĩnh vực nghiệp vụ đã làm (không gắn tên nơi làm): để người tìm theo chủ đề kiểm nghiệm, kiểm định, y tế vẫn gặp trang.
+    // Mọi cụm đều có thật trong nội dung trang (kỹ năng mềm và dự án ERP).
+    domainTopics: {
+        vi: ["Kiểm nghiệm", "Kiểm định", "Y tế", "ISO/IEC 17025", "Quản lý hồ sơ kiểm nghiệm", "Phần mềm ERP"],
+        en: ["Laboratory testing", "Inspection", "Healthcare", "ISO/IEC 17025", "Testing record management", "ERP software"],
+    },
 } as const;
 
 // Các kênh liên hệ theo thứ tự hiển thị ở mục Liên hệ (chân trang lấy lại đúng thứ tự này, bỏ điện thoại và địa chỉ).
@@ -414,11 +420,13 @@ export const PROJECTS: readonly ProjectConfig[] = [
 
 // Thứ tự hiển thị (gần nhất đến xa nhất) do người dùng cung cấp: Udata, IRDOP, Lifetex.
 // Có đủ `startedAt` nên sortExperienceEntries tự xếp theo ngày; thứ tự khai báo ở content-vi/en là phương án dự phòng.
-// Chưa có địa chỉ website của Udata và Lifetex nên để null thay vì đoán.
+// Tên công ty đầy đủ theo từng ngôn ngữ nằm ở content-vi/en; `company` ở đây là tên gọi ngắn.
+// IRDOP và Lifetex chỉ được liệt kê (`isDiscoverable: false`): không làm SEO cho hai nơi này, xem ExperienceCompany.
 export const UDATA: ExperienceCompany = {
     id: "udata",
     company: "Udata",
     companyUrl: null,
+    isDiscoverable: true,
     logo: "/image/experiment-udata/logo.svg",
     logoWidth: 380,
     logoHeight: 100,
@@ -434,26 +442,45 @@ export const UDATA: ExperienceCompany = {
             id: "uboard-esg",
             links: [{ kind: "website", url: "https://uboardesg.vn/" }],
             stack: [
+                "Python",
+                "TypeScript",
                 "Next.js",
+                "Redux Toolkit",
                 "Tailwind CSS",
                 "Ant Design",
                 "FastAPI",
                 "SQLAlchemy",
                 "Alembic",
-                "Celery",
-                "Redis",
                 "PostgreSQL",
-                "Docker",
-                "Vitest",
+                "Redis",
+                "Socket.IO",
                 "MinIO",
                 "Authentik",
+                "Docker",
+                "Docker Compose",
                 "Claude Code",
             ],
         },
         {
             id: "uleadgen",
             links: [{ kind: "website", url: "https://uleadgen.net/" }],
-            stack: [],
+            stack: [
+                "Python",
+                "TypeScript",
+                "Next.js",
+                "Tailwind CSS",
+                "FastAPI",
+                "SQLAlchemy",
+                "PostgreSQL",
+                "Redis",
+                "FastMCP",
+                "LangGraph",
+                "LiteLLM",
+                "Langfuse",
+                "Docker",
+                "Docker Compose",
+                "Claude Code",
+            ],
         },
         {
             id: "ugate",
@@ -467,7 +494,19 @@ export const UDATA: ExperienceCompany = {
                     url: "https://apps.apple.com/vn/app/ugate-industrial-ai/id6755030679",
                 },
             ],
-            stack: ["Next.js", "Cursor"],
+            stack: [
+                "Python",
+                "TypeScript",
+                "FastAPI",
+                "FastMCP",
+                "SQLAlchemy",
+                "PostgreSQL",
+                "Redis",
+                "Next.js",
+                "Tailwind CSS",
+                "Docker Compose",
+                "Cursor",
+            ],
         },
     ],
 };
@@ -475,32 +514,35 @@ export const UDATA: ExperienceCompany = {
 export const IRDOP: ExperienceCompany = {
     id: "irdop",
     company: "IRDOP",
-    companyUrl: "https://irdop.org/",
-    logo: "/image/experiment-irdop/logo.webp",
+    // Không liên kết tên cơ quan; địa chỉ website nằm ở thẻ "Website" của dự án (gắn nofollow).
+    companyUrl: null,
+    isDiscoverable: false,
+    logo: "/image/experiment-02/logo.webp",
     logoWidth: 360,
     logoHeight: 110,
     startedAt: "2025-10",
-    endedAt: "2026-04",
+    endedAt: "2026-03",
     photos: [
-        { src: "/image/experiment-irdop/irdop-001.avif", width: 960, height: 600 },
-        { src: "/image/experiment-irdop/irdop-002.avif", width: 960, height: 600 },
-        { src: "/image/experiment-irdop/irdop-003.avif", width: 960, height: 600 },
+        { src: "/image/experiment-02/workplace-02-001.avif", width: 960, height: 600 },
+        { src: "/image/experiment-02/workplace-02-002.avif", width: 960, height: 600 },
+        { src: "/image/experiment-02/workplace-02-003.avif", width: 960, height: 600 },
     ],
     projects: [
         {
             id: "internal-erp",
-            links: [],
+            links: [{ kind: "website", url: "https://irdop.org/" }],
             stack: [
+                "TypeScript",
                 "React",
+                "Node-RED",
                 "NestJS",
                 "Node.js",
-                "Node-RED",
-                "Redis",
                 "Gemini AI",
                 "PostgreSQL",
+                "Redis",
+                "MinIO",
                 "Docker",
-                "Synology NAS",
-                "Cloudflare",
+                "Docker Compose",
                 "Frigate",
                 "Cursor",
             ],
@@ -510,15 +552,16 @@ export const IRDOP: ExperienceCompany = {
 
 export const LIFETEX: ExperienceCompany = {
     id: "lifetex",
-    company: "Lifetex",
+    company: "LifeteX",
     companyUrl: null,
-    logo: "/image/experiment-lifetex/logo.webp",
+    isDiscoverable: false,
+    logo: "/image/experiment-03/logo.webp",
     logoWidth: 178,
     logoHeight: 129,
     startedAt: "2024-03",
     endedAt: "2024-06",
     photos: [
-        { src: "/image/experiment-lifetex/lifetex-001.avif", width: 960, height: 600 },
+        { src: "/image/experiment-03/workplace-03-001.avif", width: 960, height: 600 },
     ],
     projects: [
         {
@@ -538,6 +581,11 @@ export const LIFETEX: ExperienceCompany = {
                 },
             ],
             stack: ["React Native", "Firebase", "Google Maps API"],
+        },
+        {
+            id: "urenco-enterprise-management",
+            links: [],
+            stack: [],
         },
     ],
 };
