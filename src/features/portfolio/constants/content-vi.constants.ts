@@ -173,30 +173,30 @@ const CONTENT_VI: PortfolioContent = {
                 ]),
                 projects: attachProjectTexts(UDATA.projects, {
                     "uboard-esg": {
-                        name: "Uboard ESG",
+                        name: "Uboard ESG - Hệ thống kiểm kê khí thải carbon cho nhà máy",
                         summary:
-                            "Nền tảng kiểm kê và báo cáo khí nhà kính (carbon, ESG) cho doanh nghiệp sản xuất công nghiệp, tập trung vào nhà máy xi măng. Mục tiêu là thay quy trình gom số liệu phát thải thủ công, rời rạc bằng một nơi nhập liệu, kiểm soát và chốt số liệu thống nhất.",
+                            "Nền tảng kiểm kê và báo cáo khí nhà kính (carbon, ESG) cho doanh nghiệp sản xuất công nghiệp, tập trung vào nhà máy xi măng.",
                         highlights: [
                             "Tự động hóa quy trình nhập liệu, đối soát, kiểm tra và xác thực dữ liệu phát thải Scope 1–2 theo danh mục Quyết định 2626, hỗ trợ quản lý, truy vết và giải trình số liệu kiểm kê.",
                             "Xây dựng hệ thống phân quyền động DRBAC theo vai trò và đơn vị, tích hợp SSO; thiết kế kiến trúc multi-tenant với lõi dùng chung và khả năng triển khai độc lập cho từng tổ chức.",
                         ],
                     },
                     uleadgen: {
-                        name: "UleadGen",
+                        name: "UleadGen - Nền tảng AI chăm sóc khách hàng",
                         summary:
-                            "Nền tảng AI chăm sóc khách hàng. Doanh nghiệp tải tài liệu hoặc thu thập nội dung website, rồi nhúng widget chat vào trang của mình. Agent trả lời dựa trên nội dung thật và có trích dẫn nguồn.",
+                            "Doanh nghiệp tải tài liệu hoặc thu thập nội dung website, rồi nhúng widget chat vào trang của mình. Agent trả lời dựa trên nội dung thật và có trích dẫn nguồn.",
                         highlights: [
                             "Xây dựng tính năng trò chuyện và chấm điểm khách hàng tiềm năng, cùng với cơ chế bàn giao khách hàng tự động tới sales phù hợp.",
                             "Phát triển tính năng gọi thoại thời gian thực từ Website tới Zalo và Facebook Messenger, chuyển lời thoại thành tin nhắn.",
                         ],
                     },
                     ugate: {
-                        name: "Ugate",
-                        summary: null,
+                        name: "Ugate - AI Agent giám sát kho vận & quản lý dòng tiền cho doanh nghiệp",
+                        summary:
+                            "Nền tảng AI hợp nhất dữ liệu từ ERP, kho, kế toán và email để cảnh báo sớm rủi ro thiếu hụt dòng tiền, hàng tồn đọng và đứt hàng. Mục tiêu là giúp CEO/CFO nắm tình hình trong vài phút thay vì mất hàng giờ tổng hợp từ nhiều hệ thống.",
                         highlights: [
-                            "Thiết kế và phát triển API Gateway cho hệ thống multi-tenant SaaS, xử lý routing và orchestration giữa các dịch vụ ERP, AI analytics và financial modules.",
-                            "Xây dựng giao diện cho người dùng và quản trị viên, phục vụ hiển thị trực quan các số liệu biểu đồ, theo dõi, cảnh báo và quản lý dữ liệu của doanh nghiệp theo thời gian thực, hỗ trợ trò chuyện với AI Agent.",
-                            "Xây dựng giao diện quản trị tập trung, trực quan hóa dữ liệu qua dashboard, biểu đồ và hệ thống cảnh báo; tích hợp AI Agent, hỗ trợ doanh nghiệp khai thác thông tin, theo dõi hoạt động và quản lý từ nhiều nguồn dữ liệu khác nhau.",
+                            "Thiết kế và phát triển API Gateway cho hệ thống multi-tenant SaaS, xử lý routing và điều phối các dịch vụ ERP, AI analytics và các modules tài chính.",
+                            "Xây dựng giao diện cho người dùng và quản trị viên, phục vụ hiển thị trực quan các số liệu biểu đồ, theo dõi, cảnh báo và quản lý dữ liệu của doanh nghiệp theo thời gian thực, hỗ trợ trò chuyện với AI Agent. Xây dựng giao diện quản trị tập trung, trực quan hóa dữ liệu qua dashboard, biểu đồ và hệ thống cảnh báo; tích hợp AI Agent, hỗ trợ doanh nghiệp khai thác thông tin, theo dõi hoạt động và quản lý từ nhiều nguồn dữ liệu khác nhau.",
                         ],
                     },
                 }),
@@ -237,17 +237,12 @@ const CONTENT_VI: PortfolioContent = {
                 ]),
                 projects: attachProjectTexts(LIFETEX.projects, {
                     "life-office": {
-                        name: "Life Office",
+                        name: "Life Office - Hệ thống quản trị doanh nghiệp của Công ty Môi trường đô thị Hà Nội Urenco",
                         summary: null,
                         highlights: [
                             "Tham gia phát triển module quản lý văn phòng, quản lý tài sản và theo dõi phương tiện trên nền tảng di động.",
                             "Tích hợp Google Maps API để hiển thị bản đồ và chỉ đường cho người dùng.",
                         ],
-                    },
-                    "urenco-enterprise-management": {
-                        name: "Hệ thống quản trị doanh nghiệp của Công ty Môi trường đô thị Hà Nội Urenco",
-                        summary: null,
-                        highlights: [],
                     },
                 }),
             },

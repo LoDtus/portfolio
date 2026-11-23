@@ -582,11 +582,6 @@ export const LIFETEX: ExperienceCompany = {
             ],
             stack: ["React Native", "Firebase", "Google Maps API"],
         },
-        {
-            id: "urenco-enterprise-management",
-            links: [],
-            stack: [],
-        },
     ],
 };
 

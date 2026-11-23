@@ -172,30 +172,30 @@ const CONTENT_EN: PortfolioContent = {
                 ]),
                 projects: attachProjectTexts(UDATA.projects, {
                     "uboard-esg": {
-                        name: "Uboard ESG",
+                        name: "Uboard ESG - Carbon emission inventory system for factories",
                         summary:
-                            "A platform for inventorying and reporting greenhouse gas emissions (carbon, ESG) for industrial manufacturers, focused on cement plants. It replaces manual, scattered emission data collection with one place to enter, control and finalize figures.",
+                            "A platform for inventorying and reporting greenhouse gas emissions (carbon, ESG) for industrial manufacturers, focused on cement plants.",
                         highlights: [
                             "Automated data entry, reconciliation, checking and validation of Scope 1–2 emission data following the categories of Decision 2626, supporting management, traceability and justification of inventory figures.",
                             "Built a dynamic DRBAC permission system by role and unit with SSO integration; designed a multi-tenant architecture with a shared core and independent deployment for each organization.",
                         ],
                     },
                     uleadgen: {
-                        name: "UleadGen",
+                        name: "UleadGen - AI customer care platform",
                         summary:
-                            "An AI customer care platform. Businesses upload documents or crawl their website content, then embed a chat widget into their own pages. The agent answers from the real content and cites its sources.",
+                            "Businesses upload documents or crawl their website content, then embed a chat widget into their own pages. The agent answers from the real content and cites its sources.",
                         highlights: [
                             "Built chat and lead scoring features, plus a mechanism that automatically hands customers over to the right salesperson.",
                             "Developed real-time voice calling from the website to Zalo and Facebook Messenger, converting speech into messages.",
                         ],
                     },
                     ugate: {
-                        name: "Ugate",
-                        summary: null,
+                        name: "Ugate - AI Agent for warehouse and logistics monitoring and cash flow management for businesses",
+                        summary:
+                            "An AI platform that unifies data from ERP, warehouse, accounting and email to give early warning of cash shortfalls, stagnant inventory and stock-outs. The goal is to let CEOs and CFOs grasp the situation in minutes instead of spending hours compiling it from many systems.",
                         highlights: [
-                            "Designed and developed an API Gateway for a multi-tenant SaaS system, handling routing and orchestration between ERP, AI analytics and financial modules.",
-                            "Built user and administrator interfaces for visualizing charts and metrics, monitoring, alerts and real-time management of business data, with chat support for an AI Agent.",
-                            "Built a centralized admin interface that visualizes data through dashboards, charts and an alert system; integrated an AI Agent to help businesses extract insights, monitor operations and manage data from many different sources.",
+                            "Designed and developed an API Gateway for a multi-tenant SaaS system, handling routing and orchestration of ERP, AI analytics and financial modules.",
+                            "Built user and administrator interfaces for visualizing charts and metrics, monitoring, alerts and real-time management of business data, with chat support for an AI Agent. Built a centralized admin interface that visualizes data through dashboards, charts and an alert system; integrated an AI Agent to help businesses extract insights, monitor operations and manage data from many different sources.",
                         ],
                     },
                 }),
@@ -236,17 +236,12 @@ const CONTENT_EN: PortfolioContent = {
                 ]),
                 projects: attachProjectTexts(LIFETEX.projects, {
                     "life-office": {
-                        name: "Life Office",
+                        name: "Life Office - Enterprise management system of Hanoi Urban Environment Company (Urenco)",
                         summary: null,
                         highlights: [
                             "Contributed to the office management, asset management and vehicle tracking modules on the mobile platform.",
                             "Integrated the Google Maps API to show maps and give directions to users.",
                         ],
-                    },
-                    "urenco-enterprise-management": {
-                        name: "Enterprise management system of Hanoi Urban Environment Company (Urenco)",
-                        summary: null,
-                        highlights: [],
                     },
                 }),
             },
