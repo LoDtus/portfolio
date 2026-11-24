@@ -1,0 +1,78 @@
+// Thứ tự ưu tiên khi liệt kê công nghệ ở mục Kinh nghiệm và Dự án cá nhân, từ cao đến thấp theo mức nhà tuyển dụng và JD thường nhắc:
+// ngôn ngữ, framework chính, thư viện chính, cơ sở dữ liệu, API và thời gian thực, thư viện hỗ trợ, AI và tích hợp, triển khai và vận hành, công cụ khác.
+// Công nghệ mới phải được thêm vào đây (sortTechByPriority ném lỗi khi gặp tên chưa có) để thứ tự luôn nhất quán.
+export const TECH_PRIORITY: readonly string[] = [
+    // Ngôn ngữ (cùng thứ tự với nhóm "Ngôn ngữ lập trình" ở mục Năng lực)
+    "TypeScript",
+    "JavaScript",
+    "Java",
+    "Python",
+    "PHP",
+    // Framework chính
+    "Next.js",
+    "React",
+    "React Native",
+    "NestJS",
+    "Node.js",
+    "FastAPI",
+    "Spring Boot",
+    "Spring Framework",
+    "Flutter",
+    "Headless WordPress",
+    // Thư viện giao diện và quản lý trạng thái
+    "Redux Toolkit",
+    "Redux",
+    "Tailwind CSS",
+    "Ant Design",
+    // Cơ sở dữ liệu
+    "PostgreSQL",
+    "MySQL",
+    "MariaDB",
+    "MongoDB",
+    "Redis",
+    "Elasticsearch",
+    "PostGIS",
+    // API và thời gian thực
+    "REST API",
+    "RESTful API",
+    "WebSocket",
+    "Socket.IO",
+    "JWT",
+    // Thư viện hỗ trợ
+    "TypeORM",
+    "SQLAlchemy",
+    "Alembic",
+    "Celery",
+    "StompJS",
+    "Leaflet",
+    "Authentik",
+    "MinIO",
+    "Vitest",
+    "Firebase",
+    // AI và tích hợp
+    "Claude API",
+    "Gemini AI",
+    "LangGraph",
+    "LiteLLM",
+    "Langfuse",
+    "FastMCP",
+    "Node-RED",
+    "Frigate NVR",
+    "Vietmap API",
+    "Google Maps API",
+    // Triển khai và vận hành
+    "Docker",
+    "Docker Compose",
+    "Nginx",
+    "Cloudflare Tunnel",
+    "Tailscale",
+    "Headscale",
+    "GitHub Actions CI/CD",
+    "Sentry",
+    "Better Stack",
+    "Telegram Bot",
+    "Synology NAS",
+    // Công cụ khác
+    "Claude Code",
+    "Cursor",
+];

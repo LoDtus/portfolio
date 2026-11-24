@@ -8,6 +8,7 @@ import {
 } from "@/features/portfolio/constants/profile.constants";
 import { NAV_SECTION_IDS } from "@/features/portfolio/constants/sections.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
+import { formatCopyright } from "@/features/portfolio/utils/copyright.utils";
 import type { Locale } from "@/shared/constants/i18n.constants";
 
 // Chân trang indigo đậm theo thanglong.edu.vn; dòng ghi nguồn logo/ảnh nằm gọn ở đây (không chú thích dưới ảnh).
@@ -23,8 +24,6 @@ export default function SiteFooter({
     locale: Locale;
     content: PortfolioContent;
 }) {
-    const year = new Date().getFullYear();
-
     return (
         <footer className="no-print bg-band-deep text-white/80">
             <div className="site-container flex flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between">
@@ -55,7 +54,7 @@ export default function SiteFooter({
                     </ul>
                 </nav>
 
-                <ul className="flex flex-wrap gap-2">
+                <ul className="flex flex-wrap gap-1">
                     {FOOTER_CHANNELS.map((channel) => (
                         <li key={channel.id}>
                             <a
@@ -64,9 +63,9 @@ export default function SiteFooter({
                                     ? { target: "_blank", rel: "me noopener noreferrer" }
                                     : {})}
                                 aria-label={content.contact.channels[channel.id].label}
-                                className="inline-flex size-10 items-center justify-center bg-white text-brand-forest hover:bg-brand-mint"
+                                className="inline-flex size-10 items-center justify-center text-white/85 transition-transform duration-200 hover:-translate-y-0.5 hover:text-white"
                             >
-                                <ContactChannelIcon channel={channel} className="size-5" />
+                                <ContactChannelIcon channel={channel} className="size-7" />
                             </a>
                         </li>
                     ))}
@@ -76,9 +75,7 @@ export default function SiteFooter({
             <div className="border-t border-white/10">
                 <div className="site-container flex flex-col gap-2 py-6 text-[13px] leading-5 text-white/70 md:flex-row md:items-center md:justify-between">
                     <p>{content.footer.credit}</p>
-                    <p>
-                        © {year} {PROFILE.name}. {content.footer.builtWith}
-                    </p>
+                    <p>{formatCopyright(content.footer)}</p>
                 </div>
             </div>
         </footer>

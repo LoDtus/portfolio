@@ -161,11 +161,8 @@
         line-height: 1.25;
         border: 2px solid transparent;
         border-radius: 0; /* nút vuông, không bo */
-        transition:
-            background-color 200ms ease,
-            color 200ms ease,
-            border-color 200ms ease,
-            transform 200ms ease;
+        /* Mọi nút: chuyển trạng thái 200ms, nhấn thì thu nhỏ 98% (cùng quy ước transition-all duration-200 active:scale-98). */
+        transition: all 200ms ease;
     }
     .btn:hover {
         transform: translateY(-1px);
@@ -357,60 +354,14 @@
     }
 }
 
-/* 6b. Hiệu ứng xuất hiện / biến mất khi cuộn: CSS scroll-driven animations (Baseline: Chrome/Edge 115, Safari 26, Firefox 159).
-   Chạy trên compositor, không cần JS và không chặn cuộn; trình duyệt cũ hoặc bật "giảm chuyển động" thì hiện nội dung bình thường.
-   Ưu tiên hiệu ứng VÀO (người xem thấy rõ), hạn chế hiệu ứng RA:
-   - Vào: tính theo vị trí ĐỈNH phần tử trên màn hình (range `cover`, không phụ thuộc chiều cao phần tử). Bắt đầu khi đỉnh còn
-     cách mép dưới --reveal-start, chạy trong --reveal-span, nên luôn xong khi đỉnh phần tử còn ở khoảng 60% chiều cao màn hình
-     trở xuống: phần giữa và trên của màn hình luôn hiện đủ, cả khi cuộn lên (chiều ngược lại của hiệu ứng vào cũng nằm gọn ở nửa dưới).
-   - Ra: chỉ bắt đầu khi phần tử đã trượt qua 80% (inset 4.5rem = chiều cao nav sticky), tức gần như đã khuất sau nav.
-   - Chỉ animate opacity/transform; backwards/forwards để trạng thái ẩn không "dính" lại giữa hai đầu. */
+/* 6b. Hiệu ứng xuất hiện khi cuộn, điều khiển theo TRẠNG THÁI bởi RevealObserver (IntersectionObserver):
+   - Phần tử chỉ bị ẩn đi (đặt lại) khi đã KHUẤT HẲN khỏi màn hình (phía trên nav hoặc phía dưới), nên người xem không bao giờ thấy hiệu ứng "ra".
+   - Mỗi lần phần tử quay lại màn hình (cuộn xuống hay cuộn ngược lên) thì hiệu ứng "vào" chạy lại.
+   - Lớp .reveal-js chỉ được thêm khi RevealObserver chạy (có JS, không bật "giảm chuyển động"): không JS, bot tìm kiếm hay in thì nội dung hiện bình thường.
+   - Hiện khi phần tử vào vùng nhìn thấy; chỉ ẩn lại khi đã cách màn hình hơn 100px (hai observer, xem RevealObserver); chỉ animate opacity/transform. */
 :root {
-    --reveal-start: 8vh; /* vào: bắt đầu khi đỉnh phần tử đã vượt mép dưới màn hình bấy nhiêu */
-    --reveal-span: 26vh; /* vào: quãng cuộn để hoàn tất hiệu ứng */
-    --reveal-out-start: 80%; /* ra: chỉ bắt đầu khi đã trượt qua bấy nhiêu % */
-}
-
-@keyframes reveal-in {
-    from {
-        opacity: 0;
-        transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 64px), 0)
-            rotate(var(--reveal-rotate, 0deg)) scale(var(--reveal-scale, 0.96));
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-@keyframes reveal-out {
-    to {
-        opacity: 0;
-        transform: translate3d(0, -28px, 0) scale(0.985);
-    }
-}
-
-@keyframes bar-grow {
-    from {
-        transform: scaleY(0);
-    }
-    to {
-        transform: none;
-    }
-}
-
-@keyframes hero-exit {
-    to {
-        opacity: 0;
-        transform: translate3d(0, -56px, 0);
-    }
-}
-
-@keyframes hero-drift {
-    to {
-        opacity: 0;
-        transform: translate3d(0, -90px, 0) scale(0.94);
-    }
+    --reveal-duration: 700ms;
+    --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Kiểu chuyển động của hiệu ứng vào */
@@ -432,18 +383,18 @@
     --reveal-rotate: -10deg;
 }
 
-/* So le giữa các phần tử cùng hàng: lùi điểm bắt đầu thêm một quãng cuộn nhỏ (theo chiều cao màn hình, để màn hình thấp không bị dồn) */
+/* So le giữa các phần tử cùng hàng: trễ thêm một chút (ms) trước khi bắt đầu */
 .reveal-d0 {
-    --reveal-delay: 0vh;
+    --reveal-delay: 0ms;
 }
 .reveal-d1 {
-    --reveal-delay: 1.5vh;
+    --reveal-delay: 70ms;
 }
 .reveal-d2 {
-    --reveal-delay: 3vh;
+    --reveal-delay: 140ms;
 }
 .reveal-d3 {
-    --reveal-delay: 4.5vh;
+    --reveal-delay: 210ms;
 }
 
 @media (max-width: 639px) {
@@ -458,58 +409,127 @@
     }
 }
 
-@supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-        .reveal {
-            animation:
-                reveal-in cubic-bezier(0.22, 1, 0.36, 1) backwards,
-                reveal-out linear forwards;
-            animation-timeline: view(block 4.5rem 0px), view(block 4.5rem 0px);
-            animation-range:
-                cover calc(var(--reveal-start) + var(--reveal-delay, 0vh))
-                    cover calc(var(--reveal-start) + var(--reveal-span) + var(--reveal-delay, 0vh)),
-                exit var(--reveal-out-start) exit 100%;
-        }
-
-        /* Vạch đứng bên cạnh tiêu đề "mọc" từ trên xuống, chậm hơn tiêu đề một nhịp */
-        .reveal-bar {
-            transform-origin: top;
-            animation: bar-grow cubic-bezier(0.22, 1, 0.36, 1) backwards;
-            animation-timeline: view(block 4.5rem 0px);
-            animation-range:
-                cover calc(var(--reveal-start) + 2vh)
-                cover calc(var(--reveal-start) + var(--reveal-span) + 2vh);
-        }
-
-        /* Hero đã hiện sẵn khi tải: chỉ có hiệu ứng ra, và chỉ khi đã cuộn qua 80% */
-        .hero-exit {
-            animation: hero-exit linear forwards;
-            animation-timeline: view(block 4.5rem 0px);
-            animation-range: exit var(--reveal-out-start) exit 100%;
-        }
-        .hero-drift {
-            animation: hero-drift linear forwards;
-            animation-timeline: view(block 4.5rem 0px);
-            animation-range: exit var(--reveal-out-start) exit 100%;
-        }
+@keyframes reveal-in {
+    from {
+        opacity: 0;
+        transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 64px), 0)
+            rotate(var(--reveal-rotate, 0deg)) scale(var(--reveal-scale, 0.96));
+    }
+    to {
+        opacity: 1;
+        transform: none;
     }
 }
 
+@keyframes bar-grow {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: none;
+    }
+}
+
+/* Trạng thái ẩn CHỈ dùng opacity (không transform) để vị trí của phần tử không đổi giữa hai trạng thái;
+   nếu ẩn bằng transform thì IntersectionObserver (tính cả transform) sẽ làm phần tử bật tắt liên tục ở mép màn hình.
+   Hiệu ứng vào là animation chạy mỗi khi lớp .is-revealed được thêm lại. */
+@media (prefers-reduced-motion: no-preference) {
+    .reveal-js .reveal,
+    .reveal-js .reveal-bar {
+        opacity: 0;
+    }
+    .reveal-js .reveal.is-revealed {
+        opacity: 1;
+        animation: reveal-in var(--reveal-duration) var(--reveal-ease) var(--reveal-delay, 0ms) backwards;
+    }
+
+    /* Vạch đứng bên cạnh tiêu đề "mọc" từ trên xuống, chậm hơn tiêu đề một nhịp */
+    .reveal-js .reveal-bar.is-revealed {
+        opacity: 1;
+        transform-origin: top;
+        animation: bar-grow var(--reveal-duration) var(--reveal-ease) 120ms backwards;
+    }
+}
+
+/* 6c. In ấn và lưu PDF (Ctrl+P): khổ A4, giữ màu nền, không ngắt trang giữa thẻ, tiêu đề luôn đi cùng nội dung bên dưới.
+   Lớp trợ giúp: `print-keep` (không ngắt bên trong), `print-keep-next` (không bỏ lại một mình cuối trang),
+   `print-flow` (khối quá dài, được phép ngắt trang), `print-auto-height` (bỏ chiều cao tối thiểu theo màn hình). */
+/* Sau Ctrl+S: bản lưu phải hiện đủ nội dung dù chưa cuộn tới và dù script không chạy lại. */
+.static-copy .reveal,
+.static-copy .reveal-bar {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
 @media print {
+    html {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Hiện đủ nội dung: hiệu ứng cuộn chỉ để xem trên màn hình. */
     .reveal,
-    .reveal-bar,
-    .hero-exit,
-    .hero-drift {
-        animation: none !important;
+    .reveal-bar {
         opacity: 1 !important;
         transform: none !important;
+        transition: none !important;
+        animation: none !important;
     }
-}
 
-/* In CV: chỉ in nội dung, bỏ điều hướng */
-@media print {
-    .no-print {
+    /* Bỏ điều hướng, thanh tiến độ, nút kêu gọi (vô nghĩa trên giấy). */
+    .no-print,
+    .swiper-button-prev,
+    .swiper-button-next,
+    .swiper-pagination {
         display: none !important;
+    }
+
+    /* Bỏ hiệu ứng rê chuột và bóng đổ; các phần tử không bị dịch chuyển khi in. */
+    .card-lift,
+    .spotlight,
+    .tilt-frame {
+        transform: none !important;
+        box-shadow: none !important;
+        transition: none !important;
+    }
+
+    /* Khoảng cách giữa các mục gọn hơn để ít trang và ít khoảng trắng cuối trang. */
+    section[id] {
+        padding-block: 1.75rem !important;
+    }
+    .print-auto-height {
+        min-height: 0 !important;
+        padding-block: 1rem !important;
+    }
+    .print-keep-next.mb-12 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* Không ngắt trang giữa một thẻ, một ý, một khung ảnh. */
+    section li:not(.print-flow),
+    section article:not(.print-flow),
+    .print-keep,
+    .print-keep-next {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    .print-keep-next {
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+    p {
+        orphans: 3;
+        widows: 3;
     }
 }
 
@@ -616,4 +636,169 @@
 .photo-swiper .swiper-pagination-bullet {
     transform: rotate(45deg);
     box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
+}
+
+/* 7. Hiệu ứng bổ sung. Chỉ dùng transform/opacity, không nghe sự kiện cuộn và không chặn cuộn:
+   chúng chỉ tô điểm thêm, tắt hẳn khi người dùng chọn giảm chuyển động. */
+
+/* 7a. Tên ở hero: mỗi từ trồi lên từ sau một khung cắt, lần lượt từng từ.
+   Khung cắt chừa thêm chỗ phía trên và dưới để dấu tiếng Việt (ễ, ọ...) không bị cắt cụt. */
+.hero-word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-block: 0.18em 0.1em;
+    margin-block: -0.18em -0.1em;
+}
+.hero-word {
+    display: inline-block;
+}
+@keyframes word-rise {
+    from {
+        transform: translateY(115%);
+    }
+    to {
+        transform: none;
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .hero-word {
+        animation: word-rise 800ms var(--reveal-ease) both;
+        animation-delay: calc(120ms + var(--word-index, 0) * 110ms);
+    }
+}
+
+/* 7b. Nét highlight nhấn mạnh một cụm chữ (<mark class="hl">): vệt màu nhấn quét từ trái sang phải sau khi khối chữ hiện ra.
+   Mặc định hiện đủ (không JS, in ấn, giảm chuyển động); chỉ khi có chuyển động mới chạy hiệu ứng quét.
+   --hl-color theo giao diện sáng/tối; box-decoration-break giữ vệt liền khi cụm chữ xuống dòng. */
+:root {
+    --hl-color: rgb(181 71 42 / 0.2);
+}
+.dark {
+    --hl-color: rgb(242 164 136 / 0.28);
+}
+.hl {
+    color: inherit;
+    background-color: transparent;
+    background-image: linear-gradient(var(--hl-color), var(--hl-color));
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 100% 0.42em;
+    padding-inline: 0.12em;
+    margin-inline: -0.12em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+/* Trên nền xanh đậm (mục Học vấn) vệt dùng màu peach nhạt. */
+.bg-band .hl {
+    --hl-color: rgb(242 164 136 / 0.45);
+}
+@keyframes hl-sweep {
+    from {
+        background-size: 0 0.42em;
+    }
+    to {
+        background-size: 100% 0.42em;
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    /* Khối chữ ngoài hệ thống reveal (hero): quét ngay sau khi tải. */
+    .hl {
+        animation: hl-sweep 900ms var(--reveal-ease) 900ms backwards;
+    }
+    /* Khối chữ trong .reveal: quét mỗi lần khối hiện ra, trễ một nhịp để người xem đọc xong câu trước. */
+    .reveal-js .reveal .hl {
+        animation: none;
+    }
+    .reveal-js .reveal.is-revealed .hl {
+        animation: hl-sweep 900ms var(--reveal-ease) 550ms backwards;
+    }
+}
+
+/* 7c. Vệt sáng theo con trỏ trên thẻ (.spotlight): SpotlightEffect cập nhật --mx, --my.
+   Nằm dưới nội dung thẻ (z-index -1 trong stacking context riêng) nên không che chữ, không bắt sự kiện chuột. */
+.spotlight {
+    position: relative;
+    isolation: isolate;
+    --spot: rgb(181 71 42 / 0.1);
+}
+.dark .spotlight {
+    --spot: rgb(242 164 136 / 0.12);
+}
+.spotlight-on-dark {
+    --spot: rgb(255 255 255 / 0.12);
+}
+.spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--spot), transparent 70%);
+    transition: opacity 250ms ease;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .spotlight:hover::before {
+        opacity: 1;
+    }
+}
+
+/* 7d. Ảnh chân dung nghiêng nhẹ theo chuột (TiltFrame) và thẻ công nghệ nhấc lên khi rê chuột. */
+.tilt-frame {
+    transition: transform 300ms ease-out;
+    will-change: transform;
+}
+.tech-badge {
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+/* 7e. Ảnh trong slide phóng nhẹ khi rê chuột vào khung ảnh. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .photo-swiper .swiper-slide img {
+        transition: transform 900ms var(--reveal-ease);
+    }
+    .photo-swiper:hover .swiper-slide-active img {
+        transform: scale(1.04);
+    }
+}
+
+/* 7f. Thanh tiến độ cuộn trang ở mép trên: chạy bằng scroll timeline của trình duyệt (không JS, không nghe sự kiện cuộn).
+   Trình duyệt chưa hỗ trợ thì ẩn hẳn. */
+.scroll-progress {
+    display: none;
+}
+@supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .scroll-progress {
+            display: block;
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 60;
+            height: 3px;
+            background: var(--accent);
+            transform-origin: 0 50%;
+            transform: scaleX(0);
+            animation: scroll-progress linear both;
+            animation-timeline: scroll(root block);
+            pointer-events: none;
+        }
+    }
+}
+@keyframes scroll-progress {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tilt-frame,
+    .tech-badge {
+        transition: none;
+    }
 }

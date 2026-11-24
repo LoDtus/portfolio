@@ -10,10 +10,13 @@ export default function ProjectLinks({
     projectName,
     links,
     labels,
+    isDiscoverable = true,
 }: {
     projectName: string;
     links: readonly ProjectLink[];
     labels: Record<ProjectLinkKind, string>;
+    // false: không truyền uy tín tìm kiếm sang trang đích (rel nofollow), dùng cho nơi chỉ liệt kê.
+    isDiscoverable?: boolean;
 }) {
     if (links.length === 0) return null;
 
@@ -24,9 +27,9 @@ export default function ProjectLinks({
                     <a
                         href={link.url}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel={isDiscoverable ? "noopener noreferrer" : "nofollow noopener noreferrer"}
                         aria-label={`${projectName}: ${labels[link.kind]}`}
-                        className="inline-flex items-center gap-1 border border-border-main bg-surface px-3 py-1 text-sm font-semibold text-heading hover:border-band hover:bg-band hover:text-white"
+                        className="inline-flex items-center gap-1 transition-all duration-200 active:scale-98 border border-border-main bg-surface px-3 py-1 text-sm font-semibold text-heading hover:border-band hover:bg-band hover:text-white"
                     >
                         {labels[link.kind]}
                         <ArrowUpRight size={14} aria-hidden="true" />

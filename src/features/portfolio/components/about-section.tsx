@@ -1,3 +1,5 @@
+import CountUp from "@/features/portfolio/components/count-up";
+import HighlightedText from "@/features/portfolio/components/highlighted-text";
 import SectionHeading from "@/features/portfolio/components/section-heading";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
@@ -25,12 +27,15 @@ export default function AboutSection({ content }: { content: PortfolioContent })
                                 key={paragraph}
                                 className={`reveal reveal-left ${REVEAL_DELAY_CLASSES[index % REVEAL_DELAY_CLASSES.length]}`}
                             >
-                                {paragraph}
+                                <HighlightedText
+                                    text={paragraph}
+                                    phrases={about.highlights}
+                                />
                             </p>
                         ))}
                     </div>
 
-                    <dl className="grid gap-4">
+                    <dl className="print-keep grid gap-4">
                         {about.facts.map((fact, index) => (
                             <div
                                 key={fact.label}
@@ -38,7 +43,7 @@ export default function AboutSection({ content }: { content: PortfolioContent })
                             >
                                 <dt className="text-sm text-text-sub">{fact.label}</dt>
                                 <dd className="font-display text-3xl font-bold text-heading">
-                                    {fact.value}
+                                    <CountUp value={fact.value} />
                                 </dd>
                             </div>
                         ))}

@@ -7,6 +7,7 @@ export const NAV_SECTION_IDS: readonly SectionId[] = [
     "education",
     "experience",
     "projects",
+    "references",
 ];
 
 // Mọi mục mà scroll-spy theo dõi (gồm cả mục liên hệ, được đặt thành nút nổi bật trên nav).

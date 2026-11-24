@@ -1,13 +1,20 @@
 # Cloudflare Pages / Workers static assets: https://developers.cloudflare.com/pages/configuration/headers/
 # File này được Next.js chép nguyên vào out/ khi build.
 
+# Content-Security-Policy: trang chỉ được tải script, style, ảnh, font và dữ liệu từ chính nó. Script hay iframe lạ
+# bị chèn vào (mã độc, quảng cáo cờ bạc tải từ domain khác) sẽ bị trình duyệt chặn. 'unsafe-inline' cần cho các script
+# nhúng sẵn của Next.js (dữ liệu trang, chống nháy giao diện tối); trang không có ô nhập liệu nào nên không có đường chèn mã vào HTML.
+# Google Analytics (googletagmanager.com, google-analytics.com) là dịch vụ ngoài duy nhất được cho phép và chỉ tải sau khi người xem đồng ý.
+# Thêm dịch vụ ngoài khác thì phải thêm domain của nó vào đây.
 /*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://www.google-analytics.com https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; media-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Cross-Origin-Opener-Policy: same-origin
+  X-Permitted-Cross-Domain-Policies: none
 
 # Tệp có hash trong tên (JS, CSS, font): cache vĩnh viễn
 /_next/static/*
@@ -16,15 +23,36 @@
 # Logo, ảnh, tài liệu markdown: tên tệp không có hash nên chỉ cache 7 ngày
 /logo/*
   Cache-Control: public, max-age=604800
-/images/*
+/image/*
   Cache-Control: public, max-age=604800
+# Ảnh của nơi chỉ liệt kê (không làm SEO): không đưa vào Google Images, vẫn hiển thị bình thường trên trang
+/image/experiment-01/*
+  X-Robots-Tag: noindex
+/image/experiment-02/*
+  X-Robots-Tag: noindex
+/image/experiment-03/*
+  X-Robots-Tag: noindex
 /markdown/*
   Cache-Control: public, max-age=604800
 
 # Tệp mô tả cho công cụ tìm kiếm và AI: cho phép cache ngắn để cập nhật nhanh
+# llms.txt có đủ tên các nơi đã làm để AI/agent đánh giá đúng, nhưng không được hiện trên Google/Bing (noindex):
+# AI vẫn đọc được khi mở trang hoặc file này trực tiếp.
 /llms.txt
   Cache-Control: public, max-age=3600
+  X-Robots-Tag: noindex
+# Dữ liệu trang dạng RSC của Next.js (dùng nội bộ khi điều hướng): không phải trang cho người đọc, không cho index.
+/index.txt
+  X-Robots-Tag: noindex
+/vi.txt
+  X-Robots-Tag: noindex
+/en.txt
+  X-Robots-Tag: noindex
 /robots.txt
   Cache-Control: public, max-age=3600
 /sitemap.xml
+  Cache-Control: public, max-age=3600
+
+# CV (PDF): tên tệp cố định và có thể được thay mới bất cứ lúc nào nên chỉ cache ngắn
+/cv/*
   Cache-Control: public, max-age=3600

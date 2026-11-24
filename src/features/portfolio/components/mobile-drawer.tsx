@@ -76,7 +76,7 @@ export default function MobileDrawer({
                     <p className="font-display text-lg font-bold text-heading">{label}</p>
                     <button
                         type="button"
-                        className="inline-flex size-10 items-center justify-center border border-border-main text-heading"
+                        className="inline-flex size-10 items-center justify-center border border-border-main text-heading transition-all duration-200 active:scale-98"
                         aria-label={closeLabel}
                         onClick={onClose}
                     >

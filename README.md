@@ -30,7 +30,7 @@ Container chạy bằng root, nên nếu `npm install` làm đổi `package-lock
 ## Triển khai lên Cloudflare (CI/CD)
 
 Trang là bản xuất tĩnh (`output: "export"`), được phục vụ bằng **Cloudflare Workers Static Assets** tại `https://portfolio.longvi.org`.
-Không cần khai báo cổng: Cloudflare phục vụ qua HTTPS 443 (cổng 9200 trong `.env` chỉ dùng khi chạy dev trên máy).
+Không cần khai báo cổng: Cloudflare phục vụ qua HTTPS 443 (cổng 21000 trong `.env` chỉ dùng khi chạy dev trên máy).
 Cấu hình nằm ở `wrangler.jsonc` (thư mục `out/`, trang 404, tên miền).
 
 ### Quy trình tự động (`.github/workflows/ci-cd.yml`)
@@ -42,6 +42,14 @@ Cấu hình nằm ở `wrangler.jsonc` (thư mục `out/`, trang 404, tên miề
 | Chạy tay (Actions → ci-cd → Run workflow) | Như push vào `main` nếu chọn nhánh `main`. |
 
 Dependabot (`.github/dependabot.yml`) mở PR cập nhật gói và action mỗi tuần.
+
+### Google Analytics
+
+- Measurement ID (`G-NV754NB5GV`, tài khoản "Portfolio Long Nguyen", tài sản `portfolio.longvi.org`) nằm trong `NEXT_PUBLIC_GA_ID` của `ci-cd.yml`. Không phải bí mật. Biến trống (ví dụ khi chạy dev) thì không tải Analytics.
+- Chạy `npm run deploy:cloudflare` trên máy thì phải đặt `NEXT_PUBLIC_GA_ID` (và `NEXT_PUBLIC_APP_URL`) trong `.env` trước khi build.
+- `gtag.js` tải ngay khi người xem vào trang, không có banner đồng ý cookie (theo yêu cầu của chủ trang).
+- Sự kiện tự đo: lượt xem trang, cuộn, bấm link ra ngoài, tải file (CV PDF). Sự kiện tùy chỉnh: `change_language`, `copy_contact`.
+- Domain của Google được cho phép riêng trong CSP (`public/_headers`); thêm dịch vụ ngoài khác phải sửa cả CSP lẫn `scripts/check-build-output.mjs`.
 
 ### Thiết lập một lần
 

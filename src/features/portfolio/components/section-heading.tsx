@@ -1,3 +1,5 @@
+import { keepWordsTogether } from "@/features/portfolio/utils/no-break.utils";
+
 // Tiêu đề section theo thanglong.edu.vn: vạch đỏ đứng + tiêu đề đậm, phần mô tả nằm ở cột phải.
 export default function SectionHeading({
     id,
@@ -13,7 +15,7 @@ export default function SectionHeading({
     const isDark = tone === "dark";
 
     return (
-        <div className="reveal mb-12 grid gap-4 lg:grid-cols-2 lg:items-end lg:gap-12">
+        <div className="print-keep-next reveal mb-12 grid gap-4 lg:grid-cols-2 lg:items-end lg:gap-12">
             <div className="flex items-stretch gap-4">
                 <span
                     aria-hidden="true"
@@ -29,11 +31,11 @@ export default function SectionHeading({
                 </h2>
             </div>
             <p
-                className={`max-w-xl text-lg leading-8 lg:justify-self-end ${
+                className={`max-w-xl text-balance text-lg leading-8 lg:justify-self-end ${
                     isDark ? "text-white/75" : "text-text-sub"
                 }`}
             >
-                {description}
+                {keepWordsTogether(description)}
             </p>
         </div>
     );

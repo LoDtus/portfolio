@@ -28,7 +28,7 @@ interface SiteNavProps {
         nav: string;
         openMenu: string;
         closeMenu: string;
-        language: string;
+        switchLanguage: string;
     };
 }
 
@@ -60,7 +60,7 @@ export default function SiteNav({
                 </BrandLink>
 
                 <nav aria-label={labels.nav} className="hidden lg:block">
-                    <ul className="flex items-center gap-8">
+                    <ul className="flex items-center gap-5 xl:gap-8">
                         {items.map(({ id, label }) => (
                             <li key={id}>
                                 <SectionLink
@@ -92,7 +92,7 @@ export default function SiteNav({
                     </SectionLink>
                     <button
                         type="button"
-                        className="inline-flex size-10 items-center justify-center border border-border-main text-heading lg:hidden"
+                        className="inline-flex size-10 items-center justify-center border border-border-main text-heading transition-all duration-200 active:scale-98 lg:hidden"
                         aria-haspopup="dialog"
                         aria-expanded={isMenuOpen}
                         aria-controls={MOBILE_MENU_ID}
@@ -115,7 +115,7 @@ export default function SiteNav({
                         <ThemeToggle />
                         <LocaleSwitcher
                             locale={locale}
-                            label={labels.language}
+                            switchLabel={labels.switchLanguage}
                             variant="drawer"
                             onNavigate={closeMenu}
                         />

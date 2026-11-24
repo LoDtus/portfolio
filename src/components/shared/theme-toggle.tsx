@@ -28,7 +28,7 @@ export default function ThemeToggle() {
     if (!isMounted) {
         return (
             <div
-                className="w-9 h-9 rounded-lg border border-border-main bg-bg-main animate-pulse"
+                className="size-[38px] rounded-lg border border-border-main bg-bg-main animate-pulse"
                 aria-hidden="true"
             />
         );
@@ -77,7 +77,7 @@ export default function ThemeToggle() {
                 style={{ width: "270vw", height: "270vw" }}
             />
             <label
-                className="theme-toggle theme-toggle-js cursor-pointer"
+                className="theme-toggle theme-toggle-js cursor-pointer transition-all duration-200 active:scale-98"
                 aria-label={
                     isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
                 }

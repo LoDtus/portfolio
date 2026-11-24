@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { A11y, Autoplay, Keyboard, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperInstance } from "swiper/types";
@@ -13,8 +13,8 @@ import "swiper/css/pagination";
 import {
     GALLERY_AUTOPLAY_DELAY_MS,
     GALLERY_SLIDE_SPEED_MS,
-    GALLERY_VISIBLE_THRESHOLD,
 } from "@/features/portfolio/constants/experience.constants";
+import { useSwiperAutoplay } from "@/features/portfolio/hooks/use-swiper-autoplay";
 import type { ExperiencePhoto } from "@/features/portfolio/types/portfolio.types";
 import { usePrefersMotion } from "@/shared/hooks/use-prefers-motion";
 
@@ -44,43 +44,7 @@ export default function ExperienceGallery({
     const isAutoplay = hasSlides && autoplayOffsetMs !== null && prefersMotion;
     const offsetMs = autoplayOffsetMs ?? 0;
 
-    useEffect(() => {
-        const container = containerRef.current;
-        if (swiper === null || container === null) return undefined;
-
-        // Khi Swiper bị gỡ (ví dụ đổi ngôn ngữ làm trang mới thay trang cũ), nó tự destroy() và xóa module `autoplay`;
-        // gọi tiếp `swiper.autoplay.stop()` lúc đó sẽ ném lỗi và làm cả trang báo "This page couldn't load".
-        const stopAutoplay = () => {
-            if (!swiper.destroyed) swiper.autoplay.stop();
-        };
-        const startAutoplay = () => {
-            if (!swiper.destroyed) swiper.autoplay.start();
-        };
-
-        // Swiper tự bắt đầu chạy ngay khi khởi tạo; dừng lại để ta quyết định lúc bắt đầu (lệch pha, đang hiện).
-        stopAutoplay();
-        if (!isAutoplay) return undefined;
-
-        let timerId: number | undefined;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                window.clearTimeout(timerId);
-                if (entry?.isIntersecting) {
-                    timerId = window.setTimeout(startAutoplay, offsetMs);
-                } else {
-                    stopAutoplay();
-                }
-            },
-            { threshold: GALLERY_VISIBLE_THRESHOLD },
-        );
-        observer.observe(container);
-
-        return () => {
-            observer.disconnect();
-            window.clearTimeout(timerId);
-            stopAutoplay();
-        };
-    }, [swiper, isAutoplay, offsetMs]);
+    useSwiperAutoplay({ swiper, containerRef, isAutoplay, offsetMs });
 
     if (photos.length === 0) return null;
 
@@ -90,7 +54,7 @@ export default function ExperienceGallery({
     return (
         <div
             ref={containerRef}
-            className={`reveal reveal-zoom mt-6 ${wideCount === 1 ? "md:max-w-2xl" : ""}`}
+            className={`print-keep reveal reveal-zoom mt-6 ${wideCount === 1 ? "md:max-w-2xl" : ""}`}
         >
             <Swiper
                 modules={[A11y, Autoplay, Keyboard, Navigation, Pagination]}

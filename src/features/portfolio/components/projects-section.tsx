@@ -1,7 +1,8 @@
+import GithubIcon from "@/features/portfolio/components/github-icon";
 import ProjectCard from "@/features/portfolio/components/project-card";
 import SectionHeading from "@/features/portfolio/components/section-heading";
 import { REVEAL_DELAY_CLASSES } from "@/features/portfolio/constants/reveal.constants";
-import { PROJECTS } from "@/features/portfolio/constants/profile.constants";
+import { PROFILE, PROJECTS } from "@/features/portfolio/constants/profile.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
 
 export default function ProjectsSection({ content }: { content: PortfolioContent }) {
@@ -35,6 +36,18 @@ export default function ProjectsSection({ content }: { content: PortfolioContent
                         </li>
                     ))}
                 </ul>
+
+                <div className="reveal mt-10 flex justify-center">
+                    <a
+                        href={PROFILE.githubRepositoriesUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-outline"
+                    >
+                        <GithubIcon className="size-5" />
+                        {projects.moreLabel}
+                    </a>
+                </div>
             </div>
         </section>
     );

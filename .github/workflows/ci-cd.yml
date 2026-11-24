@@ -10,6 +10,10 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  # Build và deploy lại mỗi tháng (ngày 1, 03:00 UTC) dù không có commit: trang tĩnh chứa nội dung tính lúc build
+  # (số năm "hơn/gần N năm" của trường, liên kết ngành học còn hay mất, năm ở chân trang) nên cần làm mới định kỳ.
+  schedule:
+    - cron: "0 3 1 * *"
 
 permissions:
   contents: read
@@ -22,6 +26,8 @@ concurrency:
 env:
   # Biến lúc build: được đóng vào HTML (canonical, sitemap, og:url). Không kèm cổng, không có dấu "/" cuối.
   NEXT_PUBLIC_APP_URL: https://portfolio.longvi.org
+  # Measurement ID của Google Analytics 4 (công khai trong HTML, không phải bí mật). Tải ngay khi người xem vào trang.
+  NEXT_PUBLIC_GA_ID: G-NV754NB5GV
   NEXT_TELEMETRY_DISABLED: "1"
 
 jobs:
@@ -30,9 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: .node-version
           cache: npm
@@ -62,9 +68,13 @@ jobs:
           test -f out/robots.txt
           test -f out/_headers
 
+      # Chặn deploy nếu bản build có link tới domain lạ (cờ bạc, mã độc), script ngoài hay iframe (xem script).
+      - name: Check for injected links and scripts
+        run: npm run check:output
+
       - name: Upload static site
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: site
           path: out
@@ -87,10 +97,10 @@ jobs:
       cancel-in-progress: false
     steps:
       # Cần wrangler.jsonc trong repo.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       # Deploy đúng bản đã build và kiểm tra ở job trên, không build lại.
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: site
           path: out
@@ -111,7 +121,7 @@ jobs:
 
       - name: Deploy
         if: steps.credentials.outputs.available == 'true'
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

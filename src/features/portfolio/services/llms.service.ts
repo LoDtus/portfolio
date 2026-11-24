@@ -1,8 +1,11 @@
 import {
     CONTACT_CHANNELS,
+    CV_FILES,
     EDUCATION,
     PROFILE,
     PROJECTS,
+    REFERENCES,
+    SEO,
     SKILL_GROUP_ORDER,
     SKILL_ITEMS,
 } from "@/features/portfolio/constants/profile.constants";
@@ -65,6 +68,8 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         return `- [${content.meta.title}](${siteUrl}/${locale}) (${locale}): ${content.meta.description}`;
     });
 
+    // Đủ tên nơi làm và dự án để AI/agent đánh giá và đối chiếu được với CV, LinkedIn. File này gắn noindex (public/_headers)
+    // nên không xuất hiện trên Google/Bing: tên các nơi chỉ liệt kê (isDiscoverable: false) không thành một trang tìm kiếm mới.
     const experience = sortExperienceEntries(main.experience.entries).flatMap((entry) => {
         const heading = [entry.company, entry.role, entry.period]
             .filter((part): part is string => part !== null)
@@ -72,9 +77,7 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         const site = entry.companyUrl === null ? "" : ` (${entry.companyUrl})`;
         return [
             `### ${heading}${site}`,
-            ...entry.projects.map((project) =>
-                formatExperienceProject(project, main.ui.linkLabels),
-            ),
+            ...entry.projects.map((project) => formatExperienceProject(project, main.ui.linkLabels)),
             "",
         ];
     });
@@ -85,12 +88,23 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         return formatProject(text.name, [
             text.period,
             text.summary,
-            ...text.highlights,
             `${main.ui.roleLabel}: ${text.role}`,
+            ...text.facts.map((fact) => `${fact.label}: ${fact.value}`),
             links === "" ? null : links,
             `Stack: ${config.tech.join(", ")}`,
         ]);
     });
+
+    const references = REFERENCES.map((facts) => {
+        const text = main.references.items[facts.id];
+        const links = facts.links.map((item) => `[${item.label}](${item.url})`).join(", ");
+        return formatProject(facts.name, [text.role, links === "" ? null : links]);
+    });
+
+    const cvLinks = locales.map(
+        (locale) =>
+            `- [${main.contact.cv.files[locale].label}](${siteUrl}${CV_FILES[locale].href})`,
+    );
 
     const contacts = CONTACT_CHANNELS.map(
         (channel) =>
@@ -109,17 +123,26 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         "",
         `## ${main.nav.skills}`,
         ...formatSkills(main),
+        `- Lĩnh vực / Domain: ${[...new Set([...SEO.domainTopics.vi, ...SEO.domainTopics.en])].join(", ")}`,
         "",
         `## ${main.nav.education}`,
-        `- [${EDUCATION.schoolName}](${EDUCATION.schoolUrl}): ${main.education.major}, ${EDUCATION.startYear} – ${EDUCATION.endYear}, GPA ${EDUCATION.gpa}/${EDUCATION.gpaScale}`,
+        `- [${EDUCATION.schoolName}](${EDUCATION.schoolUrl}): ${main.education.major}, ${EDUCATION.startYear} - ${EDUCATION.endYear}, GPA ${EDUCATION.gpa}/${EDUCATION.gpaScale}`,
         "",
         `## ${main.nav.experience}`,
         ...experience,
-        `## ${main.nav.projects}`,
+
+        `## ${main.projects.title}`,
         ...projects,
+        `- [${main.projects.moreLabel}](${PROFILE.githubRepositoriesUrl})`,
+        "",
+        `## ${main.nav.references}`,
+        ...references,
         "",
         `## ${main.nav.contact}`,
         ...contacts,
+        "",
+        `### ${main.contact.cv.title}`,
+        ...cvLinks,
         "",
     ].join("\n");
 }

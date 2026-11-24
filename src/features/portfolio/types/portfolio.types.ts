@@ -6,14 +6,17 @@ export type SectionId =
     | "education"
     | "experience"
     | "projects"
+    | "references"
     | "contact";
 
 export type SkillGroupId =
     | "languages"
     | "frontend"
     | "backend"
+    | "database"
     | "deploy"
     | "tools"
+    | "design"
     | "soft";
 
 // Nhóm kỹ năng có danh sách không phụ thuộc ngôn ngữ (kỹ năng mềm có chữ theo từng ngôn ngữ nên nằm trong nội dung).
@@ -24,6 +27,8 @@ export type ProjectSlug =
     | "vinfastreev"
     | "affiliate-product-catalog"
     | "city-incidents-management-system";
+
+export type ReferenceId = "nguyen-huy-toan" | "tran-tien-quan";
 
 export type ContactChannelId =
     | "zalo"
@@ -87,6 +92,9 @@ export interface ExperienceCompany {
     company: string;
     // null nghĩa là chưa có địa chỉ: tên công ty hiển thị dạng chữ thường, không có liên kết.
     companyUrl: string | null;
+    // false nghĩa là chỉ liệt kê trên trang, không làm SEO cho nơi này: bỏ khỏi llms.txt, dữ liệu có cấu trúc, từ khóa;
+    // liên kết ra ngoài gắn nofollow, thẻ gắn data-nosnippet và ảnh gắn X-Robots-Tag noindex (xem public/_headers).
+    isDiscoverable: boolean;
     logo: string;
     logoWidth: number;
     logoHeight: number;
@@ -113,15 +121,65 @@ export interface ProjectText {
     name: string;
     // null nghĩa là chưa có mô tả: thẻ dự án bỏ phần đó.
     summary: string | null;
-    highlights: readonly string[];
+    // Số liệu thực tế của dự án, hiển thị dạng bullet "nhãn: giá trị" sau dòng số thành viên và vai trò; rỗng nếu chưa có.
+    facts: readonly Fact[];
     // Số thành viên và vai trò.
     role: string;
     // Thời gian thực hiện đã định dạng theo ngôn ngữ; null nếu chưa có.
     period: string | null;
 }
 
+// Liên kết ngoài của người tham chiếu (LinkedIn, trang cá nhân, TikTok...); `label` là chữ trên thẻ liên kết, không phụ thuộc ngôn ngữ.
+export interface ReferenceLink {
+    label: string;
+    url: string;
+}
+
+// Người tham chiếu: dữ kiện không phụ thuộc ngôn ngữ. Trường null/rỗng nghĩa là chưa có, giao diện bỏ phần đó thay vì bịa nội dung.
+// Dữ kiện giúp công cụ tìm kiếm hiểu người tham chiếu là ai (dùng cho dữ liệu có cấu trúc schema.org, không hiển thị trên trang).
+// Mọi mục phải có thật trong phần giới thiệu hiển thị ở trang.
+export interface ReferenceSeo {
+    // Cách viết khác của tên (không dấu, kèm học hàm/học vị).
+    alternateNames: readonly string[];
+    // Nơi đang công tác; `url` null nếu chưa có địa chỉ chính thức.
+    worksFor: readonly { name: string; url: string | null }[];
+    // Tập đoàn mẹ của các nơi công tác ở trên; null nếu không có.
+    parentOrganization: string | null;
+    // Nơi đã học (ví dụ trường tốt nghiệp); null nếu không nêu.
+    alumniOf: string | null;
+    // Công ty/tổ chức khác được nhắc trong phần giới thiệu.
+    mentions: readonly string[];
+    knowsAbout: readonly string[];
+}
+
+export interface ReferenceFacts {
+    id: ReferenceId;
+    name: string;
+    organization: string | null;
+    seo: ReferenceSeo;
+    // Ảnh (đặt trong public/image/reference-*): một ảnh thì hiện ảnh tĩnh, nhiều ảnh thì thành slide; rỗng thì hiện chữ cái đầu của tên.
+    photos: readonly ExperiencePhotoSource[];
+    email: string | null;
+    // Số điện thoại dạng quốc tế (+84...) để dùng cho liên kết tel:; `phoneDisplay` là chữ hiển thị.
+    phoneE164: string | null;
+    phoneDisplay: string | null;
+    links: readonly ReferenceLink[];
+}
+
+export interface ReferenceText {
+    // Chức danh hiện tại; null nếu chưa có.
+    role: string | null;
+    // Giới thiệu ngắn; null nếu chưa có.
+    summary: string | null;
+    highlights: readonly string[];
+    // Chữ mô tả cho từng ảnh trong `photos`, theo đúng thứ tự.
+    photoAlts: readonly string[];
+}
+
 export interface ContactChannelText {
     label: string;
+    // Giá trị hiển thị riêng cho ngôn ngữ này (ví dụ địa chỉ không dấu ở bản tiếng Anh); không có thì dùng `value` chung của kênh.
+    value?: string;
 }
 
 // Kênh liên hệ không phụ thuộc ngôn ngữ. `icon` "logo" dùng ảnh trong `logo`; các giá trị khác là biểu tượng vẽ sẵn.
@@ -134,6 +192,9 @@ export interface ContactChannelFacts {
     logo: string | null;
     // Liên kết mở sang trang khác (cần target/rel), không phải tel:/mailto:.
     isExternal: boolean;
+    // Có giá trị thì thẻ ở mục Liên hệ là nút sao chép chuỗi này (không điều hướng); null thì là liên kết tới `href`.
+    // `href` vẫn dùng cho nơi chỉ cần liên kết (chân trang, dữ liệu có cấu trúc, markdown).
+    copyText: string | null;
 }
 
 export interface PortfolioContent {
@@ -144,7 +205,9 @@ export interface PortfolioContent {
         jobTitle: string;
     };
     ui: {
-        tagline: string;
+        // Chứa tên ngôn ngữ đích, ví dụ "Chuyển sang English": nhãn của nút đổi ngôn ngữ.
+        switchLanguage: string;
+        topBarLabel: string;
         skipToContent: string;
         navLabel: string;
         menuOpen: string;
@@ -160,17 +223,22 @@ export interface PortfolioContent {
     hero: {
         eyebrow: string;
         name: string;
+        // Dòng lĩnh vực ngay dưới tên.
         role: string;
-        headline: string;
-        summary: string;
+        // Đoạn giới thiệu định hướng ở hero.
+        intro: string;
         primaryCta: string;
         secondaryCta: string;
         photoAlt: string;
+        // Cụm chữ trong `intro` được tô nhấn (phải xuất hiện nguyên văn trong intro).
+        introHighlight: string;
     };
     about: {
         title: string;
         description: string;
         paragraphs: readonly string[];
+        // Các cụm chữ trong `paragraphs` được tô nhấn (phải xuất hiện nguyên văn).
+        highlights: readonly string[];
         facts: readonly Fact[];
     };
     skills: {
@@ -189,7 +257,7 @@ export interface PortfolioContent {
         periodLabel: string;
         gpaLabel: string;
         summary: string;
-        photoAlt: string;
+        photoAlts: readonly string[];
         viewProgram: string;
     };
     experience: {
@@ -208,13 +276,36 @@ export interface PortfolioContent {
     projects: {
         title: string;
         description: string;
+        // Nút dẫn tới toàn bộ kho mã nguồn trên GitHub.
+        moreLabel: string;
         items: Record<ProjectSlug, ProjectText>;
+    };
+    references: {
+        title: string;
+        description: string;
+        // Tiêu đề đứng trước nhóm thông tin liên hệ (email, điện thoại, liên kết) của mỗi người.
+        contactLabel: string;
+        emailLabel: string;
+        phoneLabel: string;
+        linksLabel: string;
+        items: Record<ReferenceId, ReferenceText>;
     };
     contact: {
         title: string;
         description: string;
         channelsLabel: string;
         channels: Record<ContactChannelId, ContactChannelText>;
+        // Nút sao chép (điện thoại, Gmail, địa chỉ): gợi ý, kết quả thành công và thất bại.
+        copyHint: string;
+        copied: string;
+        copyFailed: string;
+        cv: {
+            // Khối tải CV tách riêng khỏi danh sách kênh liên hệ.
+            title: string;
+            description: string;
+            // Chữ của nút tải từng bản CV, theo ngôn ngữ của CV; `title` là mô tả đầy đủ (hiện khi rê chuột, đọc bởi trình đọc màn hình).
+            files: Record<Locale, { label: string; title: string }>;
+        };
     };
     footer: {
         credit: string;

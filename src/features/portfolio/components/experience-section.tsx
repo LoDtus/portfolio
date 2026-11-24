@@ -27,7 +27,7 @@ export default function ExperienceSection({ content }: { content: PortfolioConte
 
                 <ol className="ml-2 space-y-8 border-l-2 border-border-main pl-6 sm:ml-4 sm:pl-8">
                     {entries.map((entry, index) => (
-                        <li key={entry.id} className="reveal relative">
+                        <li key={entry.id} className="print-flow reveal relative">
                             <span
                                 aria-hidden="true"
                                 className="reveal reveal-pop reveal-d1 absolute -left-[2.1rem] top-8 size-4 rotate-45 bg-accent sm:-left-[2.5rem]"

@@ -8,9 +8,10 @@
         "build": "next build",
         "type-check": "tsc --noEmit",
         "lint": "eslint .",
+        "check:output": "node scripts/check-build-output.mjs out",
         "clean": "rimraf .next out node_modules",
         "preview": "npx --yes serve out",
-        "deploy:cloudflare": "npm run build && npx wrangler@4.165.0 deploy"
+        "deploy:cloudflare": "npm run build && npm run check:output && npx wrangler@4.165.0 deploy"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.12.0",
