@@ -1,6 +1,6 @@
 import CopyAsMarkdown from "@/features/portfolio/components/copy-as-markdown";
 import AboutSection from "@/features/portfolio/components/about-section";
-import AnalyticsConsent from "@/features/portfolio/components/analytics-consent";
+import AnalyticsLoader from "@/features/portfolio/components/analytics-loader";
 import ContactSection from "@/features/portfolio/components/contact-section";
 import EducationSection from "@/features/portfolio/components/education-section";
 import ExperienceSection from "@/features/portfolio/components/experience-section";
@@ -62,7 +62,7 @@ export default async function PortfolioPage({
             <RevealObserver key={locale} />
             <StaticCopyPreparer />
             {ENV.GA_ID ? (
-                <AnalyticsConsent measurementId={ENV.GA_ID} labels={content.ui.analytics} />
+                <AnalyticsLoader measurementId={ENV.GA_ID} />
             ) : null}
             <SpotlightEffect />
             <CopyAsMarkdown markdown={buildPageMarkdown(content, programUrl, getSiteUrl())} />

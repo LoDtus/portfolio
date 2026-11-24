@@ -1,6 +1,5 @@
 import BrandLink from "@/features/portfolio/components/brand-link";
 import BrandMark from "@/features/portfolio/components/brand-mark";
-import CookieSettingsButton from "@/features/portfolio/components/cookie-settings-button";
 import ContactChannelIcon from "@/features/portfolio/components/contact-channel-icon";
 import SectionLink from "@/features/portfolio/components/section-link";
 import {
@@ -10,7 +9,6 @@ import {
 import { NAV_SECTION_IDS } from "@/features/portfolio/constants/sections.constants";
 import type { PortfolioContent } from "@/features/portfolio/types/portfolio.types";
 import { formatCopyright } from "@/features/portfolio/utils/copyright.utils";
-import ENV from "@/shared/constants/env.constants";
 import type { Locale } from "@/shared/constants/i18n.constants";
 
 // Chân trang indigo đậm theo thanglong.edu.vn; dòng ghi nguồn logo/ảnh nằm gọn ở đây (không chú thích dưới ảnh).
@@ -77,12 +75,7 @@ export default function SiteFooter({
             <div className="border-t border-white/10">
                 <div className="site-container flex flex-col gap-2 py-6 text-[13px] leading-5 text-white/70 md:flex-row md:items-center md:justify-between">
                     <p>{content.footer.credit}</p>
-                    <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
-                        {ENV.GA_ID ? (
-                            <CookieSettingsButton label={content.ui.analytics.settings} />
-                        ) : null}
-                        <p>{formatCopyright(content.footer)}</p>
-                    </div>
+                    <p>{formatCopyright(content.footer)}</p>
                 </div>
             </div>
         </footer>

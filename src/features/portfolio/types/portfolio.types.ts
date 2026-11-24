@@ -218,14 +218,6 @@ export interface PortfolioContent {
         roleLabel: string;
         periodLabel: string;
         linkLabels: Record<ProjectLinkKind, string>;
-        // Banner đồng ý cookie của Google Analytics và nút mở lại ở chân trang.
-        analytics: {
-            bannerLabel: string;
-            message: string;
-            accept: string;
-            decline: string;
-            settings: string;
-        };
     };
     nav: Record<SectionId, string>;
     hero: {

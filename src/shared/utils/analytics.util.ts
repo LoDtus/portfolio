@@ -1,33 +1,12 @@
-// Google Analytics 4 tự quản lý, không thêm thư viện. Chỉ tải sau khi người xem đồng ý (xem AnalyticsConsent).
+// Google Analytics 4 tự quản lý, không thêm thư viện. Tải ngay khi vào trang (xem AnalyticsLoader).
 // Ghi chú CSP: domain của Google phải nằm trong public/_headers (script-src, connect-src, img-src).
 
 const GA_SCRIPT_URL = "https://www.googletagmanager.com/gtag/js";
-const CONSENT_STORAGE_KEY = "analytics_consent";
-
-export type AnalyticsConsent = "granted" | "denied";
 
 declare global {
     interface Window {
         dataLayer?: unknown[];
         gtag?: (...args: unknown[]) => void;
-    }
-}
-
-export function readAnalyticsConsent(): AnalyticsConsent | null {
-    try {
-        const stored = window.localStorage.getItem(CONSENT_STORAGE_KEY);
-        return stored === "granted" || stored === "denied" ? stored : null;
-    } catch {
-        // localStorage có thể bị chặn (chế độ riêng tư): coi như chưa chọn, banner sẽ hỏi lại.
-        return null;
-    }
-}
-
-export function saveAnalyticsConsent(consent: AnalyticsConsent): void {
-    try {
-        window.localStorage.setItem(CONSENT_STORAGE_KEY, consent);
-    } catch {
-        // Không lưu được thì lần sau hỏi lại; không có lựa chọn nào tốt hơn.
     }
 }
 
@@ -53,7 +32,7 @@ export function loadAnalytics(measurementId: string): void {
     document.head.appendChild(script);
 }
 
-// Gửi một sự kiện tùy chỉnh; bỏ qua nếu Analytics chưa được tải (chưa đồng ý hoặc đang chạy dev).
+// Gửi một sự kiện tùy chỉnh; bỏ qua nếu Analytics chưa được tải (chưa có Measurement ID, ví dụ khi chạy dev).
 export function trackEvent(name: string, params: Record<string, string>): void {
     window.gtag?.("event", name, params);
 }

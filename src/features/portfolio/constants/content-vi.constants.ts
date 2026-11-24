@@ -63,14 +63,6 @@ const CONTENT_VI: PortfolioContent = {
             youtube: "YouTube",
             github: "GitHub",
         },
-        analytics: {
-            bannerLabel: "Cookie thống kê",
-            message:
-                "Trang này dùng Google Analytics (cookie) để thống kê lượt truy cập ẩn danh. Bạn có đồng ý không?",
-            accept: "Đồng ý",
-            decline: "Từ chối",
-            settings: "Cài đặt cookie",
-        },
     },
     nav: {
         about: "Giới thiệu",

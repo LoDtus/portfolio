@@ -64,14 +64,6 @@ const CONTENT_EN: PortfolioContent = {
             youtube: "YouTube",
             github: "GitHub",
         },
-        analytics: {
-            bannerLabel: "Analytics cookies",
-            message:
-                "This site uses Google Analytics cookies to count visits anonymously. Is that OK with you?",
-            accept: "Accept",
-            decline: "Decline",
-            settings: "Cookie settings",
-        },
     },
     nav: {
         about: "About",
