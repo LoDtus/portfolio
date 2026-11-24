@@ -612,8 +612,8 @@ export const LIFETEX: ExperienceCompany = {
     logo: "/image/experiment-03/logo.webp",
     logoWidth: 178,
     logoHeight: 129,
-    startedAt: "2024-03",
-    endedAt: "2024-06",
+    startedAt: "2025-03",
+    endedAt: "2025-06",
     photos: [
         { src: "/image/experiment-03/workplace-03-001.avif", width: 960, height: 600 },
     ],
