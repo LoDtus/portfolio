@@ -166,7 +166,7 @@ const CONTENT_EN: PortfolioContent = {
                 summary: null,
                 highlights: [],
                 photos: attachPhotoAlts(UDATA.photos, [
-                    "Signing ceremony for a cooperation agreement",
+                    "Signing ceremony for a cooperation agreement (includes Le Van Anh, Ha Pie - Pham Khanh Ha)",
                     "Group photo at the project site",
                     "The engineering team at the project site",
                 ]),

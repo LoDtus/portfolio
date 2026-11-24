@@ -166,7 +166,7 @@ const CONTENT_VI: PortfolioContent = {
                 summary: null,
                 highlights: [],
                 photos: attachPhotoAlts(UDATA.photos, [
-                    "Lễ ký kết biên bản ghi nhớ hợp tác",
+                    "Lễ ký kết biên bản ghi nhớ hợp tác (Bao gồm có Lại Vân Anh, Hà Pie - Phạm Khánh Hà)",
                     "Ảnh nhóm tại hiện trường triển khai dự án",
                     "Ảnh nhóm kỹ sư tại hiện trường triển khai dự án",
                 ]),
