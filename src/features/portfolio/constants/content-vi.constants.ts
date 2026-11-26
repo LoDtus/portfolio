@@ -1,7 +1,9 @@
 import {
     EDUCATION,
     EXPERIENCE_YEARS,
+    FTP,
     IRDOP,
+    KET_NOI_VIEC,
     LIFETEX,
     PARTICIPATED_PROJECTS,
     PROJECTS,
@@ -248,6 +250,30 @@ const CONTENT_VI: PortfolioContent = {
                         ],
                     },
                 }),
+            },
+            {
+                ...FTP,
+                company: "Công ty cổ phần FTP",
+                role: "Cộng tác viên",
+                period: formatMonthRange(FTP.startedAt, FTP.endedAt, PRESENT),
+                summary: null,
+                highlights: [
+                    "Xử lý & Gán nhãn dữ liệu: Thu thập, chuẩn hóa, nhập liệu và gán nhãn dữ liệu (văn bản, hình ảnh) theo đúng tiêu chuẩn kỹ thuật để phục vụ phát triển phần mềm và hệ thống cơ sở dữ liệu, đảm bảo độ chính xác và tiến độ bàn giao dự án.",
+                ],
+                photos: [],
+                projects: [],
+            },
+            {
+                ...KET_NOI_VIEC,
+                company: "Công ty cổ phần kết nối việc",
+                role: "Cộng tác viên",
+                period: formatMonthRange(KET_NOI_VIEC.startedAt, KET_NOI_VIEC.endedAt, PRESENT),
+                summary: null,
+                highlights: [
+                    "Đăng tin tuyển dụng trên các nhóm Facebook, tìm và liên hệ ứng viên, trao đổi sơ bộ về công việc rồi gửi hồ sơ phù hợp cho bộ phận tuyển dụng, nhắc lịch và hỗ trợ ứng viên trong quá trình ứng tuyển.",
+                ],
+                photos: [],
+                projects: [],
             },
         ],
         pendingNote:

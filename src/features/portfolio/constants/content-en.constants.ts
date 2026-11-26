@@ -1,7 +1,9 @@
 import {
     EDUCATION,
     EXPERIENCE_YEARS,
+    FTP,
     IRDOP,
+    KET_NOI_VIEC,
     LIFETEX,
     PARTICIPATED_PROJECTS,
     PROFILE,
@@ -248,6 +250,30 @@ const CONTENT_EN: PortfolioContent = {
                         ],
                     },
                 }),
+            },
+            {
+                ...FTP,
+                company: "FTP Joint Stock Company",
+                role: "Collaborator",
+                period: formatMonthRange(FTP.startedAt, FTP.endedAt, PRESENT),
+                summary: null,
+                highlights: [
+                    "Data processing & labeling: collected, cleaned up, entered and labeled data (text and images) to the required technical standards for software and database projects, keeping it accurate and on schedule.",
+                ],
+                photos: [],
+                projects: [],
+            },
+            {
+                ...KET_NOI_VIEC,
+                company: "Joblinks Corporation",
+                role: "Collaborator",
+                period: formatMonthRange(KET_NOI_VIEC.startedAt, KET_NOI_VIEC.endedAt, PRESENT),
+                summary: null,
+                highlights: [
+                    "Posted job ads in Facebook groups, found and reached out to candidates, had first chats about the job, then sent suitable profiles to the hiring team, and reminded and helped candidates through the application process.",
+                ],
+                photos: [],
+                projects: [],
             },
         ],
         pendingNote:

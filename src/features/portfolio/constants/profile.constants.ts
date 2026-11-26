@@ -44,7 +44,7 @@ export const PROFILE = {
 // Dữ kiện SEO dùng chung cho metadata, sitemap và dữ liệu có cấu trúc.
 export const SEO = {
     // Ngày cập nhật nội dung gần nhất ("YYYY-MM-DD"); sửa nội dung trang thì nhớ đổi ngày này (dùng cho sitemap và dateModified).
-    contentUpdatedAt: "2026-11-24",
+    contentUpdatedAt: "2026-11-27",
     // Ảnh chia sẻ mạng xã hội 1200x630 (JPEG vì Facebook/Zalo không đọc ổn định AVIF/WebP).
     ogImage: { path: "/og/og-image.jpg", width: 1200, height: 630 },
     // Tên khác của chủ trang: biệt danh và tên đầy đủ có dấu (để tìm theo tên tiếng Việt).
@@ -472,15 +472,13 @@ export const PROJECTS: readonly ProjectConfig[] = [
 // Thứ tự hiển thị (gần nhất đến xa nhất) do người dùng cung cấp: Udata, IRDOP, Lifetex.
 // Có đủ `startedAt` nên sortExperienceEntries tự xếp theo ngày; thứ tự khai báo ở content-vi/en là phương án dự phòng.
 // Tên công ty đầy đủ theo từng ngôn ngữ nằm ở content-vi/en; `company` ở đây là tên gọi ngắn.
-// Cả ba nơi chỉ được liệt kê (`isDiscoverable: false`): không làm SEO cho các nơi này, xem ExperienceCompany.
+// Mọi nơi làm việc đều chỉ được liệt kê (`isDiscoverable: false`): không làm SEO cho các nơi này, xem ExperienceCompany.
 export const UDATA: ExperienceCompany = {
     id: "udata",
     company: "Udata",
     companyUrl: null,
     isDiscoverable: false,
-    logo: "/image/experiment-01/logo.svg",
-    logoWidth: 380,
-    logoHeight: 100,
+    logo: { src: "/image/experiment-01/logo.svg", width: 380, height: 100 },
     startedAt: "2026-06",
     endedAt: "2026-11",
     photos: [
@@ -568,9 +566,7 @@ export const IRDOP: ExperienceCompany = {
     // Không liên kết tên cơ quan; địa chỉ website nằm ở thẻ "Website" của dự án (gắn nofollow).
     companyUrl: null,
     isDiscoverable: false,
-    logo: "/image/experiment-02/logo.webp",
-    logoWidth: 360,
-    logoHeight: 110,
+    logo: { src: "/image/experiment-02/logo.webp", width: 360, height: 110 },
     startedAt: "2025-10",
     endedAt: "2026-03",
     photos: [
@@ -609,9 +605,7 @@ export const LIFETEX: ExperienceCompany = {
     company: "LifeteX",
     companyUrl: null,
     isDiscoverable: false,
-    logo: "/image/experiment-03/logo.webp",
-    logoWidth: 178,
-    logoHeight: 129,
+    logo: { src: "/image/experiment-03/logo.webp", width: 178, height: 129 },
     startedAt: "2025-03",
     endedAt: "2025-06",
     photos: [
@@ -639,8 +633,34 @@ export const LIFETEX: ExperienceCompany = {
     ],
 };
 
-// Các nơi đã làm việc, dùng để tính tổng số năm kinh nghiệm (xem experience-duration.utils.ts).
-// Thêm công ty mới thì thêm vào đây; `endedAt: null` nghĩa là đang làm, tự lấy tháng hiện tại làm mốc kết thúc.
+// Công việc cộng tác viên ngoài lĩnh vực phần mềm: chỉ liệt kê (không làm SEO), không có logo, ảnh hay dự án.
+export const FTP: ExperienceCompany = {
+    id: "ftp",
+    company: "FTP",
+    companyUrl: null,
+    isDiscoverable: false,
+    logo: null,
+    startedAt: "2024-01",
+    endedAt: "2025-04",
+    photos: [],
+    projects: [],
+};
+
+export const KET_NOI_VIEC: ExperienceCompany = {
+    id: "ket-noi-viec",
+    company: "Kết nối việc",
+    companyUrl: null,
+    isDiscoverable: false,
+    logo: null,
+    startedAt: "2022-08",
+    endedAt: "2023-09",
+    photos: [],
+    projects: [],
+};
+
+// Các nơi làm việc chuyên môn (phần mềm), dùng để tính tổng số năm kinh nghiệm (xem experience-duration.utils.ts).
+// Cố ý không tính FTP và Kết nối việc: đó là công việc cộng tác viên ngoài lĩnh vực, cộng vào sẽ làm số năm kinh nghiệm
+// lập trình bị thổi phồng. Thêm nơi làm phần mềm mới thì thêm vào đây; `endedAt: null` nghĩa là đang làm.
 export const EXPERIENCE_COMPANIES: readonly ExperienceCompany[] = [UDATA, IRDOP, LIFETEX];
 
 // Tổng số năm kinh nghiệm dạng chữ ("1.5+"), tính lúc build từ EXPERIENCE_COMPANIES và tháng hiện tại (xem formatExperienceYears).
