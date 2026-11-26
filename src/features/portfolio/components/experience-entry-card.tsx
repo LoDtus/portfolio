@@ -32,15 +32,17 @@ export default function ExperienceEntryCard({
         >
             <div className="print-keep-next flex flex-wrap items-center gap-x-5 gap-y-3">
                 {/* Logo đặt thẳng trên nền thẻ. Chỉ giao diện tối mới cần nền trắng, vì logo màu xanh đậm sẽ chìm trên nền tối. */}
-                <span className="inline-flex h-12 items-center dark:bg-white dark:px-3">
-                    <Image
-                        src={entry.logo}
-                        alt=""
-                        width={entry.logoWidth}
-                        height={entry.logoHeight}
-                        className="h-10 w-auto max-w-44 object-contain dark:h-8"
-                    />
-                </span>
+                {entry.logo === null ? null : (
+                    <span className="inline-flex h-12 items-center dark:bg-white dark:px-3">
+                        <Image
+                            src={entry.logo.src}
+                            alt=""
+                            width={entry.logo.width}
+                            height={entry.logo.height}
+                            className="h-10 w-auto max-w-44 object-contain dark:h-8"
+                        />
+                    </span>
+                )}
                 <h3 className="font-display text-2xl font-bold text-heading">
                     {entry.companyUrl === null ? (
                         entry.company

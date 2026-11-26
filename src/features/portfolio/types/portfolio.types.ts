@@ -95,9 +95,8 @@ export interface ExperienceCompany {
     // false nghĩa là chỉ liệt kê trên trang, không làm SEO cho nơi này: bỏ khỏi llms.txt, dữ liệu có cấu trúc, từ khóa;
     // liên kết ra ngoài gắn nofollow, thẻ gắn data-nosnippet và ảnh gắn X-Robots-Tag noindex (xem public/_headers).
     isDiscoverable: boolean;
-    logo: string;
-    logoWidth: number;
-    logoHeight: number;
+    // null nghĩa là chưa có logo: thẻ chỉ hiện tên nơi làm.
+    logo: { src: string; width: number; height: number } | null;
     // Mốc thời gian dạng "YYYY-MM". `startedAt` còn dùng để sắp xếp từ gần nhất đến xa nhất (null thì giữ thứ tự khai báo);
     // `endedAt` null nghĩa là đang làm.
     startedAt: string | null;

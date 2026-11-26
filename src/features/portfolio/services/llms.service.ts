@@ -77,6 +77,7 @@ export async function buildLlmsTxt(siteUrl: string): Promise<string> {
         const site = entry.companyUrl === null ? "" : ` (${entry.companyUrl})`;
         return [
             `### ${heading}${site}`,
+            ...entry.highlights.map((highlight) => `- ${highlight}`),
             ...entry.projects.map((project) => formatExperienceProject(project, main.ui.linkLabels)),
             "",
         ];
