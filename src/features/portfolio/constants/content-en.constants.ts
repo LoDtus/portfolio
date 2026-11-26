@@ -265,7 +265,7 @@ const CONTENT_EN: PortfolioContent = {
             },
             {
                 ...KET_NOI_VIEC,
-                company: "Ket Noi Viec Joint Stock Company",
+                company: "Joblinks Corporation",
                 role: "Collaborator",
                 period: formatMonthRange(KET_NOI_VIEC.startedAt, KET_NOI_VIEC.endedAt, PRESENT),
                 summary: null,
